@@ -13,9 +13,13 @@ let package = Package(
         .package(url: "https://github.com/stephencelis/SQLite.swift", branch: "master"),
     ],
     targets: [
-        .target(name: "BearPublisherWeb", dependencies: [
-            .product(name: "Plot", package: "Plot"),
-        ]),
+        .target(
+            name: "BearPublisherWeb",
+            dependencies: [
+                .product(name: "Plot", package: "Plot"),
+            ],
+            resources: [.copy("Resources")]
+        ),
         .target(name: "BearPublisherMarkdown", dependencies: [
             .product(name: "RubyGateway", package: "rubygateway"),
             .product(name: "MarkdownKit", package: "swift-markdownkit")

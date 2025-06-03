@@ -76,7 +76,7 @@ public final class BearParser: HtmlGenerator {
 //        }
     }
     
-    public override func generate(block: Block, tight: Bool = false) -> String {
+    public func generate(block: Block, tight: Bool = false) -> String {
         switch block {
         case let .heading(n, text):
             let text  = self.generate(text: text)
@@ -99,7 +99,7 @@ public final class BearParser: HtmlGenerator {
                 "</code></pre>\n"
             }
         default:
-            return super.generate(block: block, tight: tight)
+            return super.generate(block: block, parent: .none, tight: tight)
         }
     }
     

@@ -9,10 +9,10 @@ public final class BearApi {
     var db: Connection!
     
     // MARK: -  Common Tables & Expressions
-    private let archived = Expression<Bool>(Note.CodingKeys.archived.rawValue)
-    private let  trashed = Expression<Bool>(Note.CodingKeys.trashed.rawValue )
+    private let archived = SQLite.Expression<Bool>(Note.CodingKeys.archived.rawValue)
+    private let  trashed = SQLite.Expression<Bool>(Note.CodingKeys.trashed.rawValue )
     
-    var slugify: ((Expression<String>) -> Expression<String>)?
+    var slugify: ((SQLite.Expression<String>) -> SQLite.Expression<String>)?
     let databaseLocation: DatabaseLocation
     
     public init(databaseLocation: DatabaseLocation = .defaultPath) {
