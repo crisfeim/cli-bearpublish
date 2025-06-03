@@ -47,14 +47,12 @@ extension Menu {
             }
         }
         
-        public func makePath(spa: Bool) -> String {
+        public func makePath() -> String {
             switch type {
-            case .regular: return spa
-                ? "/?list=\(fullPath)"
-                : "/standalone" + path
-            case .tag: return spa
-                ? "/?tag=\(fullPath.replacingOccurrences(of: "&", with: "/"))"
-                : "/standalone" + path
+            case .regular: return 
+                 "/?list=\(fullPath)"
+            case .tag: return
+                "/?tag=\(fullPath.replacingOccurrences(of: "&", with: "/"))"
             }
         }
     }

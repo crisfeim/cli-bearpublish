@@ -11,12 +11,10 @@ public struct NoteList: Component {
     
     let title: String
     let model: [NoteList.Model]
-    let spaModeEnabled: Bool
     
-    public init(title: String, model: [NoteList.Model], spaModeEnabled: Bool) {
+    public init(title: String, model: [NoteList.Model]) {
         self.title = title
         self.model = model
-        self.spaModeEnabled = spaModeEnabled
     }
     
     @ComponentBuilder
@@ -40,7 +38,7 @@ public struct NoteList: Component {
             .class("htmx-indicator")
         
         List(model) { item in
-            Row(note: item, spaModeEnabled: spaModeEnabled)
+            Row(note: item)
         }
         .id("note-list")
     }

@@ -12,20 +12,18 @@ import Plot
 
 extension Core {
     
-    public func getIndex(title: String = "🏠 Inicio", spaModeEnabled: Bool) -> BaseLayout {
+    public func getIndex(title: String = "🏠 Inicio") -> BaseLayout {
         BaseLayout(
             title: title,
             tags: tags,
-            notes: notes,
-            spaModeEnabled: spaModeEnabled
+            notes: notes
         )
     }
 
-    public func getStandaloneNoteList(withFilter filter: MenuFilter, spaModeEnabled: Bool) -> StandaloneNoteList {
+    public func getStandaloneNoteList(withFilter filter: MenuFilter) -> StandaloneNoteList {
         StandaloneNoteList(
             title: filter.title,
-            notes: getNotes(filter).toNoteListModels(),
-            spaModeEnabled: spaModeEnabled
+            notes: getNotes(filter).toNoteListModels()
         )
     }
 }
@@ -82,7 +80,6 @@ extension Core {
             title: tag,
             tags: tags,
             notes: notes ?? [],
-            spaModeEnabled: true
         )
     }
     
@@ -92,7 +89,6 @@ extension Core {
                 title: "Not found",
                 tags: tags,
                 notes: [],
-                spaModeEnabled: true
             )
         }
 
@@ -102,7 +98,6 @@ extension Core {
             title: filter.title,
             tags: tags,
             notes: notes,
-            spaModeEnabled: true
         )
     }
     
@@ -120,7 +115,6 @@ extension Core {
                 tags: tags,
                 notes: notes,
                 content: detail.content,
-                spaModeEnabled: true
             )
         }
 
@@ -128,7 +122,6 @@ extension Core {
             title: "Nota no encontrada",
             tags: tags,
             notes: notes,
-            spaModeEnabled: true
         )
     }
     
@@ -141,7 +134,6 @@ extension Core {
                 title: note.title ?? "",
                 tags: tags,
                 notes: notes,
-                spaModeEnabled: true
             )
         }
 
@@ -149,7 +141,6 @@ extension Core {
             title: "Backlinks",
             tags: tags,
             notes: notes,
-            spaModeEnabled: true
         )
     }
     

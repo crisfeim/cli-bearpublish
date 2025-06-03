@@ -6,24 +6,22 @@ import Plot
 
 public struct Menu: Component {
     let tags: [Menu.Model]
-    let spaModeEnabled: Bool
-    public init(tags: [Menu.Model] = [], spaModeEnabled: Bool) {
+    public init(tags: [Menu.Model] = []) {
         self.tags = tags
-        self.spaModeEnabled = spaModeEnabled
     }
     
     @ComponentBuilder
     public var body: Component {
         Section {
-            Row(model: DefaultItems.all.model, spaModeEnabled: spaModeEnabled)
-            Row(model: DefaultItems.archived.model, spaModeEnabled: spaModeEnabled)
-            Row(model: DefaultItems.trashed.model, spaModeEnabled: spaModeEnabled)
+            Row(model: DefaultItems.all.model)
+            Row(model: DefaultItems.archived.model)
+            Row(model: DefaultItems.trashed.model)
         }
         
         // MARK: - Tags
         Section {
             for tag in tags {
-                Row(model: tag, spaModeEnabled: spaModeEnabled)
+                Row(model: tag)
             }
         }
     }

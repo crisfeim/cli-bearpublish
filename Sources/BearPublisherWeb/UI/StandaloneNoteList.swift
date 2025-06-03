@@ -11,15 +11,13 @@ import Plot
 public struct StandaloneNoteList {
     let title: String
     let notes: [NoteList.Model]
-    let spaModeEnabled: Bool
     
-    public init(title: String, notes: [NoteList.Model], spaModeEnabled: Bool) {
+    public init(title: String, notes: [NoteList.Model]) {
         self.title = title
         self.notes = notes
-        self.spaModeEnabled = spaModeEnabled
     }
     
     public var body: HTML {
-        HTML(.body(.component(NoteList(title: title, model: notes, spaModeEnabled: spaModeEnabled))))
+        HTML(.body(.component(NoteList(title: title, model: notes))))
     }
 }

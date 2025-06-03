@@ -50,14 +50,14 @@ private extension Core {
         allDbNotes.compactMap {
             let backlinks = (try? api.fetchNoteBacklinks(id: $0.id).toNoteListModels()) ?? []
             guard !backlinks.isEmpty else { return nil }
-            let html = StandaloneNoteList(title: "Backlinks", notes: backlinks, spaModeEnabled: true).body
+            let html = StandaloneNoteList(title: "Backlinks", notes: backlinks).body
             return ViewHolder(slug: slugify($0.title ?? ""), html: html)
         }
     }
     
     func getDefaultMenuFilterNoteLists() -> [ViewHolder] {
         MenuFilter.allCases.map {
-            let html = getStandaloneNoteList(withFilter: $0, spaModeEnabled: true).body
+            let html = getStandaloneNoteList(withFilter: $0).body
             return Core.ViewHolder(slug: $0.rawValue, html: html)
         }
     }
@@ -71,7 +71,7 @@ private extension Core {
                     .fetchNotes(with: tag.path)
                     .toNoteListModels()
                 
-                let html = StandaloneNoteList(title: tag.path, notes: notes ?? [], spaModeEnabled: true).body
+                let html = StandaloneNoteList(title: tag.path, notes: notes ?? []).body
                 return ViewHolder(
                     slug: tag.path.replacingOccurrences(of: "/", with: "&"),
                     html: html

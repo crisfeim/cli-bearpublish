@@ -11,12 +11,9 @@ extension NoteList {
     struct Row: Component {
         let note: NoteList.Model
         var tabindex: Int { note.isSelected ? 0 : 0} // @todo
-        let spaModeEnabled: Bool
         
         var pushedUrl: String {
-            spaModeEnabled
-            ? "/?slug=\(note.slug)"
-            : "/standalone/note/\(note.slug)"
+             "/?slug=\(note.slug)"
         }
         
         var body: Component {

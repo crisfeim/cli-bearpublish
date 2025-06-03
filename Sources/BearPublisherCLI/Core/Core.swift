@@ -9,24 +9,22 @@ import BearPublisherMarkdown
 import BearPublisherDataSource
 
 public final class Core {
+
     let parser: BearParser
     let api: BearApi
-    let spa: Bool
     
     public init(
         parser: BearParser,
-        api: BearApi,
-        spa: Bool) {
+        api: BearApi
+    ) {
             
         self.parser = parser
         self.api = api
-        self.spa = spa
     }
     
-    public init(spa: Bool) throws {
+    public init() {
         self.api = BearApi()
         self.parser = BearParser()
-        self.spa = spa
         parser.setSlugify(slugify(_:))
         parser.setImgProcessor(imgRouter(_:))
         parser.setHashtagProcessor(hashtagProcessor(_:))

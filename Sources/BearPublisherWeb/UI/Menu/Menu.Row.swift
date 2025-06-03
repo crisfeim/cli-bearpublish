@@ -11,7 +11,6 @@ import Plot
 extension Menu {
     public struct Row: Component {
         let model: Model
-        let spaModeEnabled: Bool
        
         /// This class is used as a unique hash which allows to scroll to the target tag when
         /// user clicks on a hashtag inside a note
@@ -52,7 +51,7 @@ extension Menu {
                 .hxGet("/standalone\(model.path)")
                 .hxTarget("nav")
                 .hxIndicator(.id(Indicators.spinner))
-                .hxPushUrl(model.makePath(spa: spaModeEnabled))
+                .hxPushUrl(model.makePath())
                 .hxSwap("innerHTML scroll:top")
                 .data(named: "count", value: model.count.description)
                 .hyperScript(hyperscript)
@@ -60,7 +59,7 @@ extension Menu {
                 if !model.children.isEmpty {
                     Div {
                         for children in model.children {
-                            Row(model: children, spaModeEnabled: spaModeEnabled)
+                            Row(model: children)
                         }
                     }
                     .class("childs")
@@ -77,7 +76,7 @@ extension Menu {
 
                     model.icon.render().makeRawNode()
 
-                    Link(model.name, url: model.makePath(spa: spaModeEnabled))
+                    Link(model.name, url: model.makePath())
                     Spacer()
                     if model.isPinned {
                         MenuIcons.pin.svg.makeRawNode()
@@ -86,7 +85,7 @@ extension Menu {
                 .class(model.isSelected ? "selected-summary": "")
 
                 for children in model.children {
-                    Row(model: children, spaModeEnabled: spaModeEnabled)
+                    Row(model: children)
                 }
             }
             .class(detailsClass)

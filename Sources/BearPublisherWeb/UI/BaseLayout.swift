@@ -7,7 +7,6 @@ public struct BaseLayout {
     fileprivate let navTitle: String?
     fileprivate let notes: [NoteList.Model]
     fileprivate let content: String?
-    fileprivate let spaModeEnabled: Bool
     
     fileprivate  let layoutScript = getFileContents("layout", ext: "hs")
     
@@ -18,17 +17,13 @@ public struct BaseLayout {
     }
     
     fileprivate var menu: Menu {
-        Menu(
-            tags: tags,
-            spaModeEnabled: spaModeEnabled
-        )
+        Menu(tags: tags)
     }
     
     fileprivate var nav: NoteList {
         NoteList(
             title: navTitle ?? "Notas",
-            model: notes,
-            spaModeEnabled: spaModeEnabled
+            model: notes
         )
     }
     
@@ -42,14 +37,12 @@ public struct BaseLayout {
         navTitle: String? = nil,
         notes: [NoteList.Model],
         content: String? = nil,
-        spaModeEnabled: Bool
     ) {
         self.title = title
         self.tags = tags
         self.notes = notes
         self.navTitle = navTitle
         self.content = content
-        self.spaModeEnabled = spaModeEnabled
     }
     
     

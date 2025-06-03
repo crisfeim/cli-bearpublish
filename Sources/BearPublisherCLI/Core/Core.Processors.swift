@@ -23,8 +23,7 @@ extension Core {
      func hashtagProcessor(_ hashtag: String) -> String {
          Main.Hashtag(
             hashtag: hashtag,
-            count: getHashtagCount(hashtag),
-            spaModeEnabled: spa
+            count: getHashtagCount(hashtag)
          ).render()
     }
     

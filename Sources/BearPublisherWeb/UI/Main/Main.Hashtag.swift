@@ -12,20 +12,14 @@ extension Main {
         
         let hashtag: String
         let count: Int
-        let spaModeEnabled: Bool
         
-        public init(hashtag: String, count: Int, spaModeEnabled: Bool) {
+        public init(hashtag: String, count: Int) {
             self.hashtag = hashtag
             self.count = count
-            self.spaModeEnabled = spaModeEnabled
         }
         
         var slug: String { hashtag.replacingOccurrences(of: "/", with: "&") }
-        var href: String {
-            spaModeEnabled
-            ? "/?tag=\(hashtag)"
-            : "/tag/\(slug)"
-        }
+        var href: String { "/?tag=\(hashtag)" }
         
         
         var script: String {

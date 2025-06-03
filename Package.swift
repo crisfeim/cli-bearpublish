@@ -18,7 +18,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Plot", package: "Plot"),
             ],
-            resources: [.copy("Resources")]
+            resources: [.process("Resources")]
         ),
         .target(name: "BearPublisherMarkdown", dependencies: [
             .product(name: "RubyGateway", package: "rubygateway"),
@@ -36,6 +36,6 @@ let package = Package(
                 "BearPublisherDataSource"
             ]
         ),
-        .testTarget(name: "BearPublisherTests")
+        .testTarget(name: "BearPublisherTests", dependencies: ["BearPublisherCLI"])
     ]
 )

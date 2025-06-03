@@ -9,7 +9,7 @@ extension SSG {
     func writeIndex() throws {
         guard let outputURL else { throw SSGError.unsettedOutputFolder }
         let index = core
-            .getIndex(spaModeEnabled: true)
+            .getIndex()
             .body
         
         let indexUrl = outputURL.appendingPathComponent("index.html", isDirectory: false)

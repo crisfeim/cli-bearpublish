@@ -21,20 +21,14 @@ enum Constants {
 
 public final class SSG {
    
-    var core: Core!
+    let core: Core = Core()
     fileprivate(set) var outputURL: URL?
     
     public init() {}
     
     
-    func initCore() throws {
-        if core == nil {
-            core = try Core(spa: true)
-        }
-    }
     
     public func setupDb(location: String) throws {
-        try initCore()
         try core.setupDB(location: location)
     }
     
@@ -64,7 +58,7 @@ public final class SSG {
                 }
             }
             group.wait()
-            self.core?.api.close()
+            self.core.api.close()
         }
         
         group.notify(queue: .main) {
