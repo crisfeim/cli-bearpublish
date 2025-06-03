@@ -8,10 +8,16 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.2.0"),
         .package(url: "https://github.com/johnsundell/plot.git", from: "0.9.0"),
+        .package(url: "https://github.com/johnfairh/RubyGateway", from: "5.4.0"),
+        .package(url: "https://github.com/objecthub/swift-markdownkit", from: "1.1.7")
     ],
     targets: [
         .target(name: "BearPublisherWeb", dependencies: [
             .product(name: "Plot", package: "Plot"),
+        ]),
+        .target(name: "BearPublisherMarkdown", dependencies: [
+            .product(name: "RubyGateway", package: "rubygateway"),
+            .product(name: "MarkdownKit", package: "swift-markdownkit")
         ]),
         .executableTarget(
             name: "BearPublisherCLI",
