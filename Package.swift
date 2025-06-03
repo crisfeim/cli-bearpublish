@@ -27,6 +27,9 @@ let package = Package(
             name: "BearPublisherCLI",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                "BearPublisherWeb",
+                "BearPublisherMarkdown",
+                "BearPublisherDataSource"
             ]
         ),
         .testTarget(name: "BearPublisherTests")
