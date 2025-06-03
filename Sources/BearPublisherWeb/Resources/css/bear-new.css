@@ -1,0 +1,889 @@
+body {
+   --base-background-color: #ffffff;
+   --document-background-color: var(--base-background-color);
+ }
+
+.document-wrapper {
+  /* Constants used to transform theme values to CSS */
+  --transform-line-height-factor: 1.17;
+
+  /* From template */
+  --base-text-color: #444444;
+  --base-text-secondary-color: #888888;
+  --base-text-tertiary-color: #d9d9d9;
+  --base-background-color: #ffffff;
+  --base-background-secondary-color: #F3F5F7;
+  --base-background-tertiary-color: #E4E5E6;
+  --base-stroke-color: #d9d9d9;
+  --base-stroke-secondary-color: #d9d9d9;
+  --base-accent-color: #DD4C4F;
+  --base-highlight-color: #D3FFA4;
+
+  --document-background-color: var(--base-background-color);
+  --document-text-color: var(--base-text-color);
+  --document-text-secondary-color: var(--base-text-secondary-color);
+  --document-text-light-color: var(--base-text-secondary-color);
+  --document-accent-color: var(--base-accent-color);
+  --document-cursor-color: var(--base-accent-color);
+  --document-link-color: var(--base-accent-color);
+  --document-list-marker-color: var(--base-accent-color);
+  --document-marker-color: var(--base-text-tertiary-color);
+  --document-selection-color: var(--base-selection-color);
+  --document-selection-inactive-color: var(--base-background-tertiary-color);
+  --document-text-font: "AvenirNext-Regular";
+  --document-text-size: 15px;
+  --document-line-height-multiplier: calc(
+    1.5 * var(--transform-line-height-factor)
+  );
+
+  --document-headers-text-color: var(--base-text-color);
+  --document-headers-font: "AvenirNext-Medium";
+  --document-headers-modular-scale: 1.125;
+  --document-headers-line-height-multiplier: calc(
+    1.3 * var(--transform-line-height-factor)
+  );
+  --document-headers-add-top-bottom-padding: 1;
+  --document-headers-padding-top-multiplier: 0.5;
+  --document-headers-padding-bottom-multiplier: 0.3;
+
+  --document-code-text-color: var(--base-text-color);
+  --document-code-border-color: var(--base-text-tertiary-color);
+  --document-code-background-color: var(--base-background-secondary-color);
+  --document-code-font: "Menlo-Regular";
+  --document-code-text-size-multiplier: 0.91;
+
+  --document-code-syntax-highlight-comment: #65798c;
+  --document-code-syntax-highlight-constant: #0095c9;
+  --document-code-syntax-highlight-number: #0095c9;
+  --document-code-syntax-highlight-string: #d12f1b;
+  --document-code-syntax-highlight-entity: #4a838b;
+  --document-code-syntax-highlight-keyword: #ad3da4;
+  --document-code-syntax-highlight-function: #4a838b;
+  --document-code-syntax-highlight-variable: #4a838b;
+
+  --document-task-background-color: var(--base-background-color);
+  --document-task-border-color: var(--base-text-secondary-color);
+  --document-task-check-color: var(--base-text-color);
+
+  --document-tag-background-color: var(--base-background-tertiary-color);
+  --document-tag-text-color: var(--base-text-color);
+  --document-tag-marker-color: var(--base-text-secondary-color);
+
+  --document-highlighter-background-color: var(--base-highlight-color);
+  --document-highlighter-text-color: var(--base-text-color);
+
+  --document-file-fold-color: var(--base-background-tertiary-color);
+  --document-file-background-color: var(--base-background-secondary-color);
+
+  --document-separator-border-color: var(--base-stroke-secondary-color);
+
+  --document-table-border-color: var(--base-stroke-secondary-color);
+  --document-table-cell-background-color: var(--base-background-color);
+  --document-table-cell-alternate-background-color: var(
+    --base-background-secondary-color
+  );
+}
+
+/******************************************/
+/* Reset */
+
+.document-wrapper div,
+.document-wrapper span,
+.document-wrapper applet,
+.document-wrapper object,
+.document-wrapper iframe,
+.document-wrapper h1,
+.document-wrapper h2,
+.document-wrapper h3,
+.document-wrapper h4,
+.document-wrapper h5,
+.document-wrapper h6,
+.document-wrapper p,
+.document-wrapper blockquote,
+.document-wrapper pre,
+.document-wrapper a,
+.document-wrapper abbr,
+.document-wrapper acronym,
+.document-wrapper address,
+.document-wrapper big,
+.document-wrapper cite,
+.document-wrapper code,
+.document-wrapper del,
+.document-wrapper dfn,
+.document-wrapper em,
+.document-wrapper ins,
+.document-wrapper kbd,
+.document-wrapper q,
+.document-wrapper s,
+.document-wrapper samp,
+.document-wrapper small,
+.document-wrapper strike,
+.document-wrapper strong,
+.document-wrapper tt,
+.document-wrapper var,
+.document-wrapper b,
+.document-wrapper u,
+.document-wrapper i,
+.document-wrapper center,
+.document-wrapper dl,
+.document-wrapper dt,
+.document-wrapper dd,
+.document-wrapper ol,
+.document-wrapper ul,
+.document-wrapper li,
+.document-wrapper fieldset,
+.document-wrapper form,
+.document-wrapper label,
+.document-wrapper legend,
+.document-wrapper table,
+.document-wrapper caption,
+.document-wrapper tbody,
+.document-wrapper tfoot,
+.document-wrapper thead,
+.document-wrapper tr,
+.document-wrapper th,
+.document-wrapper td,
+.document-wrapper article,
+.document-wrapper aside,
+.document-wrapper canvas,
+.document-wrapper details,
+.document-wrapper embed,
+.document-wrapper figure,
+.document-wrapper figcaption,
+.document-wrapper footer,
+.document-wrapper header,
+.document-wrapper hgroup,
+.document-wrapper menu,
+.document-wrapper nav,
+.document-wrapper output,
+.document-wrapper ruby,
+.document-wrapper section,
+.document-wrapper summary,
+.document-wrapper time,
+.document-wrapper mark,
+.document-wrapper audio,
+.document-wrapper video {
+  all:unset;
+}
+
+.document-wrapper *:before,
+.document-wrapper *:after {
+  all: unset;
+}
+
+/******************************************/
+/* Derived CSS variables */
+
+.document-wrapper  {
+  --document-inline-padding-top-bottom: 0.25em;
+  --document-inline-padding-left-right: 0.25em;
+
+  --header-1-font-size: 2em;
+  --header-2-font-size: 1.6em;
+  --header-3-font-size: 1.27em;
+
+  --document-hairline-width: calc(var(--document-text-size) / 15);
+}
+
+/******************************************/
+/* General settings */
+
+body {
+  background-color: var(--document-background-color);
+  text-rendering: optimizeLegibility;
+}
+
+.document-wrapper {
+  box-sizing: border-box;
+
+/*  background-color: var(--document-background-color);*/
+  color: var(--document-text-color);
+
+  font-family: var(--document-text-font);
+  font-size: var(--document-text-size);
+  line-height: var(--document-line-height-multiplier);
+
+  min-height: 100%;
+  max-width: 48em;
+  width: 100%;
+  tab-size: 4;
+  margin: 0 auto;
+  padding: 0 2em;
+}
+
+.document-wrapper:focus-visible {
+  outline: none;
+}
+
+.document-wrapper .marker {
+  color: var(--document-marker-color);
+  display: none;
+}
+
+.document-wrapper [data-direction="2"] {
+  direction: rtl;
+}
+
+/******************************************/
+/* Paragraphs */
+
+.document-wrapper p {
+  display: block;
+}
+
+/******************************************/
+/* Blank lines */
+
+.document-wrapper p.blank-line::before {
+  /* Force empty lines to take up space. */
+  content: " ";
+}
+
+/******************************************/
+/* Headings */
+
+.document-wrapper h1,
+.document-wrapper h2,
+.document-wrapper h3,
+.document-wrapper h4,
+.document-wrapper h5,
+.document-wrapper h6 {
+  font-family: var(--document-headers-font);
+  display: block;
+  line-height: var(--document-headers-line-height-multiplier);
+}
+
+.document-wrapper h1 {
+  font-size: var(--header-1-font-size);
+  padding-block-start: 0.8em;
+  padding-block-end: 0.33em;
+}
+
+.document-wrapper h2 {
+  font-size: var(--header-2-font-size);
+  padding-block-start: 0.66em;
+  padding-block-end: 0.27em;
+}
+
+.document-wrapper h3 {
+  font-size: var(--header-3-font-size);
+  padding-block-start: 0.53em;
+  padding-block-end: 0.27em;
+}
+
+.document-wrapper h4,
+.document-wrapper h5,
+.document-wrapper h6 {
+  padding-block-start: 0.4em;
+  padding-block-end: 0.27em;
+}
+
+/* Setext headings */
+
+.document-wrapper h1.setext {
+  border-bottom: calc(2 * var(--document-hairline-width)) solid
+    var(--document-separator-border-color);
+  padding-bottom: 0.6em;
+  margin-bottom: 0.45em;
+}
+
+.document-wrapper h2.setext {
+  border-bottom: calc(2 * var(--document-hairline-width)) solid
+    var(--document-separator-border-color);
+  padding-bottom: 0.6em;
+  margin-bottom: 0.2em;
+}
+
+.document-wrapper .setext-heading-marker + .line-ending {
+  display: none;
+}
+
+/******************************************/
+/* Lists */
+
+.document-wrapper ul,
+.document-wrapper ol {
+  display: block;
+  padding-inline-start: 2.13em;
+}
+
+.document-wrapper li {
+  display: list-item;
+  color: var(--document-text-color);
+}
+
+.document-wrapper li > p {
+  /* If not inline, it will be put on a new line after the list item ::marker that is inline. */
+  display: inline;
+}
+
+.document-wrapper li > p > .space:first-child {
+  /* Hide space used for indentation. */
+  display: none;
+}
+
+/* Unordered lists */
+
+.document-wrapper ul {
+  list-style-type: disc;
+}
+
+.document-wrapper li ul {
+  list-style: circle;
+}
+
+.document-wrapper li li ul {
+  list-style: disc; /* should be black diamond, but that is not supported */
+}
+
+.document-wrapper li li li ul {
+  list-style: circle; /* should be white diamond, but that is not supported */
+}
+
+.document-wrapper li li li li ul {
+  list-style: disc;
+}
+
+.document-wrapper li li li li li ul {
+  list-style: circle;
+}
+
+.document-wrapper li li li li li li ul {
+  list-style: disc; /* should be black diamond, but that is not supported */
+}
+
+.document-wrapper li li li li li li li ul {
+  list-style: circle; /* should be white diamond, but that is not supported */
+}
+
+.document-wrapper li::marker {
+  color: var(--document-list-marker-color);
+}
+
+/* Ordered lists */
+
+.document-wrapper ol {
+  list-style-type: none;
+  counter-reset: custom-list-item calc(var(--data-list-start, 1) - 1);
+}
+
+.document-wrapper ol > li {
+  counter-increment: custom-list-item;
+  position: relative;
+}
+
+.document-wrapper ol > li::before {
+  content: counter(custom-list-item) ". ";
+  color: var(--document-list-marker-color);
+  position: absolute;
+  transform: translate(calc(-100% - 0.33em), 0);
+}
+
+.document-wrapper ol > li[data-big-number="true"] {
+  margin-inline-start: -2.05em;
+}
+
+.document-wrapper ol > li[data-big-number="true"]::before {
+  position: static;
+  padding-inline-end: 0.25em;
+}
+
+.document-wrapper ol > li[data-list-type="1"]:before {
+  content: counter(custom-list-item) ") ";
+}
+
+.document-wrapper ol[data-direction="2"] > li::before,
+.document-wrapper [data-direction="2"] ol > li::before {
+  transform: translate(calc(100% + 0.33em), 0);
+}
+
+/* Task lists */
+
+.document-wrapper li[role="checkbox"] {
+  list-style: none;
+  position: relative;
+}
+
+.document-wrapper li[aria-checked="true"] {
+  color: var(--document-text-secondary-color);
+}
+
+.document-wrapper .todo-checkbox {
+    display: inline-block;
+    margin-left: -1.7em;
+    margin-right: 0.5em;
+}
+
+.document-wrapper .todo-checkbox svg {
+  display: inline-block;
+  margin-bottom: -0.3em;
+}
+
+/******************************************/
+/* Blockquote */
+
+.document-wrapper blockquote {
+  display: block;
+  padding-inline-start: 2.13em;
+  position: relative;
+}
+
+.document-wrapper blockquote::before {
+  content: "";
+  position: absolute;
+  top: 0.2em;
+  left: 1em;
+  width: 0.13em;
+  height: calc(100% - 0.4em);
+  border: var(--document-hairline-width) solid var(--document-list-marker-color);
+  border-radius: 0.33em;
+}
+
+.document-wrapper blockquote[data-direction="2"]::before,
+.document-wrapper [data-direction="2"] blockquote::before {
+  left: 0;
+  right: 1em;
+}
+
+.document-wrapper blockquote::before {
+  background-color: var(--document-list-marker-color);
+}
+
+.document-wrapper blockquote blockquote::before {
+  background-color: transparent;
+}
+
+.document-wrapper blockquote blockquote blockquote::before {
+  background-color: var(--document-list-marker-color);
+}
+
+.document-wrapper blockquote blockquote blockquote blockquote::before {
+  background-color: transparent;
+}
+
+.document-wrapper blockquote blockquote blockquote blockquote blockquote::before {
+  background-color: var(--document-list-marker-color);
+}
+
+.document-wrapper
+  blockquote
+  blockquote
+  blockquote
+  blockquote
+  blockquote
+  blockquote::before {
+  background-color: transparent;
+}
+
+/******************************************/
+/* Thematic breaks */
+
+.document-wrapper hr {
+  display: block;
+  margin-block-start: calc(var(--document-line-height-multiplier) * 0.5em);
+  margin-block-end: calc(var(--document-line-height-multiplier) * -0.5em);
+  border-top: var(--document-hairline-width) solid
+    var(--document-separator-border-color);
+}
+
+/******************************************/
+/* Code, HTML and YAML blocks */
+
+.document-wrapper pre {
+  display: block;
+  white-space: pre-wrap;
+  font-family: var(--document-code-font), monospace;
+  font-size: var(--document-code-text-size-multiplier);
+}
+
+.document-wrapper pre.indented-code,
+.document-wrapper pre.fenced-code,
+.document-wrapper pre.yaml {
+  color: var(--document-code-text-color);
+  background-color: var(--document-code-background-color);
+  border-radius: 0.25em;
+}
+
+.document-wrapper pre.indented-code {
+  /* Have indent for wrapped lines. */
+  padding-inline-start: 2.13em;
+}
+
+.document-wrapper pre.fenced-code,
+.document-wrapper pre.yaml {
+  padding: 0 0.5em;
+}
+
+.document-wrapper .fenced-code *,
+.document-wrapper .indented-code .space,
+.document-wrapper .yaml-marker + .line-ending {
+  display: none;
+}
+.document-wrapper .fenced-code-content,
+.document-wrapper .fenced-code-content * {
+  display: inline;
+}
+.document-wrapper .fenced-code-content .marker,
+.document-wrapper .fenced-code-content .space {
+  display: none;
+}
+
+.document-wrapper .fenced-code::before {
+  /* Force empty code block to take up space by inserting a zero-width-space. */
+  content: "\200B";
+}
+
+/******************************************/
+/* Inline code */
+
+.document-wrapper code {
+  font-family: var(--document-code-font), monospace;
+  font-size: var(--document-code-text-size-multiplier);
+  padding: var(--document-inline-padding-top-bottom)
+    var(--document-inline-padding-left-right);
+  color: var(--document-code-text-color);
+  background-color: var(--document-code-background-color);
+  font-weight: normal;
+  font-style: normal;
+  display: block;
+  border-radius: 0.25em;
+}
+
+.document-wrapper code.code-inline {
+  display: inline;
+}
+
+.document-wrapper mark code {
+  color: var(--document-text-color);
+  background-color: var(--document-highlighter-background-color);
+}
+
+/******************************************/
+/* Emphasis and strong */
+
+.document-wrapper em,
+.document-wrapper i {
+  /*font-style: italic;*/
+  font-family: "AvenirNext-Italic";
+}
+
+.document-wrapper strong,
+.document-wrapper b {
+  /*font-weight: bold;*/
+  font-family: "AvenirNext-Bold";
+}
+
+/******************************************/
+/* Highlight */
+
+.document-wrapper mark {
+  color: var(--document-text-color);
+  background-color: var(--document-highlighter-background-color);
+  text-decoration: inherit;
+  padding: var(--document-inline-padding-top-bottom)
+    var(--document-inline-padding-left-right);
+  unicode-bidi: embed;
+  border-radius: 0.25em;
+}
+
+/******************************************/
+/* Underline and strike through */
+
+.document-wrapper u {
+  text-decoration: underline;
+  text-decoration-color: var(--document-accent-color);
+  unicode-bidi: embed;
+}
+
+.document-wrapper strike,
+.document-wrapper s {
+  text-decoration: line-through;
+}
+
+/******************************************/
+/* Links, Wiki links, and images */
+
+.document-wrapper a {
+  color: var(--document-link-color);
+  unicode-bidi: embed;
+  cursor: pointer;
+}
+
+.document-wrapper a:hover {
+  text-decoration: inherit;
+}
+
+.document-wrapper .link-destination,
+.document-wrapper .link-title,
+.document-wrapper .link-label,
+.document-wrapper .link .space,
+.document-wrapper .image-destination,
+.document-wrapper .image-title,
+.document-wrapper .image-label,
+.document-wrapper .image .space {
+  display: none;
+}
+
+.document-wrapper .wiki-separator-marker {
+  display: inline;
+  color: inherit;
+}
+
+/******************************************/
+/* Link definitions */
+
+.document-wrapper div.link-definition {
+  display: block;
+}
+
+.document-wrapper .link-definition-title {
+  color: var(--document-text-light-color);
+}
+
+.document-wrapper .link-definition-separator {
+  display: inline;
+}
+
+/******************************************/
+/* Footnotes */
+
+.document-wrapper div.footnote {
+  display: block;
+}
+
+.document-wrapper .footnote-separator {
+  display: inline;
+}
+
+.document-wrapper .footnote-ref {
+  font-size: 0.9em;
+  vertical-align: super;
+}
+
+/******************************************/
+/* Hard linebreak */
+
+.document-wrapper .hard-linebreak-marker {
+  display: none;
+}
+
+/******************************************/
+/* Entities */
+
+.document-wrapper span.entity {
+  direction: ltr;
+  unicode-bidi: embed;
+  color: var(--document-code-syntax-highlight-entity);
+}
+
+.document-wrapper .entity-marker {
+  display: inline;
+}
+
+/******************************************/
+/* backslash escapes */
+
+.document-wrapper span.escape {
+  unicode-bidi: embed;
+}
+
+/******************************************/
+/* Color */
+
+.document-wrapper .color {
+  font-family: var(--document-code-font), monospace;
+  font-size: var(--document-code-text-size-multiplier);
+  padding-inline-start: 1.2em;
+  position: relative;
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+.document-wrapper .color::before {
+  content: "";
+  position: absolute;
+  width: 0.9em;
+  height: 0.9em;
+  left: 0em;
+  bottom: 0em;
+  transform: translateY(-15%);
+  border: var(--document-hairline-width) solid rgb(0, 0, 0, 0.3);
+  border-radius: 0.9em;
+  background-color: var(--data-color);
+}
+
+.document-wrapper .color-marker {
+  display: inline;
+}
+
+/******************************************/
+/* Hashtag */
+
+.document-wrapper .hashtag {
+  color: var(--document-tag-text-color);
+  background-color: var(--document-tag-background-color);
+  border-radius: 1em;
+  padding: calc(
+      var(--document-inline-padding-top-bottom) - 2 * var(--document-hairline-width)
+    )
+    calc(var(--document-inline-padding-left-right) + 0.3em);
+  unicode-bidi: embed;
+}
+
+.document-wrapper .hashtag > .marker {
+  display: inline;
+  color: var(--document-tag-marker-color);
+  padding: 0;
+}
+
+/******************************************/
+/* Replace */
+
+.document-wrapper .replace .text {
+  display: none;
+}
+
+/******************************************/
+/* Table */
+
+.document-wrapper table {
+  display: block; /* To allow for overflow with scroll bars. */
+  max-width: fit-content;
+  overflow-x: auto;
+  border-collapse: separate; /* Can't use border collapse with rounded corners. */
+  border-spacing: 0;
+  border: var(--document-hairline-width) solid var(--document-table-border-color);
+  border-radius: 0.33em;
+  margin-bottom: calc(var(--document-line-height-multiplier) * 1em);
+}
+
+.document-wrapper table[data-direction="2"] {
+  /* We force the ordering of the table rows to be the same as left-to-right,
+  while keeping the alignment to right. */
+  margin-left: auto;
+  direction: ltr;
+}
+
+.document-wrapper tr {
+  display: table-row;
+  background-color: var(--document-table-cell-background-color);
+}
+
+.document-wrapper tr.header-row,
+.document-wrapper tr:nth-child(odd) {
+  background-color: var(--document-table-cell-alternate-background-color);
+}
+
+.document-wrapper tr.delimiter-row {
+  display: none;
+}
+
+.document-wrapper th {
+  /*font-weight: bold;*/
+  font-family: "AvenirNext-Bold";
+  text-align: left;
+}
+
+.document-wrapper td,
+.document-wrapper th {
+  box-sizing: border-box;
+  display: table-cell;
+  padding: 0.37em 0.75em;
+  min-width: 5em;
+  border-right: var(--document-hairline-width) solid
+    var(--document-table-border-color);
+}
+
+.document-wrapper td:last-of-type,
+.document-wrapper th:last-of-type {
+  border: none;
+}
+
+.document-wrapper table[data-direction="2"] td {
+  margin-left: auto;
+}
+
+.document-wrapper td[data-alignment="1"] {
+  text-align: left;
+}
+
+.document-wrapper td[data-alignment="2"] {
+  text-align: right;
+}
+
+.document-wrapper td[data-alignment="3"] {
+  text-align: center;
+}
+
+/******************************************/
+/* Code Highlighting */
+
+.document-wrapper .code_comment {
+    color: var(--document-code-syntax-highlight-comment);
+}
+
+.document-wrapper .code_constant {
+    color: var(--document-code-syntax-highlight-constant);
+}
+
+.document-wrapper .code_number {
+    color: var(--document-code-syntax-highlight-number);
+}
+
+.document-wrapper .code_string {
+    color: var(--document-code-syntax-highlight-string);
+}
+
+.document-wrapper .code_entity {
+    color: var(--document-code-syntax-highlight-entity);
+}
+
+.document-wrapper .code_keyword {
+    color: var(--document-code-syntax-highlight-keyword);
+}
+
+.document-wrapper .code_function {
+    color: var(--document-code-syntax-highlight-function);
+}
+
+.document-wrapper .code_variable {
+    color: var(--document-code-syntax-highlight-variable);
+}
+
+/******************************************/
+/* images */
+
+.document-wrapper img {
+  
+  max-width: 100%;
+}
+
+/******************************************/
+/* SVGs */
+
+.document-wrapper .arrow svg #body,
+.document-wrapper .arrow svg #head {
+    fill: var(--base-text-color);
+}
+
+.document-wrapper .todo-checkbox svg #body {
+    stroke: var(--document-task-border-color);
+}
+
+.document-wrapper .todo-checkbox svg #check {
+    fill: var(--document-task-check-color);
+}
+
+.document-wrapper .todo-checkbox.todo-checked svg #body {
+   opacity: 0.35;
+}
+
+.document-wrapper .todo-checkbox.todo-checked svg #check {
+   opacity: 0.4;
+}
+
+        
+/* Overrides */
+code {
+    background: red !important;
+}

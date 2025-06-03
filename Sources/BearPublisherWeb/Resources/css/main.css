@@ -1,0 +1,69 @@
+/* @todo: this could be deleted from app.css */
+/* MARK: - Customs resets*/
+* {
+    cursor: default;
+}
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+::-moz-selection { /* Code for Firefox */
+    background: var(--text-selection-color);
+}
+
+::selection {
+    background: var(--text-selection-color);
+}
+
+.js-off .js-element,
+.unreleased {
+    display: none !important;
+}
+
+main {
+    --header-height: 54px;
+}
+/* MARK: - Common header */
+main header{
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0px 16px;
+    height: var(--header-height);
+/*    background: var(--background);*/
+/*    border-bottom: 1px solid var(--separator-color);*/
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 11;
+}
+
+main header svg {
+    fill: var(--menu-item-icon-color);
+}
+
+main header svg:hover {
+    fill: var(--text-base-color)
+}
+
+main header .title {font-weight: bold;}
+main header .title {
+    overflow: hidden;
+       display: -webkit-box;
+       -webkit-line-clamp: 1; /* number of lines to show */
+               line-clamp: 1;
+       -webkit-box-orient: vertical;
+       max-width: 30ch;
+}
+
+/* MARK: - Main */
+main article {
+    max-width: 80ch;
+    margin: auto;
+    padding: 16px;
+}
+
+

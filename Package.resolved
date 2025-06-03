@@ -1,6 +1,15 @@
 {
-  "originHash" : "905a44686ee170feb2948d13328c67b38515732fc24b946d646017b2936ee469",
+  "originHash" : "314b33565732f7392f7243c3db3ec44fbfc4ef043ae620e5f8bba7569fae1848",
   "pins" : [
+    {
+      "identity" : "plot",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/johnsundell/plot.git",
+      "state" : {
+        "revision" : "271926b4413fe868739d99f5eadcf2bd6cd62fb8",
+        "version" : "0.14.0"
+      }
+    },
     {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",

@@ -1,0 +1,110 @@
+:root {
+    --menu-width: 230px;
+    --nav-width: 320px;
+}
+
+/* Debug backgrounds */
+menu {background: var(--dark-background)}
+nav  {background: var(--background)}
+main {background: var(--background)}
+
+menu, nav,
+menu *,
+nav * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+nav {border-right: 1px solid var(--separator-color)}
+
+/* Position */
+menu, nav, main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+menu {
+    width: var(--menu-width);
+}
+nav, main {
+    width: 100%;
+}
+
+menu {z-index: 1}
+nav  {z-index: 2}
+main {z-index: 3}
+
+menu,
+nav,
+main,
+#nav-toggle,
+#menu-toggle {
+    transition: 0.4s;
+}
+
+main, menu, nav {
+  overflow-y: auto;
+}
+
+
+menu::-webkit-scrollbar,
+nav::-webkit-scrollbar {
+  display: none;
+}
+
+menu,
+nav {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+main { left: 100% }
+
+@media (min-width:768px) {
+    nav  {width: var(--nav-width) }
+    main {
+        left: var(--nav-width);
+        width: calc(100% - var(--nav-width))
+    }
+}
+
+/* MARK: - Behaviours */
+
+#menu-checkbox:checked ~ nav {
+    left: var(--menu-width);
+}
+
+#nav-checkbox:checked ~ main {
+    left: 0;
+    width: 100%;
+}
+
+@media (min-width:768px) {
+    #menu-checkbox:checked ~ nav {
+        left: var(--menu-width);
+    }
+    
+    #menu-checkbox:checked ~ main {
+        left: calc(var(--menu-width) + var(--nav-width))
+    }
+    
+    #nav-checkbox:checked ~ main {
+        left: 0;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    #menu-checkbox:checked ~ main {
+        width: calc(100% - var(--menu-width) - var(--nav-width))
+    }
+    
+    #nav-checkbox:checked ~ main {
+        left: 0;
+        width: 100%;
+    }
+}

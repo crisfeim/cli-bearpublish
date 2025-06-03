@@ -1,0 +1,180 @@
+:root {
+    --background-light: #fffdfb;
+    --background: rgba(250, 248, 245, 1);
+    --nav-subtitle-color: rgba(151, 110, 40, 1);
+    --nav-datetime-color: rgba(174, 147, 101, 1);
+    --nav-empty-note-color: rgba(137, 106, 53, 1);
+    --red-color: rgba(111, 58, 37, 1); /* @todo: rename */
+    --background-transparent: rgba(250, 248, 245, 0.8);
+    --background09: rgba(250, 248, 245, 0.92);
+    --background-search: rgba(250, 248, 245, 1);
+    --text-base-color: rgba(75, 53, 8, 1);
+    --text-selection-color: #E4D3C1;
+    --title-text-color: rgba(99, 90, 71, 1);
+    --search-text-color: rgba(99, 90, 71, 0.8);
+    --link-text-color: rgba(11, 53, 135, 1);
+    --accent-text-color: rgba(115, 144, 201, 1);
+    --accent-text-color07: rgba(115, 144, 201, 0.7);
+    --selected-text-background-color: rgba(184, 133, 80, 0.32);
+    --encrypted-placeholder-fill-color: rgba(224, 219, 209);
+    --skeleton-first-color: hsl(38, 20%, 81%);
+    --skeleton-second-color: hsl(38, 20%, 90%);
+
+    --hashtag-text-color: rgba(255, 255, 255, 1);
+    --hashtag-marker-text-color: rgba(255, 255, 255, 1);
+    --hashtag-background-color: rgb(157 142 120);
+    --marker-color: rgba(211, 255, 164, 1);
+
+    --separator-color: rgba(233, 225, 211, 1);
+    --note-table-cell-selected-color: rgba(244, 235, 221, 1);
+    --note-table-cell-ribbon-color: rgba(175, 148, 101, 1);
+    --note-table-cell-ribbon-color-unfocus: #807468;
+    --note-count-color: #D1C3AA;
+    
+    --table-row-background-color: var(--note-table-cell-selected-color);
+
+    /* --heading-indicator: #B4B4B4; */
+    --dark-background: #241305;
+    /* Body color*/
+    --fox-first-color: rgba(233, 225, 211, 1);
+    /* Ears & legs (in) color*/
+    --fox-second-color: rgba(212, 202, 185, 1);
+    /* Face & queue color*/
+    --fox-third-color: rgba(221, 208, 187, 1);
+    /* Eye, nose, and paws color */
+    --fox-fourth-color: rgba(193, 182, 163, 1);
+    --fox-shadow-color: color(srgb 0.141 0.075 0.02 / 0.08);
+    --fox-size-factor: 0.08;
+    --search-field-focused-color: #80abd9;
+
+    --body-font: 'Courier', monospace;
+    --header-font: 'Courier', monospace;
+
+    --search-background: #e2e2e2;
+
+    --navbar-height: 50px;
+    --menu-item-text-color: var(--note-table-cell-selected-color);
+    --menu-item-icon-color: rgba(174, 147, 101, 0.7);
+    --menu-item-height: 48px;
+    --menu-item-selected-color: #4F412C;
+    --code-background: rgba(233, 225, 211, 0.7);
+    --color-hashtag-color: rgba(99, 90, 71, 0.5);
+    --checkbox-color: #976e26;
+    
+    /// From bear conventions (plist)
+    --base-backround-color: red;
+    --input-background-color: rgba(233, 225, 211, 0.3);
+    --encrypted-note-color: #DDDBD8;
+        --private-note-color: #d9cbb3;
+    --search-highlighted-text-color: #DFD1B9;
+    
+    --default-fonts: 'AvenirNext', 'Avenir', 'Montserrat', 'Courier';
+    --medium-fonts : 'AvenirNext-Medium' , 'Avenir-Medium';
+    --bold-fonts   : 'AvenirNext-Bold'   , 'Avenir-Bold';
+    --heading-fonts: 'AvenirNext-Medium' , 'Avenir-Medium', 'Montserrat', 'Courier';
+    --bold-fonts   : 'AvenirNext-Bold'   , 'Avenir-Bold', 'Montserrat-Bold', 'Courier';
+    --italic-fonts : 'AvenirNext-Italic' , 'Avenir-Italic', 'Montserrat', 'Courier';
+    --code-font    : 'Menlo-Regular';
+    
+    --color-code-font: 'Menlo-Regular', 'AvenirNext-Regular', 'Avenir', 'Montserrat', 'Courier';
+    --li-bullet-font : 'AvenirNext', 'Avenir', 'Arial Black'
+    
+    
+    
+    
+    /* Constants used to transform theme values to CSS */
+    --transform-line-height-factor: 1.17;
+
+    /* From template */
+    --base-text-color: #444444;
+    --base-text-secondary-color: #888888;
+    --base-text-tertiary-color: #d9d9d9;
+    --base-background-color: #ffffff;
+    --base-background-secondary-color: #F3F5F7;
+    --base-background-tertiary-color: #E4E5E6;
+    --base-stroke-color: #d9d9d9;
+    --base-stroke-secondary-color: #d9d9d9;
+    --base-accent-color: #DD4C4F;
+    --base-highlight-color: #D3FFA4;
+
+    --document-background-color: var(--base-background-color);
+    --document-text-color: var(--base-text-color);
+    --document-text-secondary-color: var(--base-text-secondary-color);
+    --document-text-light-color: var(--base-text-secondary-color);
+    --document-accent-color: var(--base-accent-color);
+    --document-cursor-color: var(--base-accent-color);
+    --document-link-color: var(--base-accent-color);
+    --document-list-marker-color: var(--base-accent-color);
+    --document-marker-color: var(--base-text-tertiary-color);
+    --document-selection-color: var(--base-selection-color);
+    --document-selection-inactive-color: var(--base-background-tertiary-color);
+    --document-text-font: "AvenirNext-Regular";
+    --document-text-size: 15px;
+    --document-line-height-multiplier: calc(
+      1.5 * var(--transform-line-height-factor)
+    );
+
+    --document-headers-text-color: var(--base-text-color);
+    --document-headers-font: "AvenirNext-Medium";
+    --document-headers-modular-scale: 1.125;
+    --document-headers-line-height-multiplier: calc(
+      1.3 * var(--transform-line-height-factor)
+    );
+    --document-headers-add-top-bottom-padding: 1;
+    --document-headers-padding-top-multiplier: 0.5;
+    --document-headers-padding-bottom-multiplier: 0.3;
+
+    --document-code-text-color: var(--base-text-color);
+    --document-code-border-color: var(--base-text-tertiary-color);
+    --document-code-background-color: var(--base-background-secondary-color);
+    --document-code-font: "Menlo-Regular";
+    --document-code-text-size-multiplier: 0.91;
+
+    --document-code-syntax-highlight-comment: #65798c;
+    --document-code-syntax-highlight-constant: #0095c9;
+    --document-code-syntax-highlight-number: #0095c9;
+    --document-code-syntax-highlight-string: #d12f1b;
+    --document-code-syntax-highlight-entity: #4a838b;
+    --document-code-syntax-highlight-keyword: #ad3da4;
+    --document-code-syntax-highlight-function: #4a838b;
+    --document-code-syntax-highlight-variable: #4a838b;
+
+    --document-task-background-color: var(--base-background-color);
+    --document-task-border-color: var(--base-text-secondary-color);
+    --document-task-check-color: var(--base-text-color);
+
+    --document-tag-background-color: var(--base-background-tertiary-color);
+    --document-tag-text-color: var(--base-text-color);
+    --document-tag-marker-color: var(--base-text-secondary-color);
+
+    --document-highlighter-background-color: var(--base-highlight-color);
+    --document-highlighter-text-color: var(--base-text-color);
+
+    --document-file-fold-color: var(--base-background-tertiary-color);
+    --document-file-background-color: var(--base-background-secondary-color);
+
+    --document-separator-border-color: var(--base-stroke-secondary-color);
+
+    --document-table-border-color: var(--base-stroke-secondary-color);
+    --document-table-cell-background-color: var(--base-background-color);
+    --document-table-cell-alternate-background-color: var(
+      --base-background-secondary-color
+    );
+}
+
+svg {
+/*    fill: var(--title-text-color);*/
+    fill: var(--menu-item-icon-color)
+}
+
+nav .file-thumbnail {
+    --bgcolor: rgba(239, 231, 219, 1);
+}
+
+nav .selected .file-thumbnail {
+    --bg-color: rgb(236 229 218);
+}
+nav .file-thumbnail .extension {
+    --bgcolor: rgba(223, 216, 202, 1);
+    --color: rgba(99, 90, 71, 1);
+}
