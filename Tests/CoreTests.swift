@@ -11,15 +11,6 @@ struct Tag: Equatable {
     let name: String
 }
 
-enum NotesFilter {
-    case all
-    case untagged
-    case tasks
-    case encrypted
-    case archived
-    case trashed
-}
-
 struct Coordinator {
     
     protocol IndexRenderer {
@@ -59,7 +50,7 @@ struct Coordinator {
 
 
 class CoreTests: XCTestCase {
-
+    
     
     func  test_getIndex_buildsIndexResourceFromProvidersAndRenderer() throws {
         
@@ -76,7 +67,7 @@ class CoreTests: XCTestCase {
             }
         }
         
-        class RendererSpy: Coordinator.IndexRenderer {
+        class IndexRendererSpy: Coordinator.IndexRenderer {
             private let result: String
             private(set) var capturedNotes = [Note]()
             private(set) var capturedTags  = [Tag]()
@@ -91,24 +82,20 @@ class CoreTests: XCTestCase {
                 return result
             }
         }
-        
-        struct NoteListRendererDummy: Coordinator.NoteListRenderer {
-            func renderAllNotes(notes: [Note]) throws -> String {""}
-        }
-    
+
         let providerStub = ProviderStub(notes: [anyNote()], tags: [anyTag()])
-        let renderer = RendererSpy(result: "any renderer")
-        let sut = Coordinator(notesProvider: providerStub, tagsProvider: providerStub, indexRenderer: renderer, noteListRenderer: NoteListRendererDummy())
+        let indexRenderer = IndexRendererSpy(result: "any renderer")
+        let sut = makeSUT(notesProvider: providerStub, tagsProvider: providerStub,  indexRenderer: indexRenderer)
         let index = try sut.getIndex()
         let expectedIndex = Resource(filename: "index.html", contents: "any renderer")
         
         XCTAssertEqual(index, expectedIndex)
-        XCTAssertEqual(renderer.capturedTags, [anyTag()])
-        XCTAssertEqual(renderer.capturedNotes, [anyNote()])
+        XCTAssertEqual(indexRenderer.capturedTags, [anyTag()])
+        XCTAssertEqual(indexRenderer.capturedNotes, [anyNote()])
     }
     
     func test_getAllNotes_buildsAllNoteListResourceFromNoteProviderAndRenderer() throws {
-       
+        
         struct NotesProviderStub: Coordinator.NotesProvider {
             let notes: [Note]
             func get() throws -> [Note] {
@@ -116,23 +103,55 @@ class CoreTests: XCTestCase {
             }
         }
         
-        struct TagsProviderDummy: Coordinator.TagsProvider {
-            func get() throws -> [Tag] {[]}
-        }
-        
-        struct RendererDummy: Coordinator.IndexRenderer, Coordinator.NoteListRenderer {
-            func renderIndex(notes: [Note], tags: [Tag]) throws -> String {""}
-            func renderAllNotes(notes: [Note]) throws -> String {"any rendered content"}
+        class NoteListRendererSpy: Coordinator.NoteListRenderer {
+            
+            private let result: String
+            private(set) var capturedNotes = [Note]()
+            init(result: String) {
+                self.result = result
+            }
+            
+            func renderAllNotes(notes: [Note]) throws -> String {
+                capturedNotes = notes
+                return result
+            }
         }
         
         let notesProvider = NotesProviderStub(notes: [anyNote()])
-        let tagsProvider = TagsProviderDummy()
-        let renderer = RendererDummy()
-        let sut = Coordinator(notesProvider: notesProvider, tagsProvider: tagsProvider, indexRenderer: renderer, noteListRenderer: renderer)
+        
+        let rendererSpy = NoteListRendererSpy(result: "any note list rendered content")
+  
+        let sut = makeSUT(notesProvider: notesProvider, noteListRenderer: rendererSpy)
         let allNotes = try sut.getAllNotes()
-        let expectedResources = Resource(filename: "lists/all.html", contents: "any rendered content")
+        let expectedResources = Resource(filename: "lists/all.html", contents: "any note list rendered content")
         
         XCTAssertEqual(allNotes, expectedResources)
+    }
+    
+    func makeSUT(
+        notesProvider: Coordinator.NotesProvider,
+        tagsProvider: Coordinator.TagsProvider = TagsProviderDummy(),
+        indexRenderer: Coordinator.IndexRenderer = IndexRendererDummy(),
+        noteListRenderer: Coordinator.NoteListRenderer = NoteListRendererDummy()
+    ) -> Coordinator {
+        Coordinator(
+            notesProvider: notesProvider,
+            tagsProvider: tagsProvider,
+            indexRenderer: indexRenderer,
+            noteListRenderer: noteListRenderer
+        )
+    }
+    
+    struct TagsProviderDummy: Coordinator.TagsProvider {
+        func get() throws -> [Tag] {[]}
+    }
+    
+    struct IndexRendererDummy: Coordinator.IndexRenderer {
+        func renderIndex(notes: [Note], tags: [Tag]) throws -> String {""}
+    }
+    
+    struct NoteListRendererDummy: Coordinator.NoteListRenderer {
+        func renderAllNotes(notes: [Note]) throws -> String {""}
     }
     
     func anyNote() -> Note {
