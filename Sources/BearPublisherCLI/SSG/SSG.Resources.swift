@@ -43,7 +43,7 @@ extension SSG {
     // MARK: - Write
     func writeCSS() throws {
         
-        let css = BaseLayout.makeCSS() + StandaloneNote.makeCSS() // @todo: this will override theme-variables
+        let css = BaseLayout.makeCSS() + StandaloneNote.makeCSS()
         try css.forEach { resource in
             try writeToFile(
                 contents: resource.content,
@@ -74,8 +74,7 @@ extension SSG {
     }
     
     func writeImageFolder() {
-//        let outputFolder = "/Users/\(NSUserName())/dev/serve/notas.cristian/images/" // @todo
-        guard let outputURL else { return } // @todo
+        guard let outputURL else { return }
         let outputFolder = outputURL.appendingPathComponent("images").relativePath
         let script = """
         cp -r \"\(imageFolder)\" \"\(outputFolder)\"
@@ -85,9 +84,8 @@ extension SSG {
     }
     
     func writeFileFolder() {
-        guard let outputURL else { return } // @todo
+        guard let outputURL else { return }
         let outputFolder = outputURL.appendingPathComponent("files").relativePath
-//        let outputFolder = "/Users/\(NSUserName())/dev/serve/notas.cristian/files/" // @todo
         let script = """
         cp -r \"\(filesFolder)\" \"\(outputFolder)\"
         """

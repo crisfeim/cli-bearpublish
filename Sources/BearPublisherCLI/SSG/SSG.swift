@@ -91,16 +91,13 @@ extension SSG {
         let outputFileURL = outputDirectoryURL
             .appendingPathComponent(filename)
         
-        let minified = contents // @todo: minify
-        
         try FileManager.default.createDirectory(
             at: outputDirectoryURL,
             withIntermediateDirectories: true,
             attributes: nil
         )
         
-        // Write the archive
-        try minified.write(
+        try contents.write(
             to: outputFileURL,
             atomically: true,
             encoding: .utf8

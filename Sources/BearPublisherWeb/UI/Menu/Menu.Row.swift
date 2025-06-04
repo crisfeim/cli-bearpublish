@@ -40,7 +40,7 @@ extension Menu {
                     }
                     
                     Div {
-                        SVG.chevron.render().makeRawNode() // @todo use svgrenderer
+                        SVG.chevron.render().makeRawNode()
                     }
                     .class("chevron \(model.isSelected ? "selected-chevron" : "")")
                     .hyperScript(model.children.isEmpty ? "" : "on click halt the event then toggle .opened-child on the closest .menu-item then toggle .rotate45 on me")

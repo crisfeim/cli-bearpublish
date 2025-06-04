@@ -51,7 +51,6 @@ fileprivate var defaultFormatter: DateFormatter {
     return formatter
 }
 
-// @todo: make fileprivate
 public extension Date {
     func dMMMyyyy() -> String {
         defaultFormatter.string(from: self)

@@ -47,12 +47,13 @@ extension Menu {
             case .trashed: return .bin
             }
         }
-        
+       
+        #warning("Count is hardcoded. It should be injected")
         var model: Menu.Model {
             .init(
                 name: title,
                 fullPath: self.rawValue,
-                count: 0, // @todo: will be inyected lately
+                count: 0,
                 children: children,
                 isPinned: false,
                 isSelected: self == .all,

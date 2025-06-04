@@ -1,13 +1,9 @@
 import Foundation
 import RubyGateway
 import MarkdownKit
-#warning("@todo: todo list")
-#warning("@todo: regex arrows")
-#warning("@todo: regex files")
 
 
 fileprivate let rightArrow = "test"
-
 fileprivate let leftArrow = """
     <svg style="margin: 0px 3px" width="11px" height="10px" viewBox="0 0 11 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="left-arrow" transform="translate(5.500000, 5.000000) scale(-1, 1) translate(-5.500000, -5.000000)"><path d="M1.77635684e-14,5 L9,5" id="rod" stroke="#000000" stroke-width="2"></path> <path d="M11,5 L6,0.5 L6,9.5 L11,5 Z" id="point" fill="#000000"></path></g></svg>
     """
@@ -50,10 +46,6 @@ public final class BearParser: HtmlGenerator {
         _slugify = processor
     }
 
-//    public init() {
-//        _ = try? Ruby.require(filename: "rouge")
-//    }
-    
     public func parse(noteId: String, content: String) -> String {
         // Custom pre-parsing
         let note = Note(id: noteId, content: content).content
@@ -68,12 +60,7 @@ public final class BearParser: HtmlGenerator {
     }
 
     func parseCode(lang: String, code: String) -> String {
-//        do {
-//            let html = "\(try Ruby.get("Rouge").call("highlight", args: [code, lang, "html"]))"
-//            return "<pre class=\"highlight\"><code>" + html + "</pre></code>"
-//        } catch {
-            return "<pre><code>" + code + "</pre></code>"
-//        }
+        return "<pre><code>" + code + "</pre></code>"
     }
     
     public func generate(block: Block, tight: Bool = false) -> String {
@@ -175,12 +162,10 @@ public extension String {
             let hashtagRange = Range(match.range, in: self)!
             let hashtag = String(self[hashtagRange]).replacingOccurrences(of: "#", with: "")
         
-            // Generate the replacement HTML
             if let processor = processor {
                 parsedText = parsedText.replacingCharacters(in: hashtagRange, with: processor(hashtag))
             } else {
                 
-                // Slugify the hashtag
                 let slug = hashtag.replacingOccurrences(of: "/", with: "&")
                 let replacement = """
             
@@ -308,7 +293,6 @@ public extension String {
             let linkText = self[range]
             
             let slug = String(linkText).components(separatedBy: "/").map { slugify($0) }.joined(separator: "#")
-//            let slug = slugify(String(linkText.replacingOccurrences(of: "/", with: "#")))
             let href = "\(slug)"
            
             

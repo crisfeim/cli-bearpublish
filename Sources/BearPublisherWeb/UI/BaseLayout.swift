@@ -109,7 +109,7 @@ public extension BaseLayout {
     
 }
 
-// @todo: this is repeated, see Core.SSG file
+#warning("There's already a hash method. See Core.SSG file")
 extension String {
     func makeHash(maxLength: Int = 20) -> String {
         hash.description.replacingOccurrences(of: "-", with: "").prefix(maxLength) + ""

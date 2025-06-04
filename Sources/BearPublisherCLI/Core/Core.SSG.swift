@@ -81,7 +81,7 @@ private extension Core {
 }
 
 
-// @todo: too many hash functions, unify ??
+#warning("There seems to be duplicated hash functions. Unify")
 extension String {
     func makeHash(maxLength: Int = 20) -> String {
         hash.description.replacingOccurrences(of: "-", with: "").prefix(maxLength) + ""

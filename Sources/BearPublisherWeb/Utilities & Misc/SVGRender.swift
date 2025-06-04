@@ -96,8 +96,6 @@ struct SVGRenderer: Component {
     }
 }
 
-// @todo: refactor
-// @todo: make this accept an attribute parameter in order to set a class on the menu row item (selected-svg)
 enum MenuIcons {
     case pin
     case regular

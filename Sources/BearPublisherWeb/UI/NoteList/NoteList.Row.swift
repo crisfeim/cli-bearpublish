@@ -10,7 +10,8 @@ import Plot
 extension NoteList {
     struct Row: Component {
         let note: NoteList.Model
-        var tabindex: Int { note.isSelected ? 0 : 0} // @todo
+        #warning("Tab index should be different if selected")
+        var tabindex: Int { note.isSelected ? 0 : 0}
         
         var pushedUrl: String {
              "/?slug=\(note.slug)"
@@ -68,7 +69,6 @@ enum Indicator {
     }
 }
 
-// @todo Move to its own file
 struct Indicators {
     private init() {}
     static let mainIndicator = "main-indicator"

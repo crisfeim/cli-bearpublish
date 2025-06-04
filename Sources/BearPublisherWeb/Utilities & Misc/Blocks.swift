@@ -111,69 +111,11 @@ fileprivate extension FileBlock {
             .attribute(named: "playsinline", value: "true")
         }
     }
-    
-    
-    // @todo: mp4 block
-    //
-    //
-    //
-    //    //    if data.extension == "mp4" || data.extension == "mov" {
-    //    //       return """
-    //    //        <video controls playsinline>
-    //    //          <source src="/files/\(data.id)" type="video/mp4">
-    //    //        </video>
-    //    //       """
-    //    //    }
 }
-
-
-//func fileblockProcessor(_ title: String) -> String {
-//    guard let data = try? api.getFileData(from: title) else {
-//        return "@todo: Error, handle this case"
-//    }
-//
-////    if data.extension == "mp4" || data.extension == "mov" {
-////       return """
-////        <video controls playsinline>
-////          <source src="/files/\(data.id)" type="video/mp4">
-////        </video>
-////       """
-////    }
-//
-//    if data.extension == "html" {
-//        return """
-//        <div class="iframe">
-//        <iframe width="100%" height="400px" src="/files/\(data.id)"></iframe>
-//                    <a class="file-block" href="/files/\(data.id)">
-//                        <span class="filename">\(data.name)</span>
-//                        <span>
-//                            <span class="extension">\(data.extension)</span>
-//                            <span class="meta">
-//                                    <span class="file-size">\(data.size.toFileSize())</span>·
-//                                    <time>\(data.date?.dMMMyyyy() ?? "No date found")</time>
-//                               </span>
-//                        </span>
-//                    </a>
-//        </div>
-//        """
-//    }
-//
-//
-//    return """
-//    <a class="file-block" href="/files/\(data.id)">
-//        <span class="filename">\(data.name)</span>
-//        <span>
-//            <span class="extension">\(data.extension)</span>
-//            <span class="meta"><span class="file-size">\(data.size.toFileSize())</span>·<time>\(data.date?.dMMMyyyy() ?? "No date found")</time></span>
-//        </span>
-//    </a>
-//    """
-//}
 
 
 
 import Foundation
-// @todo: move to a pertinent place
 extension Int {
     func toFileSize() -> String {
         let formatter = ByteCountFormatter()

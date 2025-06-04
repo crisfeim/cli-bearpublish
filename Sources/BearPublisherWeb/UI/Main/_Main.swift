@@ -32,9 +32,7 @@ public struct Main: Component {
                     url: "bear://x-callback-url/open-note?title=@todo"
                 )
             }
-            .style("display:none") // @todo
-            
-//            threedots // @todo
+            .style("display:none")
         }
         
         Article {
@@ -57,7 +55,7 @@ public struct Main: Component {
             .id("share-button")
             .class("js-element")
         }
-        .attribute(named: "spacing", value: "xs") // @todo
+        .attribute(named: "spacing", value: "xs")
     }
 }
 
