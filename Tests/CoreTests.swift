@@ -11,10 +11,23 @@ struct Tag: Equatable {
     let name: String
 }
 
+enum NotesFilter {
+    case all
+    case untagged
+    case tasks
+    case encrypted
+    case archived
+    case trashed
+}
+
 struct Coordinator {
     
-    protocol Renderer {
+    protocol IndexRenderer {
         func renderIndex(notes: [Note], tags: [Tag]) throws -> String
+    }
+    
+    protocol NoteListRenderer {
+        func renderAllNotes(notes: [Note]) throws -> String
     }
     
     protocol NotesProvider {
@@ -27,13 +40,20 @@ struct Coordinator {
     
     let notesProvider: NotesProvider
     let tagsProvider: TagsProvider
-    let renderer: Renderer
+    let indexRenderer: IndexRenderer
+    let noteListRenderer: NoteListRenderer
     
     func getIndex() throws -> Resource {
         let notes    = try notesProvider.get()
         let tags     = try tagsProvider.get()
-        let contents = try renderer.renderIndex(notes: notes, tags: tags)
+        let contents = try indexRenderer.renderIndex(notes: notes, tags: tags)
         return Resource(filename: "index.html", contents: contents)
+    }
+    
+    func getAllNotes() throws -> Resource {
+        let notes = try notesProvider.get()
+        let contents = try noteListRenderer.renderAllNotes(notes: notes)
+        return Resource(filename: "lists/all.html", contents: contents)
     }
 }
 
@@ -56,7 +76,7 @@ class CoreTests: XCTestCase {
             }
         }
         
-        class RendererSpy: Coordinator.Renderer {
+        class RendererSpy: Coordinator.IndexRenderer {
             private let result: String
             private(set) var capturedNotes = [Note]()
             private(set) var capturedTags  = [Tag]()
@@ -72,16 +92,47 @@ class CoreTests: XCTestCase {
             }
         }
         
+        struct NoteListRendererDummy: Coordinator.NoteListRenderer {
+            func renderAllNotes(notes: [Note]) throws -> String {""}
+        }
     
         let providerStub = ProviderStub(notes: [anyNote()], tags: [anyTag()])
         let renderer = RendererSpy(result: "any renderer")
-        let sut = Coordinator(notesProvider: providerStub, tagsProvider: providerStub, renderer: renderer)
+        let sut = Coordinator(notesProvider: providerStub, tagsProvider: providerStub, indexRenderer: renderer, noteListRenderer: NoteListRendererDummy())
         let index = try sut.getIndex()
         let expectedIndex = Resource(filename: "index.html", contents: "any renderer")
         
         XCTAssertEqual(index, expectedIndex)
         XCTAssertEqual(renderer.capturedTags, [anyTag()])
         XCTAssertEqual(renderer.capturedNotes, [anyNote()])
+    }
+    
+    func test_getAllNotes_buildsAllNoteListResourceFromNoteProviderAndRenderer() throws {
+       
+        struct NotesProviderStub: Coordinator.NotesProvider {
+            let notes: [Note]
+            func get() throws -> [Note] {
+                notes
+            }
+        }
+        
+        struct TagsProviderDummy: Coordinator.TagsProvider {
+            func get() throws -> [Tag] {[]}
+        }
+        
+        struct RendererDummy: Coordinator.IndexRenderer, Coordinator.NoteListRenderer {
+            func renderIndex(notes: [Note], tags: [Tag]) throws -> String {""}
+            func renderAllNotes(notes: [Note]) throws -> String {"any rendered content"}
+        }
+        
+        let notesProvider = NotesProviderStub(notes: [anyNote()])
+        let tagsProvider = TagsProviderDummy()
+        let renderer = RendererDummy()
+        let sut = Coordinator(notesProvider: notesProvider, tagsProvider: tagsProvider, indexRenderer: renderer, noteListRenderer: renderer)
+        let allNotes = try sut.getAllNotes()
+        let expectedResources = Resource(filename: "lists/all.html", contents: "any rendered content")
+        
+        XCTAssertEqual(allNotes, expectedResources)
     }
     
     func anyNote() -> Note {
