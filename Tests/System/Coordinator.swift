@@ -8,7 +8,7 @@ struct Coordinator {
     }
     
     protocol NoteListRenderer {
-        func renderAllNotes(notes: [Note]) throws -> String
+        func render(_ notes: [Note]) throws -> String
     }
     
     protocol NotesProvider {
@@ -33,7 +33,7 @@ struct Coordinator {
     
     func getNotes(_ filter: NoteListFilter) throws -> Resource {
         let notes    = try notesProvider.get(filter)
-        let contents = try noteListRenderer.renderAllNotes(notes: notes)
+        let contents = try noteListRenderer.render(notes)
         return Resource(filename: "lists/\(filter.rawValue).html", contents: contents)
     }
 }

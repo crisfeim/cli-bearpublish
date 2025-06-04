@@ -111,7 +111,7 @@ class CoordinatorTests: XCTestCase {
             self.result = result
         }
         
-        func renderAllNotes(notes: [Note]) throws -> String {
+        func render(_ notes: [Note]) throws -> String {
             capturedNotes = notes
             return result
         }
@@ -126,7 +126,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     struct NoteListRendererDummy: Coordinator.NoteListRenderer {
-        func renderAllNotes(notes: [Note]) throws -> String {""}
+        func render(_ notes: [Note]) throws -> String {""}
     }
     
     func anyNote() -> Note {
