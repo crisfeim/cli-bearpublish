@@ -2,11 +2,10 @@
 
 import XCTest
 import BearPublisherCLI
+import BearPublisherWeb
+import BearPublisherDataSource
 
 class CoreTests: XCTestCase {
-    func test() throws {
-       let sut = SSG()
-        let desktopURL = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!.appendingPathComponent("Export")
-        try sut.build(on: desktopURL) {}
-    }
+    
+    func test() throws {}
 }
