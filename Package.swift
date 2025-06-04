@@ -36,6 +36,9 @@ let package = Package(
                 "BearPublisherDataSource"
             ]
         ),
-        .testTarget(name: "BearPublisherTests", dependencies: ["BearPublisherCLI"])
+        .testTarget(name: "BearPublisherTests", dependencies: ["BearPublisherCLI",
+                                                               "BearPublisherWeb",
+                                                               "BearPublisherMarkdown",
+                                                               "BearPublisherDataSource"])
     ]
 )
