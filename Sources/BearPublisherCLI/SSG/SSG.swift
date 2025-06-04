@@ -41,8 +41,9 @@ public final class SSG {
         measure("Building") { [weak self] in
             guard let self else { return }
             
+            #warning("Copy resources. Commented for now because copying them is causing the tests to prompt with a permission dialog on each run")
             let writes = [
-                self.writeResources,
+//                self.writeResources,
                 self.writeIndex,
                 self.writeLists,
                 self.writeNotes
