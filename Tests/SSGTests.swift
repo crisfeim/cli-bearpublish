@@ -2,29 +2,11 @@
 
 import XCTest
 
+
+
+
+
 class SSGTests: XCTestCase {
-   
-    struct SSG {
-        let resources: [Resource]
-        let outputURL: URL
-        
-        func build() throws {
-            try createOutputFolderIfNeeded()
-            try resources.forEach {
-                let url = outputURL.appendingPathComponent($0.filename)
-                try $0.contents.write(to: url, atomically: true, encoding: .utf8)
-            }
-        }
-        
-        func createOutputFolderIfNeeded() throws {
-            try FileManager.default.createDirectory(at: outputURL, withIntermediateDirectories: true)
-        }
-    }
-    
-    struct Resource {
-        let filename: String
-        let contents: String
-    }
     
     override func setUp() {
         setupEmptyStoreState()
