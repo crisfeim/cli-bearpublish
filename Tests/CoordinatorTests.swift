@@ -23,7 +23,7 @@ class CoordinatorTests: XCTestCase {
     
     func test_getNotesByFilter_buildsAllNoteListResourceFromNoteProviderAndRenderer() throws {
         
-       
+        
         let notesProvider = NoteListProviderSpy(notes: [anyNote()])
         let rendererSpy = NoteListRendererSpy(result: "any note list rendered content")
         let sut = makeSUT(notesProvider: notesProvider, noteListRenderer: rendererSpy)
@@ -35,6 +35,10 @@ class CoordinatorTests: XCTestCase {
         XCTAssertEqual(allNotes, expectedResources)
         XCTAssertEqual(notesProvider.capturedFilter, expectedFilter)
     }
+}
+
+// MARK: - Helpers
+private extension CoordinatorTests {
     
     func makeSUT(
         notesProvider: Coordinator.NotesProvider,
