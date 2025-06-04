@@ -10,11 +10,6 @@ import BearPublisherWeb
 // MARK: - Processors to be injected into the parser
 extension Core {
     
-    func parse(id: String, content: String) -> String {
-        parser.parse(noteId: id, content: content)
-    }
-    
-    
     func getHashtagCount(_ hashtag: String) -> Int {
         (try! tagsProvider.fetchTagTree())
             .flat().filter { $0.path == hashtag }.first?.count ?? 0
