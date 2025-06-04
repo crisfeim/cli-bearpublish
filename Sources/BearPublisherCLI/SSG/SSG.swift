@@ -22,10 +22,11 @@ enum Constants {
 public final class SSG {
    
     let core: Core
-    fileprivate(set) var outputURL: URL?
+    let outputURL: URL
     
-    public init(core: Core) {
+    public init(core: Core, outputURL: URL) {
         self.core = core
+        self.outputURL = outputURL
     }
     
     
@@ -33,8 +34,7 @@ public final class SSG {
     /// - Parameters:
     ///   - destinationURL: The output url where the site will be generated.
     ///   - completion: Block that will be execute once the site generatiion ends. Will run on main thread.
-    public func build(on destinationURL: URL, completion: @escaping () -> Void) throws {
-        self.outputURL = destinationURL
+    public func build(completion: @escaping () -> Void) throws {
         
         let group = DispatchGroup()
         let queue = DispatchQueue(label: "build", attributes: .concurrent)
@@ -66,7 +66,6 @@ public final class SSG {
 
 
 public enum SSGError: Error {
-    case unsettedOutputFolder
     case failedTryingToInitCore
 }
 
@@ -85,7 +84,6 @@ extension SSG {
 
     /// Writes file to output path only if there has been a change to the file
     func writeToFile(contents: String, outputPath: String, filename: String) throws {
-        guard let outputURL else { throw SSGError.unsettedOutputFolder }
         let outputDirectoryURL = outputURL
             .appendingPathComponent(outputPath)
         let outputFileURL = outputDirectoryURL

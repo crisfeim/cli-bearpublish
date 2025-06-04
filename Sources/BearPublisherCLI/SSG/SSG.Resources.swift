@@ -74,7 +74,6 @@ extension SSG {
     }
     
     func writeImageFolder() {
-        guard let outputURL else { return }
         let outputFolder = outputURL.appendingPathComponent("images").relativePath
         let script = """
         cp -r \"\(imageFolder)\" \"\(outputFolder)\"
@@ -84,7 +83,6 @@ extension SSG {
     }
     
     func writeFileFolder() {
-        guard let outputURL else { return }
         let outputFolder = outputURL.appendingPathComponent("files").relativePath
         let script = """
         cp -r \"\(filesFolder)\" \"\(outputFolder)\"

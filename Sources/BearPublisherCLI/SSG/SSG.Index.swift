@@ -7,7 +7,6 @@
 
 extension SSG {
     func writeIndex() throws {
-        guard let outputURL else { throw SSGError.unsettedOutputFolder }
         let index = core
             .getIndex()
             .body
