@@ -21,16 +21,13 @@ enum Constants {
 
 public final class SSG {
    
-    let core: Core = Core()
+    let core: Core
     fileprivate(set) var outputURL: URL?
     
-    public init() {}
-    
-    
-    
-    public func setupDb(location: String) throws {
-        try core.setupDB(location: location)
+    public init(core: Core) {
+        self.core = core
     }
+    
     
     /// Builds site.
     /// - Parameters:

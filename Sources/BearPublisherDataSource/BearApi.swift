@@ -15,9 +15,9 @@ public final class BearApi {
     var slugify: ((SQLite.Expression<String>) -> SQLite.Expression<String>)?
     let databaseLocation: DatabaseLocation
     
-    public init(databaseLocation: DatabaseLocation = .defaultPath) {
+    public init(databaseLocation: DatabaseLocation = .defaultPath) throws {
         self.databaseLocation = databaseLocation
-        db = try! Connection(databaseLocation.path, readonly: true)
+        db = try Connection(databaseLocation.path, readonly: true)
     }
     
     public func connect(location: String) throws {
