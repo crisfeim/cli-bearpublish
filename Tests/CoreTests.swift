@@ -11,7 +11,7 @@ struct Tag: Equatable {
     let name: String
 }
 
-enum NoteListFilter {
+enum NoteListFilter: String {
     case all
     case untagged
     case tasks
@@ -55,7 +55,7 @@ struct Coordinator {
     func getNotes(_ filter: NoteListFilter) throws -> Resource {
         let notes    = try notesProvider.get(filter)
         let contents = try noteListRenderer.renderAllNotes(notes: notes)
-        return Resource(filename: "lists/all.html", contents: contents)
+        return Resource(filename: "lists/\(filter.rawValue).html", contents: contents)
     }
 }
 
@@ -101,7 +101,7 @@ class CoreTests: XCTestCase {
                 return result
             }
         }
-
+        
         let providerSpy = ProviderSpy(notes: [anyNote()], tags: [anyTag()])
         let indexRenderer = IndexRendererSpy(result: "any renderer")
         let sut = makeSUT(notesProvider: providerSpy, tagsProvider: providerSpy,  indexRenderer: indexRenderer)
@@ -146,16 +146,17 @@ class CoreTests: XCTestCase {
             }
         }
         
+        let expectedFilter = NoteListFilter.archived
         let notesProvider = NoteListProviderSpy(notes: [anyNote()])
         
         let rendererSpy = NoteListRendererSpy(result: "any note list rendered content")
   
         let sut = makeSUT(notesProvider: notesProvider, noteListRenderer: rendererSpy)
-        let allNotes = try sut.getNotes(.all)
-        let expectedResources = Resource(filename: "lists/all.html", contents: "any note list rendered content")
+        let allNotes = try sut.getNotes(expectedFilter)
+        let expectedResources = Resource(filename: "lists/\(expectedFilter.rawValue).html", contents: "any note list rendered content")
         
         XCTAssertEqual(allNotes, expectedResources)
-        XCTAssertEqual(notesProvider.capturedFilter, .all)
+        XCTAssertEqual(notesProvider.capturedFilter, expectedFilter)
     }
     
     func makeSUT(
