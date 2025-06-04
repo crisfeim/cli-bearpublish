@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SVG: String {
+public enum SVG: String, Equatable {
     case burger
     case chevron
     case note

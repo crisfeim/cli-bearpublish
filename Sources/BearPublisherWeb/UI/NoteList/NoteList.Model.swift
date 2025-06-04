@@ -1,7 +1,7 @@
 import Foundation
 
 extension NoteList {
-    public struct Model {
+    public struct Model: Equatable {
         public let id: Int
         let title: String
         let slug: String

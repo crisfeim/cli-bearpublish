@@ -10,8 +10,6 @@ import BearPublisherDataSource
 
 public final class Core {
     public protocol Api {
-        func fetchAll() throws -> [Note]
-        func fetchTagTree() throws -> [Hashtag]
         func fetchNotes() throws -> [Note]
         func fetchUntagged() throws -> [Note]
         func fetchEncrypted() throws -> [Note]
@@ -25,6 +23,14 @@ public final class Core {
         func getFileData(from fileName: String) throws -> File?
         func close()
     }
+    
+    public protocol TagsProvider {
+        func fetchTagTree() throws -> [Hashtag]
+    }
+    
+    public protocol NotesProvider {
+        func fetchAll() throws -> [Note]
+    }
 
     lazy var parser: BearParser = {
         let parser = BearParser()
@@ -35,9 +41,13 @@ public final class Core {
         return parser
     }()
     
+    let tagsProvider: TagsProvider
+    let notesProvider: NotesProvider
     let api: Api
     
-    public init(api: Api) {
+    public init(tagsProvider: TagsProvider, notesProvider: NotesProvider, api: Api) {
+        self.tagsProvider = tagsProvider
+        self.notesProvider = notesProvider
         self.api = api
     }
 }

@@ -16,7 +16,7 @@ extension Core {
     
     
     func getHashtagCount(_ hashtag: String) -> Int {
-        (try! api.fetchTagTree())
+        (try! tagsProvider.fetchTagTree())
             .flat().filter { $0.path == hashtag }.first?.count ?? 0
     }
     

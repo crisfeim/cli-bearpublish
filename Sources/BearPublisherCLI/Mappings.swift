@@ -17,14 +17,14 @@ extension File {
 }
 
 extension [Note] {
-    func toNoteListModels() -> [NoteList.Model] {
+    public func toNoteListModels() -> [NoteList.Model] {
         self.map { $0.toNoteListModel() }
             .defaultSort()
     }
 }
 
 extension [Hashtag] {
-    func toMenuModels() -> [Menu.Model] {
+   public func toMenuModels() -> [Menu.Model] {
         self.map { $0.toMenuModel() }
             .defaultSort()
     }

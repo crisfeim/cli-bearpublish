@@ -4,7 +4,7 @@
 
 import Plot
 
-public struct Menu: Component {
+public struct Menu: Component, Equatable {
     let tags: [Menu.Model]
     public init(tags: [Menu.Model] = []) {
         self.tags = tags

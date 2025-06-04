@@ -7,5 +7,112 @@ import BearPublisherDataSource
 
 class CoreTests: XCTestCase {
     
-    func test() throws {}
+    func test_getIndex_deliversExpectedBaseLayoutWithGivenNotesAndTags() {
+        struct ProviderStub: Core.TagsProvider, Core.NotesProvider {
+            let notes: [Note]
+            let tags: [Hashtag]
+            func fetchAll() throws -> [Note] {
+                notes
+            }
+            
+            func fetchTagTree() throws -> [Hashtag] {
+                tags
+            }
+        }
+      
+        let expectedNotes = [
+            Note(
+                id: 0,
+                uuid: UUID().uuidString,
+                title: "any title",
+                subtitle: "any subtitle",
+                content: "any content",
+                archived: false,
+                encrypted: false,
+                hasFiles: false,
+                hasImages: false,
+                hasSourceCode: false,
+                pinned: false,
+                todoCompleted: 0,
+                todoIncompleted: 0,
+                trashed: false,
+                creationDate: nil,
+                modificationDate: nil,
+                lastEditingDevice: "any device"
+            )
+        ]
+        
+        let expectedTags = [
+            Hashtag(path: "any path", count: 0, isPinned: false, children: [])
+        ]
+        ;
+        let provider = ProviderStub(notes: expectedNotes, tags: expectedTags)
+        let sut = Core(tagsProvider: provider, notesProvider: provider, api: ApiDummy())
+        let expectedIndex = BaseLayout(
+            title: "index",
+            tags: expectedTags.toMenuModels(),
+            notes: expectedNotes.toNoteListModels(),
+        )
+
+        
+        XCTAssertEqual(sut.getIndex(title: "index"), expectedIndex)
+    }
+    
+    
+    struct ApiDummy: Core.Api {
+        func fetchNotes() throws -> [BearPublisherDataSource.Note] {
+            [ ]
+        }
+        
+        func fetchUntagged() throws -> [BearPublisherDataSource.Note] {
+            [ ]
+        }
+        
+        func fetchEncrypted() throws -> [BearPublisherDataSource.Note] {
+            [ ]
+        }
+        
+        func fetchArchived() throws -> [BearPublisherDataSource.Note] {
+            [ ]
+        }
+        
+        func fetchTrashed() throws -> [BearPublisherDataSource.Note] {
+            [ ]
+        }
+        
+        func fetchTasks() throws -> [BearPublisherDataSource.Note] {
+            [ ]
+        }
+        
+        func fetchNote(slug: String) throws -> BearPublisherDataSource.Note? {
+            nil
+        }
+        
+        func fetchNoteBacklinks(id: Int) throws -> [BearPublisherDataSource.Note] {
+            [ ]
+        }
+        
+        func fetchNotes(with tag: String) throws -> [BearPublisherDataSource.Note] {
+            [ ]
+        }
+        
+        func getFileId(with filenaem: String) throws -> String? {
+            nil
+        }
+        
+        func getFileData(from fileName: String) throws -> BearPublisherDataSource.File? {
+            nil
+        }
+        
+        func close() {
+        }
+        
+        func fetchTagTree() throws -> [BearPublisherDataSource.Hashtag] {
+            []
+        }
+        
+        func fetchAll() throws -> [BearPublisherDataSource.Note] {
+            []
+        }
+    }
 }

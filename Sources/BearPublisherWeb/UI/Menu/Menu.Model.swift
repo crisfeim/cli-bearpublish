@@ -6,7 +6,7 @@
 //
 
 extension Menu {
-    public struct Model {
+    public struct Model: Equatable {
         public init(
             name: String,
             fullPath: String,

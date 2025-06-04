@@ -33,6 +33,26 @@ public struct Note {
     public let creationDate: Date?
     public let modificationDate: Date?
     public let lastEditingDevice: String
+    
+    public init(id: Int, uuid: String, title: String?, subtitle: String?, content: String?, archived: Bool, encrypted: Bool, hasFiles: Bool, hasImages: Bool, hasSourceCode: Bool, pinned: Bool, todoCompleted: Int, todoIncompleted: Int, trashed: Bool, creationDate: Date?, modificationDate: Date?, lastEditingDevice: String) {
+        self.id = id
+        self.uuid = uuid
+        self.title = title
+        self.subtitle = subtitle
+        self.content = content
+        self.archived = archived
+        self.encrypted = encrypted
+        self.hasFiles = hasFiles
+        self.hasImages = hasImages
+        self.hasSourceCode = hasSourceCode
+        self.pinned = pinned
+        self.todoCompleted = todoCompleted
+        self.todoIncompleted = todoIncompleted
+        self.trashed = trashed
+        self.creationDate = creationDate
+        self.modificationDate = modificationDate
+        self.lastEditingDevice = lastEditingDevice
+    }
 }
 
 extension Note: Codable {

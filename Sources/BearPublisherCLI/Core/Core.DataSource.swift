@@ -14,7 +14,7 @@ extension Core {
     
     /// All notes, including trashed & archived
     var allDbNotes: [Note] {
-        (try? api.fetchAll()) ?? []
+        (try? notesProvider.fetchAll()) ?? []
     }
     
     /// All notes but trashed & archived
@@ -26,7 +26,7 @@ extension Core {
     
     /// Raw tags before processing as UI object [Menu.Model]
     var dbTags: [Hashtag] {
-        try! api.fetchTagTree()
+        try! tagsProvider.fetchTagTree()
     }
     
     // MARK: - UI models

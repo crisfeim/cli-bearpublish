@@ -7,7 +7,7 @@
 import Foundation
 import Plot
 
-public struct NoteList: Component {
+public struct NoteList: Component, Equatable {
     
     let title: String
     let model: [NoteList.Model]
