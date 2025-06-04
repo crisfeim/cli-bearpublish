@@ -3,7 +3,7 @@
 import XCTest
 
 
-class CoreTests: XCTestCase {
+class CoordinatorTests: XCTestCase {
     
     func test_getIndex_buildsIndexResourceFromProvidersAndRenderer() throws {
         
