@@ -20,38 +20,12 @@ class CoreTests: XCTestCase {
             }
         }
         
-        let expectedNotes = [
-            Note(
-                id: 0,
-                uuid: UUID().uuidString,
-                title: "any title",
-                subtitle: "any subtitle",
-                content: "any content",
-                archived: false,
-                encrypted: false,
-                hasFiles: false,
-                hasImages: false,
-                hasSourceCode: false,
-                pinned: false,
-                todoCompleted: 0,
-                todoIncompleted: 0,
-                trashed: false,
-                creationDate: nil,
-                modificationDate: nil,
-                lastEditingDevice: "any device"
-            )
-        ]
-        
-        let expectedTags = [
-            Hashtag(path: "any path", count: 0, isPinned: false, children: [])
-        ]
-        ;
-        let provider = ProviderStub(notes: expectedNotes, tags: expectedTags)
+        let provider = ProviderStub(notes: [anyNote()], tags: [anyHashtag()])
         let sut = Core(tagsProvider: provider, notesProvider: provider, api: ApiDummy())
         let expectedIndex = BaseLayout(
             title: "index",
-            tags: expectedTags.toMenuModels(),
-            notes: expectedNotes.toNoteListModels(),
+            tags: [anyHashtag()].toMenuModels(),
+            notes: [anyNote()].toNoteListModels(),
         )
         
         
@@ -62,6 +36,37 @@ class CoreTests: XCTestCase {
 
 // MARK: - Helpers
 private extension CoreTests {
+    
+    func anyNote() -> Note {
+        Note(
+            id: 0,
+            uuid: UUID().uuidString,
+            title: "any title",
+            subtitle: "any subtitle",
+            content: "any content",
+            archived: false,
+            encrypted: false,
+            hasFiles: false,
+            hasImages: false,
+            hasSourceCode: false,
+            pinned: false,
+            todoCompleted: 0,
+            todoIncompleted: 0,
+            trashed: false,
+            creationDate: nil,
+            modificationDate: nil,
+            lastEditingDevice: "any device"
+        )
+    }
+    
+    func anyHashtag() -> Hashtag {
+        Hashtag(
+            path: "any path",
+            count: 0,
+            isPinned: false,
+            children: []
+        )
+    }
     
     struct ApiDummy: Core.Api {
         func fetchNotes() throws -> [BearPublisherDataSource.Note] {
