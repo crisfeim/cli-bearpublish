@@ -18,10 +18,6 @@ public final class BearApi {
         db = try Connection(dbPath, readonly: true)
     }
     
-    public func connect(location: String) throws {
-        db = try Connection(location, readonly: true)
-    }
-    
     public func setSlugify(_ processor: @escaping StringProcesor) throws {
         self.slugify = (
             try db.createFunction("slugify", deterministic: true) {processor($0)}
