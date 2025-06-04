@@ -55,7 +55,7 @@ public final class Core {
 public typealias StringProcessor = (String) -> String
 
 public func makeBearApi(dbLocationPath: String, slugify: @escaping StringProcessor) throws -> BearApi {
-    let api = try BearApi(databaseLocation: .customPath(dbLocationPath))
+    let api = try BearApi(dbPath: dbLocationPath)
     try api.setSlugify(slugify)
     return api
 }
