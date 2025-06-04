@@ -19,7 +19,7 @@ class CoreTests: XCTestCase {
                 tags
             }
         }
-      
+        
         let expectedNotes = [
             Note(
                 id: 0,
@@ -53,11 +53,15 @@ class CoreTests: XCTestCase {
             tags: expectedTags.toMenuModels(),
             notes: expectedNotes.toNoteListModels(),
         )
-
+        
         
         XCTAssertEqual(sut.getIndex(title: "index"), expectedIndex)
     }
     
+}
+
+// MARK: - Helpers
+private extension CoreTests {
     
     struct ApiDummy: Core.Api {
         func fetchNotes() throws -> [BearPublisherDataSource.Note] {
