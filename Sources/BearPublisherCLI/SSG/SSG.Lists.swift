@@ -45,31 +45,14 @@ extension SSG {
     
     private func writeNoteList(_ noteList: Core.NoteLists) throws {
         
-//        measure(noteList.outputFolder) { [weak self] in
-            
-//            guard let self else { return }
-            
             try self.core.getNoteLists(noteList).forEach { holder in
-                
-//                let hash = holder.hash()
-//                let slug = "\(noteList.outputFolder)-\(holder.slug))"
-                
                 /// Check if file has changed from cache, otherwise override
-//                guard self.store.state().noteListCache[slug] != hash else { return }
                 
                 try self.writeToFile(
                     contents: holder.html.render(),
                     outputPath: "/standalone/\(noteList.outputFolder)/\(holder.slug)",
                     filename: "index.html"
                 )
-                
-                /// Update cache
-//                try self.store.update(.noteListCache(slug: slug, hash: hash))
-                            
-            #if DEBUG
-                print("Standalone \(noteList.outputFolder) note list \(holder.slug)")
-            #endif
             }
-//        }
     }
 }
