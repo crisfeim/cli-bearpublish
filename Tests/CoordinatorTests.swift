@@ -80,7 +80,7 @@ class CoordinatorTests: XCTestCase {
             self.result = result
         }
         
-        func renderIndex(notes: [Note], tags: [Tag]) throws -> String {
+        func render(notes: [Note], tags: [Tag]) throws -> String {
             capturedNotes = notes
             capturedTags  = tags
             return result
@@ -122,7 +122,7 @@ class CoordinatorTests: XCTestCase {
     }
     
     struct IndexRendererDummy: Coordinator.IndexRenderer {
-        func renderIndex(notes: [Note], tags: [Tag]) throws -> String {""}
+        func render(notes: [Note], tags: [Tag]) throws -> String {""}
     }
     
     struct NoteListRendererDummy: Coordinator.NoteListRenderer {

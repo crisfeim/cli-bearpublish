@@ -4,7 +4,7 @@
 struct Coordinator {
     
     protocol IndexRenderer {
-        func renderIndex(notes: [Note], tags: [Tag]) throws -> String
+        func render(notes: [Note], tags: [Tag]) throws -> String
     }
     
     protocol NoteListRenderer {
@@ -27,7 +27,7 @@ struct Coordinator {
     func getIndex() throws -> Resource {
         let notes    = try notesProvider.get(.all)
         let tags     = try tagsProvider.get()
-        let contents = try indexRenderer.renderIndex(notes: notes, tags: tags)
+        let contents = try indexRenderer.render(notes: notes, tags: tags)
         return Resource(filename: "index.html", contents: contents)
     }
     
