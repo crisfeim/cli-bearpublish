@@ -1,19 +1,7 @@
-//
-//  File.swift
-//  
-//
-//  Created by Cristian Felipe Patiño Rojas on 21/05/2023.
-//
+// © 2025  Cristian Felipe Patiño Rojas. Created on 4/6/25.
+
+
 import Foundation
-
-
-public struct File {
-    public let id: String
-    public let name: String
-    public let date: Date?
-    public let `extension`: String
-    public let size: Int
-}
 
 public struct Note {
     public let id: Int
@@ -108,23 +96,3 @@ extension Note: Codable {
         lastEditingDevice = try container.decode(String.self, forKey: .lastEditingDevice)
     }
 }
-
-
-public struct Tag {
-    public let id: Int
-    public let title: String
-    public let tagCon: String
-    public let count: Int
-    public let slug: String
-    public let childs: [Tag]
-    
-    public init(id: Int, title: String, tagCon: String, count: Int, slug: String, childs: [Tag]) {
-        self.id = id
-        self.title = title
-        self.tagCon = tagCon
-        self.count = count
-        self.slug = slug
-        self.childs = childs
-    }
-}
-
