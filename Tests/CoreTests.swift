@@ -65,47 +65,12 @@ class CoreTests: XCTestCase {
     
     func  test_getIndex_buildsIndexResourceFromProvidersAndRenderer() throws {
         
-        final class ProviderSpy: Coordinator.TagsProvider, Coordinator.NotesProvider {
-            private let notes: [Note]
-            private let tags: [Tag]
-            
-            private(set) var capturedFilter: NoteListFilter?
-            
-            init(notes: [Note], tags: [Tag]) {
-                self.notes = notes
-                self.tags = tags
-            }
-        
-            func get(_ filter: NoteListFilter) throws -> [Note] {
-               capturedFilter = filter
-               return notes
-            }
-            
-            func get() throws -> [Tag] {
-                tags
-            }
-        }
-        
-        class IndexRendererSpy: Coordinator.IndexRenderer {
-            private let result: String
-            private(set) var capturedNotes = [Note]()
-            private(set) var capturedTags  = [Tag]()
-            
-            init(result: String) {
-                self.result = result
-            }
-            
-            func renderIndex(notes: [Note], tags: [Tag]) throws -> String {
-                capturedNotes = notes
-                capturedTags  = tags
-                return result
-            }
-        }
-        
         let providerSpy = ProviderSpy(notes: [anyNote()], tags: [anyTag()])
         let indexRenderer = IndexRendererSpy(result: "any renderer")
         let sut = makeSUT(notesProvider: providerSpy, tagsProvider: providerSpy,  indexRenderer: indexRenderer)
+        
         let index = try sut.getIndex()
+        
         let expectedIndex = Resource(filename: "index.html", contents: "any renderer")
         let expectedNoteListFilter = NoteListFilter.all
         XCTAssertEqual(index, expectedIndex)
@@ -116,45 +81,15 @@ class CoreTests: XCTestCase {
     
     func test_getNotesByFilter_buildsAllNoteListResourceFromNoteProviderAndRenderer() throws {
         
-        final class NoteListProviderSpy: Coordinator.NotesProvider {
-            private let notes: [Note]
-            
-            private(set) var capturedFilter: NoteListFilter?
-            
-            init(notes: [Note]) {
-                self.notes = notes
-            }
-        
-            func get(_ filter: NoteListFilter) throws -> [Note] {
-               capturedFilter = filter
-               return notes
-            }
-        }
-        
-        
-        class NoteListRendererSpy: Coordinator.NoteListRenderer {
-            
-            private let result: String
-            private(set) var capturedNotes = [Note]()
-            init(result: String) {
-                self.result = result
-            }
-            
-            func renderAllNotes(notes: [Note]) throws -> String {
-                capturedNotes = notes
-                return result
-            }
-        }
+       
+        let notesProvider = NoteListProviderSpy(notes: [anyNote()])
+        let rendererSpy = NoteListRendererSpy(result: "any note list rendered content")
+        let sut = makeSUT(notesProvider: notesProvider, noteListRenderer: rendererSpy)
         
         let expectedFilter = NoteListFilter.archived
-        let notesProvider = NoteListProviderSpy(notes: [anyNote()])
-        
-        let rendererSpy = NoteListRendererSpy(result: "any note list rendered content")
-  
-        let sut = makeSUT(notesProvider: notesProvider, noteListRenderer: rendererSpy)
         let allNotes = try sut.getNotes(expectedFilter)
-        let expectedResources = Resource(filename: "lists/\(expectedFilter.rawValue).html", contents: "any note list rendered content")
         
+        let expectedResources = Resource(filename: "lists/\(expectedFilter.rawValue).html", contents: "any note list rendered content")
         XCTAssertEqual(allNotes, expectedResources)
         XCTAssertEqual(notesProvider.capturedFilter, expectedFilter)
     }
@@ -171,6 +106,73 @@ class CoreTests: XCTestCase {
             indexRenderer: indexRenderer,
             noteListRenderer: noteListRenderer
         )
+    }
+    
+    final class ProviderSpy: Coordinator.TagsProvider, Coordinator.NotesProvider {
+        private let notes: [Note]
+        private let tags: [Tag]
+        
+        private(set) var capturedFilter: NoteListFilter?
+        
+        init(notes: [Note], tags: [Tag]) {
+            self.notes = notes
+            self.tags = tags
+        }
+    
+        func get(_ filter: NoteListFilter) throws -> [Note] {
+           capturedFilter = filter
+           return notes
+        }
+        
+        func get() throws -> [Tag] {
+            tags
+        }
+    }
+    
+    class IndexRendererSpy: Coordinator.IndexRenderer {
+        private let result: String
+        private(set) var capturedNotes = [Note]()
+        private(set) var capturedTags  = [Tag]()
+        
+        init(result: String) {
+            self.result = result
+        }
+        
+        func renderIndex(notes: [Note], tags: [Tag]) throws -> String {
+            capturedNotes = notes
+            capturedTags  = tags
+            return result
+        }
+    }
+    
+    final class NoteListProviderSpy: Coordinator.NotesProvider {
+        private let notes: [Note]
+        
+        private(set) var capturedFilter: NoteListFilter?
+        
+        init(notes: [Note]) {
+            self.notes = notes
+        }
+    
+        func get(_ filter: NoteListFilter) throws -> [Note] {
+           capturedFilter = filter
+           return notes
+        }
+    }
+    
+    
+    class NoteListRendererSpy: Coordinator.NoteListRenderer {
+        
+        private let result: String
+        private(set) var capturedNotes = [Note]()
+        init(result: String) {
+            self.result = result
+        }
+        
+        func renderAllNotes(notes: [Note]) throws -> String {
+            capturedNotes = notes
+            return result
+        }
     }
     
     struct TagsProviderDummy: Coordinator.TagsProvider {
