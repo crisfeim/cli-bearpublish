@@ -18,7 +18,6 @@ class SSGTests: XCTestCase {
         let sut = SSG(resources: [resource], outputURL: tmpURL)
         try sut.build()
         
-        NSWorkspace.shared.open(testSpecificURL())
         XCTAssertEqual(
             try String(contentsOf: tmpURL.appendingPathComponent(resource.filename)),
             resource.contents
