@@ -22,7 +22,7 @@ let package = Package(
             ],
             resources: [.process("Resources")]
         ),
-        .target(name: "BearPublisherMarkdown", dependencies: [
+        .target(name: "BearMarkdown", dependencies: [
             .product(name: "RubyGateway", package: "rubygateway"),
             .product(name: "MarkdownKit", package: "swift-markdownkit")
         ]),
@@ -35,13 +35,13 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "BearDomain",
                 "BearWebUI",
-                "BearPublisherMarkdown",
+                "BearMarkdown",
                 "BearDatabase"
             ]
         ),
         .testTarget(name: "BearPublisherTests", dependencies: ["BearPublisherCLI",
                                                                "BearWebUI",
-                                                               "BearPublisherMarkdown",
+                                                               "BearMarkdown",
                                                                "BearDatabase"])
     ]
 )
