@@ -11,7 +11,8 @@ extension NoteList {
     struct Row: Component {
         let note: NoteList.Model
         #warning("Tab index should be different if selected")
-        var tabindex: Int { note.isSelected ? 0 : 0}
+        let isSelected: Bool
+        var tabindex: Int { isSelected ? 0 : 0}
         
         var pushedUrl: String {
              "/?slug=\(note.slug)"
@@ -51,7 +52,7 @@ extension NoteList {
                 .hxIndicator(.class(Indicators.mainIndicator))
                 .hyperScript("on click take .selected then Layout.toggleNav()")
                 .tabIndex(tabindex)
-                .class(note.isSelected ? "selected" : "")
+                .class(isSelected ? "selected" : "")
             }
         }
     }

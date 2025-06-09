@@ -5,7 +5,6 @@ extension NoteList {
         public let id: Int
         let title: String
         let slug: String
-        let isSelected: Bool
         let isPinned: Bool
         let isEncrypted: Bool
         let isEmpty: Bool
@@ -21,7 +20,6 @@ extension NoteList {
             id: Int,
             title: String,
             slug: String,
-            isSelected: Bool,
             isPinned: Bool,
             isEncrypted: Bool,
             isEmpty: Bool,
@@ -32,7 +30,6 @@ extension NoteList {
             self.id = id
             self.title = title
             self.slug = slug
-            self.isSelected = isSelected
             self.isPinned = isPinned
             self.isEncrypted = isEncrypted
             self.isEmpty = isEmpty

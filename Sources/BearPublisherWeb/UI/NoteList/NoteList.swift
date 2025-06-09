@@ -38,7 +38,7 @@ public struct NoteList: Component, Equatable {
             .class("htmx-indicator")
         
         List(model) { item in
-            Row(note: item)
+            Row(note: item, isSelected: false)
         }
         .id("note-list")
     }

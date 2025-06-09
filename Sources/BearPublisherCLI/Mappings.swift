@@ -74,7 +74,6 @@ extension Note {
             id: id,
             title: makeTitle(),
             slug: slugify(title ?? "Nota sin título"),
-            isSelected: isSelected,
             isPinned: pinned,
             isEncrypted: isPrivate,
             isEmpty: isEmpty(),
