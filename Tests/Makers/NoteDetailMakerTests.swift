@@ -7,15 +7,16 @@ class NoteDetailMakerTests: XCTestCase {
     func test_make_deliversRenderedNoteDetails() throws {
         let provider = ProviderStub(notes: [anyNote()])
         let renderer = Renderer(result: "any note content")
-        let sut = makeSUT(provider: provider, renderer: renderer)
+        let router: SUT.Router = { "standalone/note/\($0)" }
+        let sut = makeSUT(provider: provider, renderer: renderer, router: router)
         let notes = try sut.make()
         let expected = [Resource(filename: "standalone/note/any-slug", contents: "any note content")]
         
         XCTAssertEqual(notes, expected)
     }
     
-    private func makeSUT(provider: SUT.Provider, renderer: SUT.Renderer) -> SUT {
-        SUT(provider: provider, renderer: renderer)
+    private func makeSUT(provider: SUT.Provider, renderer: SUT.Renderer, router: @escaping SUT.Router) -> SUT {
+        SUT(provider: provider, renderer: renderer, router: router)
     }
     
     struct ProviderStub: SUT.Provider {
