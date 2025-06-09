@@ -4,7 +4,7 @@ import XCTest
 import BearPublisherCLI
 
 class ComposerTests: XCTestCase {
-    
+
     func test() throws {
         let dbURL = Bundle.module.url(forResource: "database", withExtension: "sqlite")!
         let sut = try make(dbPath: dbURL.path, outputURL: testSpecificURL())

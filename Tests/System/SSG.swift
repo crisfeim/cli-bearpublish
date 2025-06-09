@@ -8,7 +8,8 @@ struct SSG {
     let outputURL: URL
     
     func build() throws {
-        try createOutputFolderIfNeeded()
+        cleanOutputFolder()
+        try createOutputFolder()
         try resources.forEach {
             let url = outputURL.appendingPathComponent($0.filename)
             let directory = url.deletingLastPathComponent()
@@ -18,7 +19,12 @@ struct SSG {
         }
     }
     
-    func createOutputFolderIfNeeded() throws {
+    private func cleanOutputFolder() {
+        try? FileManager.default.removeItem(at: outputURL)
+    }
+    
+    
+    private func createOutputFolder() throws {
         try FileManager.default.createDirectory(at: outputURL, withIntermediateDirectories: true)
     }
 }
