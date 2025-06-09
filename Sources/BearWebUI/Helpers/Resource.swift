@@ -26,3 +26,11 @@ public struct Resource {
         self.content = content
     }
 }
+
+
+#warning("There's already a hash method. See Core.SSG file")
+private extension String {
+    func makeHash(maxLength: Int = 20) -> String {
+        hash.description.replacingOccurrences(of: "-", with: "").prefix(maxLength) + ""
+    }
+}
