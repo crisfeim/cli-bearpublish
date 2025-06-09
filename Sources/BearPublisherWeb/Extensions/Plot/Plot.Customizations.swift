@@ -37,27 +37,13 @@ public extension Node where Context == BodyContext {
     static func section(_ nodes: Self...) -> Node {
         .element(named: "section", nodes: nodes)
     }
-    
-    static func _script(_ nodes: Self...) -> Node {
-        .element(named: "script", nodes: nodes)
-    }
 }
-
-
 
 public extension ElementDefinitions {
     enum Section: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node.section }
-    enum Details: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node.details }
-    enum Summary: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node.summary }
-    enum Script: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node._script }
 }
 
-
 public typealias Section = ElementComponent<ElementDefinitions.Section>
-public typealias Details = ElementComponent<ElementDefinitions.Details>
-public typealias Summary = ElementComponent<ElementDefinitions.Summary>
-public typealias _Script  = ElementComponent<ElementDefinitions.Script>
-
 
 
 public struct Spacer: Component {
@@ -67,14 +53,7 @@ public struct Spacer: Component {
     }
 }
 
-struct Script: Component {
- let script: String
- var body: Component {
-     _Script {
-         Raw(text: script)
-     }
- }
-}
+
 
 struct Raw: Component {
  let text: String
