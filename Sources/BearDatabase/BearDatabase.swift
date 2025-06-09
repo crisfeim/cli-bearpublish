@@ -9,8 +9,8 @@ public final class BearDatabase {
     var db: Connection!
     
     // MARK: -  Common Tables & Expressions
-    private let archived = SQLite.Expression<Bool>(Note.CodingKeys.archived.rawValue)
-    private let  trashed = SQLite.Expression<Bool>(Note.CodingKeys.trashed.rawValue )
+    private let archived = SQLite.Expression<Bool>(Note.CodingKeys.isArchived.rawValue)
+    private let  trashed = SQLite.Expression<Bool>(Note.CodingKeys.isTrashed.rawValue )
     
     var slugify: ((SQLite.Expression<String>) -> SQLite.Expression<String>)?
     
@@ -55,7 +55,7 @@ public final class BearDatabase {
     /// Fetches all encrypted notes but archived & trashed
     public func fetchEncrypted() throws -> [Note] {
         
-        let encrypted = Expression<Bool>(Note.CodingKeys.encrypted.rawValue)
+        let encrypted = Expression<Bool>(Note.CodingKeys.isEncrypted.rawValue)
         let query = Self.notes().table.filter(encrypted && !archived && !trashed)
         return try db.prepare(query).map { try $0.decode() }
     }
@@ -377,12 +377,12 @@ extension BearDatabase {
            title: row[2] as? String,
            subtitle: row[3] as? String,
            content: row[4] as? String,
-           archived: row[5] as! Int64 == 1,
-           encrypted: row[6] as! Int64 == 1,
+           isArchived: row[5] as! Int64 == 1,
+           isEncrypted: row[6] as! Int64 == 1,
            hasFiles: row[7] as! Int64 == 1,
            hasImages: row[8] as! Int64 == 1,
            hasSourceCode: row[9] as! Int64 == 1,
-           pinned: row[10] as! Int64 == 1,
+           isPinned: row[10] as! Int64 == 1,
            todoCompleted: Int(row[11] as! Int64),
            todoIncompleted: Int(row[12] as! Int64),
            trashed: row[13] as! Int64 == 1,
@@ -393,7 +393,7 @@ extension BearDatabase {
     }
     
     func tag(from row: Statement.Element) -> Hashtag? {
-        let id = Int(row[0] as! Int64)
+//        let id = Int(row[0] as! Int64)
         let path = (row[1] as? String) ?? ""
         let isPinned = row[3] as? Int64
         let count = Int(row[4] as! Int64)
