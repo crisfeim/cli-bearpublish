@@ -76,12 +76,6 @@ private extension DefaultNoteListsMakerTests {
         }
     }
     
-    struct NoteDetailRendererStub: NoteDetailRenderer {
-        let result: String
-        func render(_ note: Note) -> String {result}
-    }
-    
-    
     func anyNote() -> Note {
         Note(content: "any content", slug: "any-slug")
     }
