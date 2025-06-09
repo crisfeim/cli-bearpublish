@@ -18,18 +18,18 @@ struct IndexRenderer: IndexMaker.Renderer {
             )
         }
         
-        return BaseLayout(title: "Home", tags: tags, notes: notes).render()
+        return IndexView(title: "Home", tags: tags, notes: notes).render()
     }
 }
 
 struct NoteDetailRenderer: NoteDetailMaker.Renderer {
     func render(_ note: Note) -> String {
-       StandaloneNote(title: note.title, slug: note.slug, content: note.content).render()
+       NoteDetailView(title: note.title, slug: note.slug, content: note.content).render()
     }
 }
 
 struct NoteListRenderer: NoteListMaker.Renderer {
     func render(_ list: BearPublisherDomain.NoteList) -> String {
-        StandaloneNoteList(title: list.title, notes: list.notes).render()
+        NoteListView(title: list.title, notes: list.notes).render()
     }
 }

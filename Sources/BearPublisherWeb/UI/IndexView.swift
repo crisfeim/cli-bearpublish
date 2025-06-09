@@ -3,7 +3,7 @@ import Plot
 import BearPublisherDomain
 
 /// Base three panel layout (menu, nav note list and main note content)
-public struct BaseLayout: Equatable, View {
+public struct IndexView: Equatable, View {
     fileprivate let title: String
     fileprivate let tags: [Menu.Model]
     fileprivate let navTitle: String?
@@ -77,7 +77,7 @@ public struct BaseLayout: Equatable, View {
 
 
 
-public extension BaseLayout {
+public extension IndexView {
     static func makeCSS() -> [Resource] {
         
         let app    = getCSSFile("app")

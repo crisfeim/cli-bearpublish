@@ -9,7 +9,7 @@ import Plot
 
 /// Standalone note component. It contains only the content of the note without the additional three panel layouts.
 /// This is used to generate the standalone pages that will be consummed by HTMX when user selects a note thorugh the <nav> (note list) component.
-public struct StandaloneNote: View {
+public struct NoteDetailView: View {
     
     fileprivate let title: String
     fileprivate let content: String
@@ -43,7 +43,7 @@ public struct StandaloneNote: View {
     }
 }
 
-public extension StandaloneNote {
+public extension NoteDetailView {
     
     static func makeCSS() -> [Resource] {
         
