@@ -43,6 +43,7 @@ class DefaultNoteListsMakerTests: XCTestCase {
         )]
         
         XCTAssertEqual(resources, expectedResources)
+        XCTAssertEqual(renderer.capturedNotes, [anyNote()])
     }
 }
 
