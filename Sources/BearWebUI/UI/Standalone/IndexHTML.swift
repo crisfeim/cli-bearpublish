@@ -59,6 +59,12 @@ private extension IndexHTML {
 }
 
 
+public extension IndexHTML {
+    static func resources() -> [Resource] {
+        Self.makeCSS()
+    }
+}
+
 private extension IndexHTML {
     static func makeCSS() -> [Resource] {
         

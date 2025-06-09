@@ -2,6 +2,8 @@
 
 import Foundation
 
+import BearWebUI
+
 func make(dbPath: String, outputURL: URL) throws -> SSG {
     let bearDb = try BearDatabase(dbPath: dbPath)
     
@@ -23,7 +25,13 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
     let lists = try defaultNoteListMaker.make()
     
     let pages = [index] + notes + lists
-    let ssg = SSG(resources: pages, outputURL: outputURL)
+    
+    let resources = IndexHTML.resources().map {
+        Resource(filename: "assets/css/\($0.fileName)", contents: $0.content)
+    }
+    
+    let all = pages + resources
+    let ssg = SSG(resources: all, outputURL: outputURL)
     return ssg
 }
 
