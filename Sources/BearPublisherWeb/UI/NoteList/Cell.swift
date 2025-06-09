@@ -13,10 +13,7 @@ extension NoteListView {
         let note: Note
         let isSelected: Bool
         var tabindex: Int { isSelected ? 1 : 0}
-        
-        var pushedUrl: String {
-             "/?slug=\(note.slug)"
-        }
+        var pushedUrl: String { "/?slug=\(note.slug)" }
         
         var body: Component {
             ListItem {
