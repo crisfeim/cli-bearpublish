@@ -5,7 +5,7 @@ import Foundation
 import BearWebUI
 
 func make(dbPath: String, outputURL: URL) throws -> SSG {
-    let bearDb = try BearDatabase(dbPath: dbPath)
+    let bearDb = try BearDb(path: dbPath)
     
     let index = try IndexMaker(provider: bearDb, renderer: IndexRenderer()).make()
     let notes = try NoteDetailMaker(
@@ -46,22 +46,9 @@ import BearDatabase
 import BearDomain
 import BearPublisherCLI
 
-extension BearDatabase: IndexMaker.Provider {
+extension BearDb: IndexMaker.Provider {
     func notes() throws -> [BearDomain.Note] {
-        try fetchAll().map {
-            Note(
-                id: $0.id,
-                title: $0.title ?? "@todo",
-                slug: slugify($0.title ?? "New note"),
-                isPinned: $0.isPinned,
-                isEncrypted: $0.isEncrypted,
-                isEmpty: $0.content?.isEmpty ?? true,
-                subtitle: $0.subtitle ?? "",
-                creationDate: $0.creationDate,
-                modificationDate: $0.modificationDate,
-                content: $0.content ?? ""
-            )
-        }
+        try fetchAll().map(NoteMapper.map)
     }
     
     func tags() throws -> [BearDomain.Tag] {
@@ -69,45 +56,18 @@ extension BearDatabase: IndexMaker.Provider {
     }
 }
 
-extension BearDatabase: NoteDetailMaker.Provider {
+extension BearDb: NoteDetailMaker.Provider {
     func get() throws -> [BearDomain.Note] {
         try notes()
     }
 }
 
 struct NoteListDefaultAdapterProvider: NoteListMaker.Provider {
-    let bearDb: BearDatabase
+    let bearDb: BearDb
     
     func get() throws -> [NoteList] {
-        let archived = try bearDb.fetchArchived().map {
-            BearDomain.Note(
-                id: $0.id,
-                title: $0.title ?? "New note",
-                slug: slugify($0.title ?? "New note"),
-                isPinned: $0.isPinned,
-                isEncrypted: $0.isPinned,
-                isEmpty: $0.content?.isEmpty ?? true,
-                subtitle: $0.subtitle ?? "",
-                creationDate: $0.creationDate,
-                modificationDate: $0.modificationDate,
-                content: $0.content ?? ""
-            )
-        }
-        
-        let tasks = try bearDb.fetchTasks().map {
-            BearDomain.Note(
-                id: $0.id,
-                title: $0.title ?? "New note",
-                slug: slugify($0.title ?? "New note"),
-                isPinned: $0.isPinned,
-                isEncrypted: $0.isPinned,
-                isEmpty: $0.content?.isEmpty ?? true,
-                subtitle: $0.subtitle ?? "",
-                creationDate: $0.creationDate,
-                modificationDate: $0.modificationDate,
-                content: $0.content ?? ""
-            )
-        }
+        let archived = try bearDb.fetchArchived().map(NoteMapper.map)
+        let tasks    = try bearDb.fetchTasks().map(NoteMapper.map)
         
         return [
             NoteList(title: "Archived", slug: "archived", notes: archived),
@@ -117,28 +77,31 @@ struct NoteListDefaultAdapterProvider: NoteListMaker.Provider {
 }
 
 struct NoteListTaggedAdapterProvider: NoteListMaker.Provider {
-    let bearDb: BearDatabase
+    let bearDb: BearDb
     
     func get() throws -> [NoteList] {
         let tags = try bearDb.fetchTags()
         return try tags.map {
-            let notes = try bearDb.fetchNotes(with: $0.name).map {
-                BearDomain.Note(
-                    id: $0.id,
-                    title: $0.title ?? "New note",
-                    slug: slugify($0.title ?? "New note"),
-                    isPinned: $0.isPinned,
-                    isEncrypted: $0.isPinned,
-                    isEmpty: $0.content?.isEmpty ?? true,
-                    subtitle: $0.subtitle ?? "",
-                    creationDate: $0.creationDate,
-                    modificationDate: $0.modificationDate,
-                    content: $0.content ?? ""
-                )
-            }
-            
+            let notes = try bearDb.fetchNotes(with: $0.name).map(NoteMapper.map)
             return NoteList(title: $0.name, slug: slugify($0.name), notes: notes)
         }
+    }
+}
+
+enum NoteMapper {
+    static func map(_ note: BearDatabase.Note) -> BearDomain.Note {
+        Note(
+            id: note.id,
+            title: note.title ?? "New note",
+            slug: slugify(note.title ?? "New note"),
+            isPinned: note.isPinned,
+            isEncrypted: note.isEncrypted,
+            isEmpty: note.content?.isEmpty ?? true,
+            subtitle: note.subtitle ?? "",
+            creationDate: note.creationDate,
+            modificationDate: note.modificationDate,
+            content: note.content ?? ""
+        )
     }
 }
 

@@ -4,7 +4,7 @@ import SQLite3
 
 
 public typealias StringProcesor = (String) -> String
-public final class BearDatabase {
+public final class BearDb {
     
     var db: Connection!
     
@@ -14,8 +14,8 @@ public final class BearDatabase {
     
     var slugify: ((SQLite.Expression<String>) -> SQLite.Expression<String>)?
     
-    public init(dbPath: String) throws {
-        db = try Connection(dbPath, readonly: true)
+    public init(path: String) throws {
+        db = try Connection(path, readonly: true)
     }
     
     public func setSlugify(_ processor: @escaping StringProcesor) throws {
@@ -289,7 +289,7 @@ extension Array where Element == Note {
 }
 
 // MARK: - Helpers
-extension BearDatabase {
+extension BearDb {
     
     func file(from row: Statement.Element) -> File {
         var creationDate: Date?
