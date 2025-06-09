@@ -80,11 +80,14 @@ struct NoteListTaggedAdapterProvider: NoteListMaker.Provider {
     let bearDb: BearDb
     
     func get() throws -> [NoteList] {
-        let tags = try bearDb.fetchTags()
-        return try tags.map {
-            let notes = try bearDb.fetchNotes(with: $0.name).map(NoteMapper.map)
-            return NoteList(title: $0.name, slug: slugify($0.name), notes: notes)
-        }
+        try bearDb.fetchTagTree().flatMap(makeNoteLists)
+    }
+    
+    private func makeNoteLists(from hashtag: Hashtag) throws -> [NoteList] {
+        let notes = try bearDb.fetchNotes(with: hashtag.name).map(NoteMapper.map)
+        let current = NoteList(title: hashtag.name, slug: slugify(hashtag.name), notes: notes)
+        let childrenLists = try hashtag.children.flatMap(makeNoteLists)
+        return [current] + childrenLists
     }
 }
 
