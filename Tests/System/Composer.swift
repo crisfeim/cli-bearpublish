@@ -20,19 +20,19 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
         router: Router.note
     ).make()
     
-    let defaultLists = try NoteListMaker(
+    let notesByFilter = try NoteListMaker(
         provider: NoteListDefaultAdapterProvider(bearDb: bearDb),
         renderer: NoteListRenderer(),
         router: Router.list
     ).make()
     
-    let tagNoteLists = try NoteListMaker(
+    let notesByTags = try NoteListMaker(
         provider: NoteListTaggedAdapterProvider(bearDb: bearDb),
         renderer: NoteListRenderer(),
         router: Router.tag
     ).make()
    
-    let pages = [index] + notes + defaultLists + tagNoteLists
+    let pages = [index] + notes + notesByFilter + notesByTags
     
     let css = IndexHTML.css().map {
         Resource(filename: "assets/css/\($0.fileName)", contents: $0.content)
