@@ -19,10 +19,16 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
         renderer: NoteListRenderer(),
         router: { "standalone/list/\($0).html"}
     )
+    
+    let tagNoteListMaker = NoteListMaker(
+        provider: NoteListTaggedAdapterProvider(bearDb: bearDb),
+        renderer: NoteListRenderer(),
+        router: { "standalone/tag/\($0).html" }
+    )
    
     let index = try indexMaker.make()
     let notes = try notesDetailMaker.make()
-    let lists = try defaultNoteListMaker.make()
+    let lists = try defaultNoteListMaker.make() + (try tagNoteListMaker.make())
     
     let pages = [index] + notes + lists
     
@@ -124,7 +130,27 @@ struct NoteListDefaultAdapterProvider: NoteListMaker.Provider {
 struct NoteListTaggedAdapterProvider: NoteListMaker.Provider {
     let bearDb: BearDatabase
     
-    func get() throws -> [NoteList] {[ ]}
+    func get() throws -> [NoteList] {
+        let tags = try bearDb.fetchTags()
+        return try tags.map {
+            let notes = try bearDb.fetchNotes(with: $0.name).map {
+                BearDomain.Note(
+                    id: $0.id,
+                    title: $0.title ?? "New note",
+                    slug: slugify($0.title ?? "New note"),
+                    isPinned: $0.isPinned,
+                    isEncrypted: $0.isPinned,
+                    isEmpty: $0.content?.isEmpty ?? true,
+                    subtitle: $0.subtitle ?? "",
+                    creationDate: $0.creationDate,
+                    modificationDate: $0.modificationDate,
+                    content: $0.content ?? ""
+                )
+            }
+            
+            return NoteList(title: $0.name, slug: slugify($0.name), notes: notes)
+        }
+    }
 }
 
 
