@@ -30,8 +30,8 @@ extension Menu {
         fileprivate var js: Component {
             Div {
                 HStack {
-                    SVGRenderer(model.icon)
-                        .cssClass(model.isSelected ? "selected-svg" : "")
+//                    SVGRenderer(model.icon)
+//                        .cssClass(model.isSelected ? "selected-svg" : "")
                         
                     Span(model.name)
                     Spacer()
@@ -74,7 +74,7 @@ extension Menu {
             Details {
                 Summary {
 
-                    model.icon.render().makeRawNode()
+//                    model.icon.render().makeRawNode()
 
                     Link(model.name, url: model.makePath())
                     Spacer()

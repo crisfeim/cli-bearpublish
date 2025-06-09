@@ -39,8 +39,8 @@ extension Hashtag {
             children: children.map {$0.toMenuModel()},
             isPinned: isPinned,
             isSelected: false,
-            type: .tag,
-            icon: .tag
+//            type: .tag,
+//            icon: .tag
         )
     }
 }

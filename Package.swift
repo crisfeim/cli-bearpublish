@@ -13,6 +13,7 @@ let package = Package(
         .package(url: "https://github.com/stephencelis/SQLite.swift", branch: "master"),
     ],
     targets: [
+        .target(name: "BearPublisherDomain"),
         .target(
             name: "BearPublisherWeb",
             dependencies: [
@@ -31,6 +32,7 @@ let package = Package(
             name: "BearPublisherCLI",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                "BearPublisherDomain",
                 "BearPublisherWeb",
                 "BearPublisherMarkdown",
                 "BearPublisherDataSource"

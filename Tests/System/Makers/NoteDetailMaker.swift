@@ -1,4 +1,5 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 9/6/25.
+import BearPublisherDomain
 
 struct NoteDetailMaker {
     protocol Provider {

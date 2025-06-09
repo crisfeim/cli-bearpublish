@@ -1,7 +1,7 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 9/6/25.
 
 import XCTest
-import BearPublisherCLI
+import BearPublisherDomain
 
 class IndexMakerTests: XCTestCase {
     
@@ -53,10 +53,21 @@ class IndexMakerTests: XCTestCase {
     }
     
     func anyNote() -> Note {
-        Note(content: "any content", slug: "any-slug")
+        Note(
+            id: 0,
+            title: "any note",
+            slug: "any-slug",
+            isPinned: false,
+            isEncrypted: false,
+            isEmpty: false,
+            subtitle: "any subtitle",
+            creationDate: nil,
+            modificationDate: nil,
+            content: "any content"
+        )
     }
     
     func anyTag() -> Tag {
-        Tag(name: "any tag")
+        Tag(name: "any tag", fullPath: "any-tag", notesCount: 0, children: [], isPinned: false)
     }
 }

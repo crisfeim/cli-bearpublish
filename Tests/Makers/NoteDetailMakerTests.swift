@@ -1,6 +1,7 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 9/6/25.
 
 import XCTest
+import BearPublisherDomain
 
 class NoteDetailMakerTests: XCTestCase {
     typealias SUT = NoteDetailMaker
@@ -30,6 +31,17 @@ class NoteDetailMakerTests: XCTestCase {
     }
     
     func anyNote() -> Note {
-        Note(content: "any content", slug: "any-slug")
+        Note(
+            id: 0,
+            title: "any note",
+            slug: "any-slug",
+            isPinned: false,
+            isEncrypted: false,
+            isEmpty: false,
+            subtitle: "any subtitle",
+            creationDate: nil,
+            modificationDate: nil,
+            content: "any content"
+        )
     }
 }

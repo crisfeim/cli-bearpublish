@@ -57,8 +57,8 @@ extension Menu {
                 children: children,
                 isPinned: false,
                 isSelected: self == .all,
-                type: .regular,
-                icon: icon
+//                type: .regular,
+//                icon: icon
             )
         }
     }

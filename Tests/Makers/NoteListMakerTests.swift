@@ -1,6 +1,7 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 9/6/25.
 
 import XCTest
+import BearPublisherDomain
 
 class NoteListMakerTests: XCTestCase {
     
@@ -38,6 +39,17 @@ class NoteListMakerTests: XCTestCase {
     }
     
     func anyNote() -> Note {
-        Note(content: "any content", slug: "any-slug")
+        Note(
+            id: 0,
+            title: "any note",
+            slug: "any-note",
+            isPinned: false,
+            isEncrypted: false,
+            isEmpty: false,
+            subtitle: "any subtitle",
+            creationDate: Date(),
+            modificationDate: Date(),
+            content: "any content"
+        )
     }
 }
