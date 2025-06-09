@@ -85,7 +85,11 @@ struct NoteListTaggedAdapterProvider: NoteListMaker.Provider {
     
     private func makeNoteLists(from hashtag: Hashtag) throws -> [NoteList] {
         let notes = try bearDb.fetchNotes(with: hashtag.name).map(NoteMapper.map)
-        let current = NoteList(title: hashtag.name, slug: slugify(hashtag.name), notes: notes)
+        let current = NoteList(
+            title: hashtag.name,
+            slug: hashtag.path.replacingOccurrences(of: "/", with: "&"),
+            notes: notes
+        )
         let childrenLists = try hashtag.children.flatMap(makeNoteLists)
         return [current] + childrenLists
     }
@@ -112,7 +116,7 @@ enum HasthagMapper {
     static func map(_ hashtag: Hashtag) -> Tag {
         Tag(
             name: hashtag.name,
-            fullPath: hashtag.path,
+            fullPath: hashtag.path.replacingOccurrences(of: "/", with: "&"),
             notesCount: hashtag.count,
             children: hashtag.children.map(Self.map),
             isPinned: hashtag.isPinned
