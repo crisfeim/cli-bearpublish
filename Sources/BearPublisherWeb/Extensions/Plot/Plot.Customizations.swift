@@ -33,17 +33,6 @@ public enum StackSpacing: String {
 // MARK: - Custom definitions
 public typealias BodyContext = HTML.BodyContext
 public extension Node where Context == BodyContext {
-    static func spacer() -> Self {
-        .element(named: "spacer")
-    }
-
-    static func hstack(_ nodes: Self...) -> Node {
-        .element(named: "hstack", nodes: nodes)
-    }
-    
-    static func vstack(_ nodes: Self...) -> Node {
-        .element(named: "vstack", nodes: nodes)
-    }
     
     static func section(_ nodes: Self...) -> Node {
         .element(named: "section", nodes: nodes)
@@ -57,21 +46,17 @@ public extension Node where Context == BodyContext {
 
 
 public extension ElementDefinitions {
-    /// Definition for the `<hstack>` element.
-    enum HStack: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node.hstack }
-    enum VStack: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node.vstack }
     enum Section: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node.section }
     enum Details: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node.details }
     enum Summary: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node.summary }
     enum Script: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node._script }
 }
 
-public typealias HStack  = ElementComponent<ElementDefinitions.HStack >
-public typealias VStack  = ElementComponent<ElementDefinitions.VStack >
+
 public typealias Section = ElementComponent<ElementDefinitions.Section>
 public typealias Details = ElementComponent<ElementDefinitions.Details>
 public typealias Summary = ElementComponent<ElementDefinitions.Summary>
-public typealias _Script  = ElementComponent<ElementDefinitions.Script >
+public typealias _Script  = ElementComponent<ElementDefinitions.Script>
 
 
 
