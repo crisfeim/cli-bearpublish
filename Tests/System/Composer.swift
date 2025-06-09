@@ -50,7 +50,7 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
 
 extension BearDb: IndexMaker.Provider {
     func notes() throws -> [BearDomain.Note] {
-        try fetchAll().map(NoteMapper.map)
+        try fetchNotes().map(NoteMapper.map)
     }
     
     func tags() throws -> [BearDomain.Tag] {
