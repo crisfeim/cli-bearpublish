@@ -1,8 +1,10 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 9/6/25.
 
 import Foundation
-
 import BearWebUI
+import BearDatabase
+import BearDomain
+import BearPublisherCLI
 
 func make(dbPath: String, outputURL: URL) throws -> SSG {
     let bearDb = try BearDb(path: dbPath)
@@ -45,9 +47,6 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
     return ssg
 }
 
-import BearDatabase
-import BearDomain
-import BearPublisherCLI
 
 extension BearDb: IndexMaker.Provider {
     func notes() throws -> [BearDomain.Note] {
