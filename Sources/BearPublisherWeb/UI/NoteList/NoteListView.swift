@@ -1,26 +1,31 @@
 //
-//  NoteList.swift
+//  File.swift
 //  
 //
-//  Created by Cristian Felipe Patiño Rojas on 06/09/2023.
+//  Created by Cristian Felipe Patiño Rojas on 24/10/2023.
 //
-import Foundation
-import Plot
 
+import Plot
 import BearPublisherDomain
 
-public struct NoteList: Component, Equatable {
-    
+/// Standalone nav (note list). This will be used to generate the standalone note list that will be consumed through HTMX when switching tags, or default notes filter on <menu> component
+public struct NoteListView: View {
     let title: String
-    let model: [Note]
+    let notes: [Note]
     
-    public init(title: String, model: [Note]) {
+    public init(title: String, notes: [Note]) {
         self.title = title
-        self.model = model
+        self.notes = notes
     }
     
+    public var body: HTML {
+        HTML(.body(.component(list)))
+    }
+}
+
+extension NoteListView {
     @ComponentBuilder
-    public var body: Component {
+    public var list: Component {
         Header {
             Label("") {
                 SVG.burger
@@ -39,10 +44,9 @@ public struct NoteList: Component, Equatable {
             .id("spinner")
             .class("htmx-indicator")
         
-        List(model) { item in
+        List(notes) { item in
             Row(note: item, isSelected: false)
         }
         .id("note-list")
     }
-    
 }

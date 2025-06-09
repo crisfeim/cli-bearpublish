@@ -8,12 +8,11 @@
 import Plot
 import BearPublisherDomain
 
-extension NoteList {
+extension NoteListView {
     struct Row: Component {
         let note: Note
-        #warning("Tab index should be different if selected")
         let isSelected: Bool
-        var tabindex: Int { isSelected ? 0 : 0}
+        var tabindex: Int { isSelected ? 1 : 0}
         
         var pushedUrl: String {
              "/?slug=\(note.slug)"
@@ -75,4 +74,15 @@ struct Indicators {
     private init() {}
     static let mainIndicator = "main-indicator"
     static let spinner = "spinner"
+}
+
+extension NoteListView {
+    struct EncryptedPlaceholder: Component {
+        var body: Component {
+            Div {
+                Div().class("encrypted-placeholder")
+                Div().class("encrypted-placeholder")
+            }
+        }
+    }
 }

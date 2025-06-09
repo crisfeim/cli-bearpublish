@@ -22,11 +22,8 @@ public struct IndexView: Equatable, View {
         Menu(tags: tags)
     }
     
-    fileprivate var nav: NoteList {
-        NoteList(
-            title: navTitle ?? "Notas",
-            model: notes
-        )
+    fileprivate var nav: Component {
+        NoteListView(title: navTitle ?? "Notas", notes: notes).list
     }
     
     fileprivate var main: Main {
