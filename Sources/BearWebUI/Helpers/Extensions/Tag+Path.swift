@@ -9,17 +9,10 @@ import BearDomain
 
 extension Tag {
     var path: String {
-        //            switch type {
-        //            case .regular: return "/list/\(fullPath)"
         return "/tag/\(fullPath).html"
     }
     
     func makePath() -> String {
-        //            switch type {
-        //            case .regular: return
-        //                 "/?list=\(fullPath)"
-        //            case .tag: return
         "/?tag=\(fullPath.replacingOccurrences(of: "&", with: "/"))"
-        //            }
     }
 }
