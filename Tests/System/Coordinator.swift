@@ -13,7 +13,7 @@ protocol IndexRenderer {
 }
 
 protocol NoteListRenderer {
-    func render(_ notes: [Note]) throws -> String
+    func render(_ notes: [Note]) -> String
 }
 
 protocol NoteDetailRenderer {

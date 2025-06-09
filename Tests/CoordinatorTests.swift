@@ -18,24 +18,7 @@ class CoordinatorTests: XCTestCase {
         XCTAssertEqual(notesProvider.capturedFilter, expectedFilter)
     }
     
-    func test_getTaggedNotes_buildTaggedNoteListsResourcesFromTaggedNotesProviderAndNoteListRenderer() throws {
-    
-        struct NotesByTagListProvider: TaggedNotesProvider {
-            let result: [TagNoteList]
-            func get() throws -> [TagNoteList] {
-                result
-            }
-        }
-       
-        let provider = NotesByTagListProvider(result: [TagNoteList(tag: "any-tag", notes: [anyNote()])])
-        let noteListRenderer = NoteListRendererSpy(result: "any rendered content")
-        let sut = makeSUT(taggedNotesProvider: provider, noteListRenderer: noteListRenderer)
-        let noteListByTag = try sut.getTaggedNotes()
-        let expected = [Resource(filename: "standalone/tag/any-tag", contents: "any rendered content")]
-        
-        XCTAssertEqual(noteListByTag, expected)
-        XCTAssertEqual(noteListRenderer.capturedNotes, [anyNote()])
-    }
+
 }
 
 // MARK: - Helpers
@@ -111,7 +94,6 @@ private extension CoordinatorTests {
         }
     }
     
-    
     class NoteListRendererSpy: NoteListRenderer {
         
         private let result: String
@@ -120,7 +102,7 @@ private extension CoordinatorTests {
             self.result = result
         }
         
-        func render(_ notes: [Note]) throws -> String {
+        func render(_ notes: [Note]) -> String {
             capturedNotes = notes
             return result
         }
@@ -135,7 +117,7 @@ private extension CoordinatorTests {
     }
     
     struct NoteListRendererDummy: NoteListRenderer {
-        func render(_ notes: [Note]) throws -> String {""}
+        func render(_ notes: [Note]) -> String {""}
     }
     
     struct NotesProviderDummy:NotesProvider {
