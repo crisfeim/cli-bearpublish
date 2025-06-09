@@ -25,7 +25,7 @@ public struct NoteListView: View {
 
 extension NoteListView {
     @ComponentBuilder
-    public var list: Component {
+    var list: Component {
         Header {
             Label("") {
                 SVG.burger

@@ -6,7 +6,7 @@ import BearPublisherWeb
 
 struct IndexRenderer: IndexMaker.Renderer {
     func render(notes: [Note], tags: [Tag]) -> String {
-        IndexView(title: "Home", tags: tags, notes: notes).render()
+        IndexHTML(title: "Home", tags: tags, notes: notes).render()
     }
 }
 

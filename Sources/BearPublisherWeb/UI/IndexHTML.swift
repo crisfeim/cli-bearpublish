@@ -3,44 +3,20 @@ import Plot
 import BearPublisherDomain
 
 /// Base three panel layout (menu, nav note list and main note content)
-public struct IndexView: Equatable, View {
-    fileprivate let title: String
-    fileprivate let tags: [Tag]
-    fileprivate let notes: [Note]
-    fileprivate let content: String?
-    
-    fileprivate  let layoutScript = getFileContents("layout", ext: "hs")
-    
-    
-    fileprivate var css: [Resource] { Self.makeCSS() }
-    fileprivate var js : (head: [Resource], body: [Resource]) {
-        Self.makeJS()
-    }
-    
-    fileprivate var menu: Menu {
-        Menu(tags: tags)
-    }
-    
-    fileprivate var nav: Component {
-        NoteListView(title: "Notes", notes: notes).list
-    }
-    
-    fileprivate var main: Main {
-        Main(content: content)
-    }
+public struct IndexHTML: Equatable, View {
+    private let title: String
+    private let tags: [Tag]
+    private let notes: [Note]
     
     public init(
         title: String,
         tags: [Tag],
         notes: [Note],
-        content: String? = nil,
     ) {
         self.title = title
         self.tags = tags
         self.notes = notes
-        self.content = content
     }
-    
     
     public var body: HTML {
         HTML(
@@ -59,9 +35,9 @@ public struct IndexView: Equatable, View {
                 .class("js-off"),
                 .makeCheckbox("menu"),
                 .makeCheckbox("nav"),
-                .menu(.component(menu), .class("js-element")),
-                .nav(.component(nav)),
-                .main(.component(main)),
+                .menu(.component(Menu(tags: tags)), .class("js-element")),
+                .nav(.component(NoteListView(title: "Notes", notes: notes).list)),
+                .main(.component(Main(content: nil))),
                 .script(type: "text/hyperscript", layoutScript),
                 .forEach(js.body, { .script(.src($0.fullPath)) })
             )
@@ -69,9 +45,22 @@ public struct IndexView: Equatable, View {
     }
 }
 
+extension IndexHTML {
+    fileprivate var layoutScript: String {
+        getFileContents("layout", ext: "hs")
+    }
+    
+    fileprivate var css: [Resource] {
+        Self.makeCSS()
+    }
+    
+    fileprivate var js : (head: [Resource], body: [Resource]) {
+        Self.makeJS()
+    }
+}
 
 
-public extension IndexView {
+public extension IndexHTML {
     static func makeCSS() -> [Resource] {
         
         let app    = getCSSFile("app")
