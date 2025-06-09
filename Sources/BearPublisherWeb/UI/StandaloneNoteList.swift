@@ -9,7 +9,7 @@ import Plot
 import BearPublisherDomain
 
 /// Standalone nav (note list). This will be used to generate the standalone note list that will be consumed through HTMX when switching tags, or default notes filter on <menu> component
-public struct StandaloneNoteList {
+public struct StandaloneNoteList: View {
     let title: String
     let notes: [Note]
     

@@ -3,7 +3,7 @@ import Plot
 import BearPublisherDomain
 
 /// Base three panel layout (menu, nav note list and main note content)
-public struct BaseLayout: Equatable {
+public struct BaseLayout: Equatable, View {
     fileprivate let title: String
     fileprivate let tags: [Menu.Model]
     fileprivate let navTitle: String?
