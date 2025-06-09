@@ -13,8 +13,6 @@ public struct NoteDetailHTML: HTMLDocument {
     private let content: String
     private let slug: String
     
-    private var css: [Resource] { Self.makeCSS() }
-    
     public init(
         title: String,
         slug: String,
@@ -29,29 +27,11 @@ public struct NoteDetailHTML: HTMLDocument {
         HTML(
             .style("overflow: scroll"),
             .lang(.spanish),
-            .head(
-                .title(title),
-                .forEach(css, {.stylesheet($0.fullPath)})
-            ),
+            .head(.title(title)),
             .body(
                 .class("js-off"),
                 .div(.component(Content(content: content)))
             )
         )
-    }
-}
-
-private extension NoteDetailHTML {
-    
-    static func makeCSS() -> [Resource] {
-        
-        let vars  = getCSSFile("theme-variables")
-        let bear  = getCSSFile("bear")
-        let main  = getCSSFile("main")
-        
-        let theme      = Resource(name: "theme-variables", fileExtension: "css", content: vars       )
-        let standalone = Resource(name: "standalone"     , fileExtension: "css", content: bear + main)
-        
-        return [theme, standalone]
     }
 }
