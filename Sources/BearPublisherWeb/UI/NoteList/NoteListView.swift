@@ -45,7 +45,7 @@ extension NoteListView {
             .class("htmx-indicator")
         
         List(notes) { item in
-            Row(note: item, isSelected: false)
+            Cell(note: item, isSelected: false)
         }
         .id("note-list")
     }

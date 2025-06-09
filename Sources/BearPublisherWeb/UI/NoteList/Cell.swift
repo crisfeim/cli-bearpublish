@@ -9,7 +9,7 @@ import Plot
 import BearPublisherDomain
 
 extension NoteListView {
-    struct Row: Component {
+    struct Cell: Component {
         let note: Note
         let isSelected: Bool
         var tabindex: Int { isSelected ? 1 : 0}
