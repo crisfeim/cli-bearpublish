@@ -171,7 +171,7 @@ public extension String {
             
             <a
             href="/tag/\(slug)"
-            hx-get="/standalone/tag/\(slug)"
+            hx-get="/standalone/tag/\(slug).html"
             hx-target="nav"
             class="hashtag"
             _="on click set .nav-checkbox.checked to false">\(hashtag)</a>

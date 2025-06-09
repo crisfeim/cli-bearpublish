@@ -33,7 +33,7 @@ extension Content {
         
         var body: Component {
             Link(hashtag, url: href)
-                .hxGet("/standalone/tag/\(slug)")
+                .hxGet("/standalone/tag/\(slug).html")
                 .hxTarget("nav")
                 .class("hashtag")
                 .hxIndicator(.id("spinner"))

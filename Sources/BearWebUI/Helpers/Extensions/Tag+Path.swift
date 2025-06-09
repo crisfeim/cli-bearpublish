@@ -11,7 +11,7 @@ extension Tag {
     var path: String {
         //            switch type {
         //            case .regular: return "/list/\(fullPath)"
-        return "/tag/\(fullPath)"
+        return "/tag/\(fullPath).html"
     }
     
     func makePath() -> String {

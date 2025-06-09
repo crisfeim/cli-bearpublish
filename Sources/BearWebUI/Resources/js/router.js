@@ -52,7 +52,7 @@ if (slug) {
 const tag = urlParams.get('tag');
 if (tag) {
     const parsedTag = tag.replace(/\//g, '&');
-    const resourceUrl = `/standalone/tag/${parsedTag}`;
+    const resourceUrl = `/standalone/tag/${parsedTag}.html`;
     loadContent(resourceUrl, 'nav');
     
 }

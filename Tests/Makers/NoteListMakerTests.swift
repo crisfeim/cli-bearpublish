@@ -13,11 +13,11 @@ class NoteListMakerTests: XCTestCase {
             NoteList(title: "Any tag", slug: "any-tag", notes: [anyNote()])
         ])
         let renderer = RendererStub(result: "any rendered content")
-        let router: SUT.Router = { "standalone/tag/\($0)" }
+        let router: SUT.Router = { "standalone/tag/\($0).html" }
         
         let sut = makeSUT(provider: provider, renderer: renderer, router: router)
         let resources = try sut.make()
-        let expected = [Resource(filename: "standalone/tag/any-tag", contents: "any rendered content")]
+        let expected = [Resource(filename: "standalone/tag/any-tag.html", contents: "any rendered content")]
         
         XCTAssertEqual(resources, expected)
     }
