@@ -9,7 +9,7 @@ import Plot
 import BearPublisherDomain
 
 extension Menu {
-    public struct Cell: Component {
+    struct Cell: Component {
         let tag: Tag
         let isSelected: Bool
        
@@ -26,7 +26,7 @@ extension Menu {
         }
        
         
-        public var body: Component { js }
+        var body: Component { js }
         
         fileprivate var js: Component {
             Div {

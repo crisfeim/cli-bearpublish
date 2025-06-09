@@ -5,12 +5,11 @@
 import Plot
 import BearPublisherDomain
 
-public struct Menu: Component, Equatable {
+struct Menu: Component, Equatable {
     let tags: [Tag]
    
     @ComponentBuilder
-    public var body: Component {
-        // MARK: - Tags
+    var body: Component {
         Section {
             for tag in tags {
                 Cell(tag: tag, isSelected: false)

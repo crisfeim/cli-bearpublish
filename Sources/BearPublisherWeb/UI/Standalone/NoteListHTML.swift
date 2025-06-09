@@ -9,8 +9,8 @@ import Plot
 import BearPublisherDomain
 
 public struct NoteListHTML: HTMLDocument {
-    let title: String
-    let notes: [Note]
+    private let title: String
+    private let notes: [Note]
     
     public init(title: String, notes: [Note]) {
         self.title = title

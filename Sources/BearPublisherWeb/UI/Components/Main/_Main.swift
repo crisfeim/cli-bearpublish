@@ -7,16 +7,11 @@
 
 import Plot
 
-public struct Main: Component {
-    
-    private let content: String?
-    
-    public init(content: String? = nil) {
-        self.content = content
-    }
-    
+struct Main: Component {
+    let content: String?
+   
     @ComponentBuilder
-    public var body: Component {
+    var body: Component {
         Header {
             Label("") {
                 SVG.chevron.render().makeRawNode()

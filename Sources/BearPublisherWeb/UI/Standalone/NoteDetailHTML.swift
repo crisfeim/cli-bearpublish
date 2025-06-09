@@ -9,11 +9,11 @@ import Plot
 
 public struct NoteDetailHTML: HTMLDocument {
     
-    fileprivate let title: String
-    fileprivate let content: String
-    fileprivate let slug: String
+    private let title: String
+    private let content: String
+    private let slug: String
     
-    fileprivate var css: [Resource] { Self.makeCSS() }
+    private var css: [Resource] { Self.makeCSS() }
     
     public init(
         title: String,
@@ -41,7 +41,7 @@ public struct NoteDetailHTML: HTMLDocument {
     }
 }
 
-public extension NoteDetailHTML {
+private extension NoteDetailHTML {
     
     static func makeCSS() -> [Resource] {
         

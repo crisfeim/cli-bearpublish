@@ -8,7 +8,7 @@
 import Plot
 
 extension Main {
-    public struct Hashtag: Component {
+    struct Hashtag: Component {
         
         let hashtag: String
         let count: Int
@@ -31,7 +31,7 @@ extension Main {
         """
         }
         
-       public var body: Component {
+        var body: Component {
             Link(hashtag, url: href)
                 .hxGet("/standalone/tag/\(slug)")
                 .hxTarget("nav")

@@ -44,22 +44,22 @@ public struct IndexHTML: Equatable, HTMLDocument {
     }
 }
 
-extension IndexHTML {
-    fileprivate var layoutScript: String {
+private extension IndexHTML {
+    var layoutScript: String {
         getFileContents("layout", ext: "hs")
     }
     
-    fileprivate var css: [Resource] {
+    var css: [Resource] {
         Self.makeCSS()
     }
     
-    fileprivate var js : (head: [Resource], body: [Resource]) {
+    var js : (head: [Resource], body: [Resource]) {
         Self.makeJS()
     }
 }
 
 
-public extension IndexHTML {
+private extension IndexHTML {
     static func makeCSS() -> [Resource] {
         
         let app    = getCSSFile("app")
