@@ -68,15 +68,7 @@ extension BearDatabase: IndexMaker.Provider {
     }
     
     func tags() throws -> [BearDomain.Tag] {
-        try fetchTags().map {
-            Tag(
-                name: $0.name,
-                fullPath: $0.path,
-                notesCount: $0.count,
-                children: [], // @todo
-                isPinned: $0.isPinned
-            )
-        }
+        try fetchTagTree().map(Tag.init(from:))
     }
 }
 
@@ -150,6 +142,18 @@ struct NoteListTaggedAdapterProvider: NoteListMaker.Provider {
             
             return NoteList(title: $0.name, slug: slugify($0.name), notes: notes)
         }
+    }
+}
+
+extension Tag {
+    init(from hashtag: Hashtag) {
+        self.init(
+            name: hashtag.name,
+            fullPath: hashtag.path,
+            notesCount: hashtag.count,
+            children: hashtag.children.map(Tag.init(from:)),
+            isPinned: hashtag.isPinned
+        )
     }
 }
 

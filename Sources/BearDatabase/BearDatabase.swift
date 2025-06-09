@@ -266,10 +266,6 @@ public final class BearDatabase {
         
         return try db.prepare(sqlQuery).map {note(from: $0)}
     }
-    
-    public func searchTags(query: String) -> [Tag] {
-        []
-    }
 }
 
 public struct SearchResultItem {
