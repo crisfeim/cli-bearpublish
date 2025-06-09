@@ -6,13 +6,21 @@ import BearPublisherCLI
 class IndexMakerTests: XCTestCase {
     
     struct IndexMaker {
-        let notesProvider: NotesProvider
-        let tagsProvider: TagsProvider
-        let renderer: IndexRenderer
+        protocol Provider {
+            func notes() throws -> [Note]
+            func tags() throws -> [Tag]
+        }
+        
+        protocol Renderer {
+            func render(notes: [Note], tags: [Tag]) -> String
+        }
+        
+        let provider: Provider
+        let renderer: Renderer
         
         func make() throws -> Resource {
-            let notes = try notesProvider.get(.all)
-            let tags = try tagsProvider.get()
+            let notes = try provider.notes()
+            let tags = try provider.tags()
             let rendered = renderer.render(notes: notes, tags: tags)
             return Resource(filename: "index.html", contents: rendered)
         }
@@ -20,10 +28,10 @@ class IndexMakerTests: XCTestCase {
     
     func test_make_deliversRenderedIndexWithProvidedNotesAndTags() throws {
         
-        let provider = ProviderSpy(notes: [anyNote()], tags: [anyTag()])
-        let renderer = IndexRendererSpy(result: "any renderer")
+        let provider = ProviderStub(stubNotes: [anyNote()], stubTags: [anyTag()])
+        let renderer = RendererSpy(result: "any renderer")
         
-        let sut = makeSUT(notesProvider: provider, tagsProvider: provider,  renderer: renderer)
+        let sut = makeSUT(provider: provider,  renderer: renderer)
         
         let index = try sut.make()
         
@@ -32,39 +40,24 @@ class IndexMakerTests: XCTestCase {
         XCTAssertEqual(index, expectedIndex)
         XCTAssertEqual(renderer.capturedTags, [anyTag()])
         XCTAssertEqual(renderer.capturedNotes, [anyNote()])
-        XCTAssertEqual(provider.capturedFilter, .all)
     }
     
-    func makeSUT(notesProvider: NotesProvider, tagsProvider: TagsProvider, renderer: IndexRenderer) -> IndexMaker {
+    func makeSUT(provider: IndexMaker.Provider, renderer: IndexMaker.Renderer) -> IndexMaker {
          IndexMaker(
-            notesProvider: notesProvider,
-            tagsProvider: tagsProvider,
+            provider: provider,
             renderer: renderer
         )
     }
     
-    final class ProviderSpy: TagsProvider, NotesProvider {
-        private let notes: [Note]
-        private let tags: [Tag]
+    struct ProviderStub: IndexMaker.Provider {
+        let stubNotes: [Note]
+        let stubTags: [Tag]
         
-        private(set) var capturedFilter: NoteListFilter?
-        
-        init(notes: [Note], tags: [Tag]) {
-            self.notes = notes
-            self.tags = tags
-        }
-    
-        func get(_ filter: NoteListFilter) throws -> [Note] {
-           capturedFilter = filter
-           return notes
-        }
-        
-        func get() throws -> [Tag] {
-            tags
-        }
+        func notes() throws -> [Note] { stubNotes }
+        func tags() throws -> [Tag] { stubTags }
     }
     
-    class IndexRendererSpy: IndexRenderer {
+    class RendererSpy: IndexMaker.Renderer {
         private let result: String
         private(set) var capturedNotes = [Note]()
         private(set) var capturedTags  = [Tag]()
