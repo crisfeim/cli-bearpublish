@@ -11,8 +11,6 @@ import BearDomain
 extension NoteList {
     struct Cell: Component {
         let note: Note
-        let isSelected: Bool
-        var tabindex: Int { isSelected ? 1 : 0}
         var pushedUrl: String { "/?slug=\(note.slug)" }
         
         var body: Component {
@@ -48,8 +46,6 @@ extension NoteList {
                 .hx_swap("innerHTML scroll:top")
                 .hx_indicator(.class("main-indicator"))
                 .hyperscript("on click take .selected then Layout.toggleNav()")
-                .tabIndex(tabindex)
-                .class(isSelected ? "selected" : "")
             }
         }
     }

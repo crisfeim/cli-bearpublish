@@ -28,9 +28,7 @@ struct NoteList: Component {
             .id("spinner")
             .class("htmx-indicator")
         
-        List(notes) { item in
-            Cell(note: item, isSelected: false)
-        }
-        .id("note-list")
+        List(notes, content: Cell.init)
+            .id("note-list")
     }
 }
