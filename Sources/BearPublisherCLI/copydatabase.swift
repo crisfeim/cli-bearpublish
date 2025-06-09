@@ -5,7 +5,7 @@ import Foundation
 /// This needs to be done manually because app sandbox is deactivated in order to prevent asking folder permissions for accessing Bear folder on each launch.
 /// Also, this needs to be done because accessing BearDb directly can cause a crash when Bear is opened (because two processes try to open the db at the same time)
 /// By accessing a copy we circumvent this problem.
-func copyDatabase() throws {
+public func copyBearDatabase() throws {
     let fm = FileManager.default
     let destinationPath = NSString(string: "~/Library/Containers/lat.cristian.Renard/Data/Applications/").expandingTildeInPath
     let destinationURL = URL(fileURLWithPath: destinationPath).appendingPathComponent("database.sqlite")
