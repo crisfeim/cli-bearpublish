@@ -27,36 +27,3 @@ protocol TaggedNotesProvider {
 protocol TagsProvider {
     func get() throws -> [Tag]
 }
-
-
-struct Coordinator {
-    let notesProvider: NotesProvider
-    let taggedNotesProvider: TaggedNotesProvider
-    let tagsProvider: TagsProvider
-    
-    let noteListRenderer: NoteListRenderer
-    let noteDetailRenderer: NoteDetailRenderer
-    
-    
-    
-    func getNotes(_ filter: NoteListFilter) throws -> Resource {
-        let notes    = try notesProvider.get(filter)
-        let contents = try noteListRenderer.render(notes)
-        return Resource(filename: "standalone/list/\(filter.rawValue).html", contents: contents)
-    }
-    
-    func getTaggedNotes() throws -> [Resource] {
-        try taggedNotesProvider.get().map {
-           Resource(
-                filename: "standalone/tag/" + $0.tag,
-                contents: try noteListRenderer.render($0.notes)
-            )
-        }
-    }
-    
-    func getNoteDetails() throws -> [Resource] {
-        try notesProvider.get(.all).map {
-            Resource(filename: "standalone/note/\($0.slug)", contents: noteDetailRenderer.render($0))
-        }
-    }
-}
