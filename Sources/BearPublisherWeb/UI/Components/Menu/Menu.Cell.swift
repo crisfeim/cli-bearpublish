@@ -26,9 +26,7 @@ extension Menu {
         }
        
         
-        var body: Component { js }
-        
-        fileprivate var js: Component {
+        var body: Component {
             Div {
                 HStack {
 //                    SVGRenderer(model.icon)
