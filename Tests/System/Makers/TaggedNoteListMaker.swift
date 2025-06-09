@@ -9,13 +9,16 @@ struct TaggedNoteListMaker {
         func render(_ notes: [Note]) -> String
     }
     
+    typealias Router = (String) -> String
+    
     let provider: Provider
     let renderer: Renderer
+    let router: Router
     
     func make() throws -> [Resource] {
         try provider.get().map {
             Resource(
-                filename: "standalone/tag/\($0.slug)",
+                filename: router($0.slug),
                 contents: renderer.render($0.notes)
             )
         }

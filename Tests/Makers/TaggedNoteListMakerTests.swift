@@ -5,13 +5,16 @@ import XCTest
 class TaggedNoteListMakerTests: XCTestCase {
     
     typealias SUT = TaggedNoteListMaker
+    
     func test_make_deliversRenderedTaggedNoteLists() throws {
         
         let provider = ProviderStub(stub: [
             NoteList(title: "Any tag", slug: "any-tag", notes: [anyNote()])
         ])
         let renderer = RendererSpy(result: "any rendered content")
-        let sut = makeSUT(provider: provider, renderer: renderer)
+        let router: SUT.Router = { "standalone/tag/\($0)" }
+        
+        let sut = makeSUT(provider: provider, renderer: renderer, router: router)
         let resources = try sut.make()
         let expected = [Resource(filename: "standalone/tag/any-tag", contents: "any rendered content")]
         
@@ -20,8 +23,8 @@ class TaggedNoteListMakerTests: XCTestCase {
     }
     
     
-    func makeSUT(provider: SUT.Provider, renderer: SUT.Renderer) -> SUT {
-        SUT(provider: provider, renderer: renderer)
+    func makeSUT(provider: SUT.Provider, renderer: SUT.Renderer, router: @escaping SUT.Router) -> SUT {
+        SUT(provider: provider, renderer: renderer, router: router)
     }
     
     
