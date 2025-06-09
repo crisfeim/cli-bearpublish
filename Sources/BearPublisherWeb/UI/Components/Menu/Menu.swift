@@ -3,7 +3,7 @@
 //
 
 import Plot
-import BearPublisherDomain
+import BearDomain
 
 struct Menu: Component, Equatable {
     let tags: [Tag]

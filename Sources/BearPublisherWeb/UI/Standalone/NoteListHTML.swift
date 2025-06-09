@@ -6,7 +6,7 @@
 //
 
 import Plot
-import BearPublisherDomain
+import BearDomain
 
 public struct NoteListHTML: HTMLDocument {
     private let title: String

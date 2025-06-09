@@ -1,7 +1,7 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 9/6/25.
 
 import XCTest
-import BearPublisherDomain
+import BearDomain
 import BearPublisherWeb
 
 struct IndexRenderer: IndexMaker.Renderer {
@@ -17,7 +17,7 @@ struct NoteDetailRenderer: NoteDetailMaker.Renderer {
 }
 
 struct NoteListRenderer: NoteListMaker.Renderer {
-    func render(_ list: BearPublisherDomain.NoteList) -> String {
+    func render(_ list: BearDomain.NoteList) -> String {
         NoteListHTML(title: list.title, notes: list.notes).render()
     }
 }

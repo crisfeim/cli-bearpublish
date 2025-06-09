@@ -6,7 +6,7 @@
 //
 
 import Plot
-import BearPublisherDomain
+import BearDomain
 
 extension Menu {
     struct Cell: Component {

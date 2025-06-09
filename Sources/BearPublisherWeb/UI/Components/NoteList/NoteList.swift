@@ -2,7 +2,7 @@
 
 
 import Plot
-import BearPublisherDomain
+import BearDomain
 
 struct NoteList: Component {
     let title: String

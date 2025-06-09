@@ -1,6 +1,6 @@
 import Plot
 
-import BearPublisherDomain
+import BearDomain
 
 public struct IndexHTML: Equatable, HTMLDocument {
     private let title: String

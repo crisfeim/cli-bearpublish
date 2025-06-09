@@ -1,5 +1,5 @@
 import Foundation
-import BearPublisherDomain
+import BearDomain
 
 extension Note {
     var dateTime: String {

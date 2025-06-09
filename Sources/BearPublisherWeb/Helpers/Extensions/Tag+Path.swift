@@ -5,7 +5,7 @@
 //  Created by Cristian Felipe Patiño Rojas on 08/09/2023.
 //
 
-import BearPublisherDomain
+import BearDomain
 
 extension Tag {
     var path: String {
