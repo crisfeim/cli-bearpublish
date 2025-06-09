@@ -11,6 +11,9 @@ struct SSG {
         try createOutputFolderIfNeeded()
         try resources.forEach {
             let url = outputURL.appendingPathComponent($0.filename)
+            let directory = url.deletingLastPathComponent()
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+
             try $0.contents.write(to: url, atomically: true, encoding: .utf8)
         }
     }
