@@ -95,33 +95,6 @@ struct NoteListTaggedAdapterProvider: NoteListMaker.Provider {
     }
 }
 
-enum NoteMapper {
-    static func map(_ note: BearDatabase.Note) -> BearDomain.Note {
-        Note(
-            id: note.id,
-            title: note.title ?? "New note",
-            slug: slugify(note.title ?? "New note"),
-            isPinned: note.isPinned,
-            isEncrypted: note.isEncrypted,
-            isEmpty: note.content?.isEmpty ?? true,
-            subtitle: note.subtitle ?? "",
-            creationDate: note.creationDate,
-            modificationDate: note.modificationDate,
-            content: note.content ?? ""
-        )
-    }
-}
 
-enum HasthagMapper {
-    static func map(_ hashtag: Hashtag) -> Tag {
-        Tag(
-            name: hashtag.name,
-            fullPath: hashtag.path.replacingOccurrences(of: "/", with: "&"),
-            notesCount: hashtag.count,
-            children: hashtag.children.map(Self.map),
-            isPinned: hashtag.isPinned
-        )
-    }
-}
 
 
