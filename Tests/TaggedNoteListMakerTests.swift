@@ -3,7 +3,11 @@
 import XCTest
 
 struct TaggedNoteListMaker {
-    let provider: TaggedNotesProvider
+    protocol Provider {
+        func get() throws -> [TagNoteList]
+    }
+    
+    let provider: Provider
     let renderer: NoteListRenderer
     
     func make() throws -> [Resource] {
@@ -17,16 +21,10 @@ struct TaggedNoteListMaker {
 }
 class TaggedNoteListMakerTests: XCTestCase {
     
+    typealias SUT = TaggedNoteListMaker
     func test_make_() throws {
-    
-        struct NotesByTagListProvider: TaggedNotesProvider {
-            let result: [TagNoteList]
-            func get() throws -> [TagNoteList] {
-                result
-            }
-        }
-       
-        let provider = NotesByTagListProvider(result: [TagNoteList(tag: "any-tag", notes: [anyNote()])])
+        
+        let provider = ProviderStub(stub: [TagNoteList(tag: "any-tag", notes: [anyNote()])])
         let renderer = NoteListRendererSpy(result: "any rendered content")
         let sut = makeSUT(provider: provider, renderer: renderer)
         let resources = try sut.make()
@@ -37,8 +35,14 @@ class TaggedNoteListMakerTests: XCTestCase {
     }
     
     
-    func makeSUT(provider: TaggedNotesProvider, renderer: NoteListRenderer) -> TaggedNoteListMaker {
-        TaggedNoteListMaker(provider: provider, renderer: renderer)
+    func makeSUT(provider: SUT.Provider, renderer: NoteListRenderer) -> SUT {
+        SUT(provider: provider, renderer: renderer)
+    }
+    
+    
+    struct ProviderStub: SUT.Provider {
+        let stub: [TagNoteList]
+        func get() throws -> [TagNoteList] { stub }
     }
     
     class NoteListRendererSpy: NoteListRenderer {
