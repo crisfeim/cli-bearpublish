@@ -7,26 +7,29 @@ import BearWebUI
 func make(dbPath: String, outputURL: URL) throws -> SSG {
     let bearDb = try BearDb(path: dbPath)
     
-    let index = try IndexMaker(provider: bearDb, renderer: IndexRenderer()).make()
+    let index = try IndexMaker(
+        provider: bearDb,
+        renderer: IndexRenderer()
+    ).make()
+    
     let notes = try NoteDetailMaker(
         provider: bearDb,
         renderer: NoteDetailRenderer(),
-        router: { "standalone/note/\($0).html" }
+        router: Router.note
     ).make()
     
     let defaultLists = try NoteListMaker(
         provider: NoteListDefaultAdapterProvider(bearDb: bearDb),
         renderer: NoteListRenderer(),
-        router: { "standalone/list/\($0).html"}
+        router: Router.list
     ).make()
     
     let tagNoteLists = try NoteListMaker(
         provider: NoteListTaggedAdapterProvider(bearDb: bearDb),
         renderer: NoteListRenderer(),
-        router: { "standalone/tag/\($0).html" }
+        router: Router.tag
     ).make()
    
-    
     let pages = [index] + notes + defaultLists + tagNoteLists
     
     let css = IndexHTML.css().map {
