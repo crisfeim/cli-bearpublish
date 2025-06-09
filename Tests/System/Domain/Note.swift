@@ -2,4 +2,5 @@
 
 struct Note: Equatable {
     let content: String
+    let slug: String
 }

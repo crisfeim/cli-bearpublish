@@ -23,7 +23,6 @@ class CoordinatorTests: XCTestCase {
     
     func test_getNotesByFilter_buildsAllNoteListResourceFromNoteProviderAndRenderer() throws {
         
-        
         let notesProvider = NoteListProviderSpy(notes: [anyNote()])
         let rendererSpy = NoteListRendererSpy(result: "any note list rendered content")
         let sut = makeSUT(notesProvider: notesProvider, noteListRenderer: rendererSpy)
@@ -34,6 +33,16 @@ class CoordinatorTests: XCTestCase {
         let expectedResources = Resource(filename: "standalone/list/\(expectedFilter.rawValue).html", contents: "any note list rendered content")
         XCTAssertEqual(allNotes, expectedResources)
         XCTAssertEqual(notesProvider.capturedFilter, expectedFilter)
+    }
+    
+    func test_getNotes_buildNotesREsourcesFromNoteProviderAndRenderer() throws {
+        let provider = NoteListProviderSpy(notes: [anyNote()])
+        let renderer = NoteDetailRendererStub(result: "any note content")
+        let sut = makeSUT(notesProvider: provider, noteDetailRenderer: renderer)
+        let notes = try sut.getNoteDetails()
+        let expected = [Resource(filename: "standalone/note/any-slug", contents: "any note content")]
+        
+        XCTAssertEqual(notes, expected)
     }
     
     func test_getTaggedNotes_buildTaggedNoteListsResourcesFromTaggedNotesProviderAndNoteListRenderer() throws {
@@ -64,14 +73,16 @@ private extension CoordinatorTests {
         taggedNotesProvider: Coordinator.TaggedNotesProvider = TaggedNotesProviderDummy(),
         tagsProvider: Coordinator.TagsProvider = TagsProviderDummy(),
         indexRenderer: Coordinator.IndexRenderer = IndexRendererDummy(),
-        noteListRenderer: Coordinator.NoteListRenderer = NoteListRendererDummy()
+        noteListRenderer: Coordinator.NoteListRenderer = NoteListRendererDummy(),
+        noteDetailRenderer: Coordinator.NoteDetailRenderer = NoteDetailRendererDummy()
     ) -> Coordinator {
         Coordinator(
             notesProvider: notesProvider,
             taggedNotesProvider: taggedNotesProvider,
             tagsProvider: tagsProvider,
             indexRenderer: indexRenderer,
-            noteListRenderer: noteListRenderer
+            noteListRenderer: noteListRenderer,
+            noteDetailRenderer: noteDetailRenderer
         )
     }
     
@@ -162,8 +173,18 @@ private extension CoordinatorTests {
         func get() throws -> [TagNoteList] {[]}
     }
     
+    struct NoteDetailRendererDummy: Coordinator.NoteDetailRenderer {
+        func render(_ note: Note) -> String {""}
+    }
+    
+    struct NoteDetailRendererStub: Coordinator.NoteDetailRenderer {
+        let result: String
+        func render(_ note: Note) -> String {result}
+    }
+    
+    
     func anyNote() -> Note {
-        Note(content: "any content")
+        Note(content: "any content", slug: "any-slug")
     }
     
     func anyTag() -> Tag {

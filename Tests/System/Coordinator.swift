@@ -18,6 +18,10 @@ struct Coordinator {
         func render(_ notes: [Note]) throws -> String
     }
     
+    protocol NoteDetailRenderer {
+        func render(_ note: Note) -> String
+    }
+    
     protocol NotesProvider {
         func get(_ filter: NoteListFilter) throws -> [Note]
     }
@@ -33,8 +37,11 @@ struct Coordinator {
     let notesProvider: NotesProvider
     let taggedNotesProvider: TaggedNotesProvider
     let tagsProvider: TagsProvider
+    
+    
     let indexRenderer: IndexRenderer
     let noteListRenderer: NoteListRenderer
+    let noteDetailRenderer: NoteDetailRenderer
     
     func getIndex() throws -> Resource {
         let notes    = try notesProvider.get(.all)
@@ -55,6 +62,12 @@ struct Coordinator {
                 filename: "standalone/tag/" + $0.tag,
                 contents: try noteListRenderer.render($0.notes)
             )
+        }
+    }
+    
+    func getNoteDetails() throws -> [Resource] {
+        try notesProvider.get(.all).map {
+            Resource(filename: "standalone/note/\($0.slug)", contents: noteDetailRenderer.render($0))
         }
     }
 }
