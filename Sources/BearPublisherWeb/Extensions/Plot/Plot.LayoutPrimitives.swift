@@ -4,10 +4,7 @@ import Plot
 
 // MARK: - Node
 // Usage: HTML(.hstack(...))
-public extension Node where Context == BodyContext {
-    static func spacer() -> Self {
-        .element(named: "spacer")
-    }
+public extension Node where Context == HTML.BodyContext {
     
     static func hstack(_ nodes: Self...) -> Node {
         .element(named: "hstack", nodes: nodes)
@@ -15,6 +12,21 @@ public extension Node where Context == BodyContext {
     
     static func vstack(_ nodes: Self...) -> Node {
         .element(named: "vstack", nodes: nodes)
+    }
+}
+
+
+public enum StackSpacing: String {
+    case xs
+    case s
+    case m
+    case l
+    case xl
+}
+
+extension Component {
+    func spacing(_ spacing: StackSpacing) -> Component {
+        attribute(named: "spacing", value: spacing.rawValue)
     }
 }
 

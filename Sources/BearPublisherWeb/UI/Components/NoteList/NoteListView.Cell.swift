@@ -47,7 +47,7 @@ extension NoteList {
                 .hxPushUrl(pushedUrl)
                 .hxSwap("innerHTML scroll:top")
                 .hxIndicator(.class("main-indicator"))
-                .hyperScript("on click take .selected then Layout.toggleNav()")
+                .hyperscript("on click take .selected then Layout.toggleNav()")
                 .tabIndex(tabindex)
                 .class(isSelected ? "selected" : "")
             }

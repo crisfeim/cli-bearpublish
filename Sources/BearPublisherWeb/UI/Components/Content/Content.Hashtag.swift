@@ -38,7 +38,7 @@ extension Content {
                 .class("hashtag")
                 .hxIndicator(.id("spinner"))
                 .data(named: "count", value: count.description)
-                .hyperScript(script)
+                .hyperscript(script)
         }
     }
 }

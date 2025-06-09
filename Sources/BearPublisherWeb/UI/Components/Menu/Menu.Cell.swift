@@ -42,7 +42,7 @@ extension Menu {
                         SVG.chevron.render().makeRawNode()
                     }
                     .class("chevron \(isSelected ? "selected-chevron" : "")")
-                    .hyperScript(tag.children.isEmpty ? "" : "on click halt the event then toggle .opened-child on the closest .menu-item then toggle .rotate45 on me")
+                    .hyperscript(tag.children.isEmpty ? "" : "on click halt the event then toggle .opened-child on the closest .menu-item then toggle .rotate45 on me")
                     .style("display: flex; \(tag.children.isEmpty ? "opacity: 0" : "opacity: 1")")
                 }
                 .class("content")
@@ -53,7 +53,7 @@ extension Menu {
                 .hxPushUrl(tag.makePath())
                 .hxSwap("innerHTML scroll:top")
                 .data(named: "count", value: tag.notesCount.description)
-                .hyperScript(hyperscript)
+                .hyperscript(hyperscript)
                 
                 if !tag.children.isEmpty {
                     Div {
@@ -66,7 +66,7 @@ extension Menu {
                 }
             }
             .class("menu-item \(detailsClass)")
-            .hyperScript(menuItemScript)
+            .hyperscript(menuItemScript)
         }
         
         let hyperscript = """

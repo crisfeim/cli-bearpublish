@@ -18,7 +18,7 @@ struct Content: Component {
             }
             .id("nav-toggle")
             .attribute(named: "for", value: "nav-checkbox")
-            .hyperScript("on click set #menu-checkbox.checked to false")
+            .hyperscript("on click set #menu-checkbox.checked to false")
             .class("js-element")
         }
         
