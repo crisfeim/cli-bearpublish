@@ -14,9 +14,8 @@ public func copyBearDatabase(destinationPath: String, filename: String) throws {
 
     if fm.fileExists(atPath: destinationURL.relativePath) {
         try fm.removeItem(at: destinationURL)
-        try fm.copyItem(atPath: sourcePath, toPath: destinationURL.relativePath)
     } else {
         try fm.createDirectory(atPath: destinationPath, withIntermediateDirectories: true, attributes: nil)
-        try fm.copyItem(atPath: sourcePath, toPath: destinationURL.relativePath)
     }
+    try fm.copyItem(atPath: sourcePath, toPath: destinationURL.relativePath)
 }
