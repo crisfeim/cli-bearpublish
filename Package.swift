@@ -26,7 +26,7 @@ let package = Package(
             .product(name: "RubyGateway", package: "rubygateway"),
             .product(name: "MarkdownKit", package: "swift-markdownkit")
         ]),
-        .target(name: "BearPublisherDataSource", dependencies: [
+        .target(name: "BearDatabase", dependencies: [
             .product(name: "SQLite", package: "SQLite.swift")
         ]),
         .executableTarget(
@@ -36,12 +36,12 @@ let package = Package(
                 "BearDomain",
                 "BearWebUI",
                 "BearPublisherMarkdown",
-                "BearPublisherDataSource"
+                "BearDatabase"
             ]
         ),
         .testTarget(name: "BearPublisherTests", dependencies: ["BearPublisherCLI",
                                                                "BearWebUI",
                                                                "BearPublisherMarkdown",
-                                                               "BearPublisherDataSource"])
+                                                               "BearDatabase"])
     ]
 )

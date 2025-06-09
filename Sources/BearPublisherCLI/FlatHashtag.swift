@@ -7,7 +7,7 @@
 
 import Foundation
 
-import BearPublisherDataSource
+import BearDatabase
 
 /// Model used to flat a Hashtag tree to a non-node struct array.
 /// This means that a tree as follows:
