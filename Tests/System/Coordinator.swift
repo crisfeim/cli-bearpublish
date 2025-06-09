@@ -7,6 +7,11 @@ struct TagNoteList: Equatable {
     let notes: [Note]
 }
 
+struct FilteredNoteList: Equatable {
+    let filter: String
+    let slug: String
+    let notes: [Note]
+}
 
 protocol NoteListRenderer {
     func render(_ notes: [Note]) -> String
