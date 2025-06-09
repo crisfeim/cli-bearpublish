@@ -31,7 +31,7 @@ class CoordinatorTests: XCTestCase {
         let expectedFilter = NoteListFilter.archived
         let allNotes = try sut.getNotes(expectedFilter)
         
-        let expectedResources = Resource(filename: "lists/\(expectedFilter.rawValue).html", contents: "any note list rendered content")
+        let expectedResources = Resource(filename: "standalone/list/\(expectedFilter.rawValue).html", contents: "any note list rendered content")
         XCTAssertEqual(allNotes, expectedResources)
         XCTAssertEqual(notesProvider.capturedFilter, expectedFilter)
     }

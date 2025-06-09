@@ -46,7 +46,7 @@ struct Coordinator {
     func getNotes(_ filter: NoteListFilter) throws -> Resource {
         let notes    = try notesProvider.get(filter)
         let contents = try noteListRenderer.render(notes)
-        return Resource(filename: "lists/\(filter.rawValue).html", contents: contents)
+        return Resource(filename: "standalone/list/\(filter.rawValue).html", contents: contents)
     }
     
     func getTaggedNotes() throws -> [Resource] {
