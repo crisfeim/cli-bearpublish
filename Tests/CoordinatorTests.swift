@@ -4,23 +4,6 @@ import XCTest
 
 
 class CoordinatorTests: XCTestCase {
-    
-    func test_getIndex_buildsIndexResourceFromProvidersAndRenderer() throws {
-        
-        let providerSpy = ProviderSpy(notes: [anyNote()], tags: [anyTag()])
-        let indexRenderer = IndexRendererSpy(result: "any renderer")
-        let sut = makeSUT(notesProvider: providerSpy, tagsProvider: providerSpy,  indexRenderer: indexRenderer)
-        
-        let index = try sut.getIndex()
-        
-        let expectedIndex = Resource(filename: "index.html", contents: "any renderer")
-        let expectedNoteListFilter = NoteListFilter.all
-        XCTAssertEqual(index, expectedIndex)
-        XCTAssertEqual(indexRenderer.capturedTags, [anyTag()])
-        XCTAssertEqual(indexRenderer.capturedNotes, [anyNote()])
-        XCTAssertEqual(providerSpy.capturedFilter, expectedNoteListFilter)
-    }
-    
     func test_getNotesByFilter_buildsAllNoteListResourceFromNoteProviderAndRenderer() throws {
         
         let notesProvider = NoteListProviderSpy(notes: [anyNote()])
@@ -116,7 +99,7 @@ private extension CoordinatorTests {
             self.result = result
         }
         
-        func render(notes: [Note], tags: [Tag]) throws -> String {
+        func render(notes: [Note], tags: [Tag]) -> String {
             capturedNotes = notes
             capturedTags  = tags
             return result
@@ -158,7 +141,7 @@ private extension CoordinatorTests {
     }
     
     struct IndexRendererDummy: IndexRenderer {
-        func render(notes: [Note], tags: [Tag]) throws -> String {""}
+        func render(notes: [Note], tags: [Tag]) -> String {""}
     }
     
     struct NoteListRendererDummy: NoteListRenderer {

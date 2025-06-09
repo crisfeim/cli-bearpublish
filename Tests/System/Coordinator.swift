@@ -9,7 +9,7 @@ struct TagNoteList: Equatable {
 
 
 protocol IndexRenderer {
-    func render(notes: [Note], tags: [Tag]) throws -> String
+    func render(notes: [Note], tags: [Tag]) -> String
 }
 
 protocol NoteListRenderer {
