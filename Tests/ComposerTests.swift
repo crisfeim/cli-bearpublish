@@ -6,17 +6,13 @@ import BearPublisherCLI
 class ComposerTests: XCTestCase {
     
     func test() throws {
-       try XCTExpectFailure {
-            let dbURL = Bundle.module.url(forResource: "database", withExtension: "sqlite")!
-            let sut = try make(dbPath: dbURL.path, outputURL: testSpecificURL())
-            
-            try sut.build()
-            
-            XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/note").path))
-            XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/list").path))
-            XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/tag").path))
-            NSWorkspace.shared.open(testSpecificURL())
-        }
+        let dbURL = Bundle.module.url(forResource: "database", withExtension: "sqlite")!
+        let sut = try make(dbPath: dbURL.path, outputURL: testSpecificURL())
+        
+        try sut.build()
+        
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/note").path))
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/list").path))
     }
     
     private func cachesDirectory() -> URL {

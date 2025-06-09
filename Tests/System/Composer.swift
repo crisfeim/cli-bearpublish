@@ -12,23 +12,17 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
         router: { "standalone/note/\($0).html" }
     )
     
-//    let defaultNoteListMaker = NoteListMaker(
-//        provider: NoteListDefaultAdapterProvider(bearDb: bearDb),
-//        renderer: NoteListRenderer(),
-//        router: {_ in ""}
-//    )
-//    
-//    let taggedNoteListMaker = NoteListMaker(
-//        provider: NoteListTaggedAdapterProvider(bearDb: bearDb),
-//        renderer: NoteListRenderer(),
-//        router: {_ in ""}
-//    )
+    let defaultNoteListMaker = NoteListMaker(
+        provider: NoteListDefaultAdapterProvider(bearDb: bearDb),
+        renderer: NoteListRenderer(),
+        router: { "standalone/list/\($0).html"}
+    )
+   
+    let index = try indexMaker.make()
+    let notes = try notesDetailMaker.make()
+    let lists = try defaultNoteListMaker.make()
     
-    let pages = [try indexMaker.make()]
-    + (try notesDetailMaker.make())
-//    + (try defaultNoteListMaker.make()
-//    + (try taggedNoteListMaker.make()))
-    
+    let pages = [index] + notes + lists
     let ssg = SSG(resources: pages, outputURL: outputURL)
     return ssg
 }
@@ -77,13 +71,48 @@ extension BearDatabase: NoteDetailMaker.Provider {
 struct NoteListDefaultAdapterProvider: NoteListMaker.Provider {
     let bearDb: BearDatabase
     
-    func get() throws -> [NoteList] {[]}
+    func get() throws -> [NoteList] {
+        let archived = try bearDb.fetchArchived().map {
+            BearDomain.Note(
+                id: $0.id,
+                title: $0.title ?? "New note",
+                slug: slugify($0.title ?? "New note"),
+                isPinned: $0.isPinned,
+                isEncrypted: $0.isPinned,
+                isEmpty: $0.content?.isEmpty ?? true,
+                subtitle: $0.subtitle ?? "",
+                creationDate: $0.creationDate,
+                modificationDate: $0.modificationDate,
+                content: $0.content ?? ""
+            )
+        }
+        
+        let tasks = try bearDb.fetchTasks().map {
+            BearDomain.Note(
+                id: $0.id,
+                title: $0.title ?? "New note",
+                slug: slugify($0.title ?? "New note"),
+                isPinned: $0.isPinned,
+                isEncrypted: $0.isPinned,
+                isEmpty: $0.content?.isEmpty ?? true,
+                subtitle: $0.subtitle ?? "",
+                creationDate: $0.creationDate,
+                modificationDate: $0.modificationDate,
+                content: $0.content ?? ""
+            )
+        }
+        
+        return [
+            NoteList(title: "Archived", slug: "archived", notes: archived),
+            NoteList(title: "Tasks", slug: "tasks", notes: tasks)
+        ]
+    }
 }
 
 struct NoteListTaggedAdapterProvider: NoteListMaker.Provider {
     let bearDb: BearDatabase
     
-    func get() throws -> [NoteList] {[]}
+    func get() throws -> [NoteList] {[ ]}
 }
 
 
