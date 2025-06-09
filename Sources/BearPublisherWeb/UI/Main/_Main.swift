@@ -25,14 +25,6 @@ public struct Main: Component {
             .attribute(named: "for", value: "nav-checkbox")
             .hyperScript("on click set #menu-checkbox.checked to false")
             .class("js-element")
-            
-            Span {
-                Link(
-                    "title @todo",
-                    url: "bear://x-callback-url/open-note?title=@todo"
-                )
-            }
-            .style("display:none")
         }
         
         Article {
