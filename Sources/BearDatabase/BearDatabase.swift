@@ -4,7 +4,7 @@ import SQLite3
 
 
 public typealias StringProcesor = (String) -> String
-public final class BearApi {
+public final class BearDatabase {
     
     var db: Connection!
     
@@ -293,7 +293,7 @@ extension Array where Element == Note {
 }
 
 // MARK: - Helpers
-extension BearApi {
+extension BearDatabase {
     
     func file(from row: Statement.Element) -> File {
         var creationDate: Date?
