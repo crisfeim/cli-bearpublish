@@ -6,7 +6,6 @@ import BearPublisherDomain
 public struct IndexView: Equatable, View {
     fileprivate let title: String
     fileprivate let tags: [Menu.Model]
-    fileprivate let navTitle: String?
     fileprivate let notes: [Note]
     fileprivate let content: String?
     
@@ -23,7 +22,7 @@ public struct IndexView: Equatable, View {
     }
     
     fileprivate var nav: Component {
-        NoteListView(title: navTitle ?? "Notas", notes: notes).list
+        NoteListView(title: "Notes", notes: notes).list
     }
     
     fileprivate var main: Main {
@@ -33,14 +32,12 @@ public struct IndexView: Equatable, View {
     public init(
         title: String,
         tags: [Menu.Model],
-        navTitle: String? = nil,
         notes: [Note],
         content: String? = nil,
     ) {
         self.title = title
         self.tags = tags
         self.notes = notes
-        self.navTitle = navTitle
         self.content = content
     }
     
