@@ -7,7 +7,7 @@
 
 import Plot
 
-struct Main: Component {
+struct Content: Component {
     let content: String?
    
     @ComponentBuilder
@@ -23,11 +23,10 @@ struct Main: Component {
         }
         
         Article {
-            NoteDetailSkeleton()
+            Skeleton()
+            
             if let content = content {
-                Div {
-                    Raw(text: content)
-                }
+                Div { Raw(text: content) }
                 .class("content main-indicator")
             }
         }
@@ -46,19 +45,4 @@ struct Main: Component {
     }
 }
 
-struct NoteDetailSkeleton: Component {
-    
-    var body: Component {
-        Div {
-            Div {}.class("title-placeholder")
-            Div {}.class("text-placeholder")
-            Div {}.class("text-placeholder")
-            Div {}.class("text-placeholder")
-            Div {}.class("text-placeholder")
-            Div {}.class("text-placeholder")
-            Div {}.class("text-placeholder")
-        }
-        .class("skeleton main-indicator")
-        .style("padding-top: 24px")
-    }
-}
+

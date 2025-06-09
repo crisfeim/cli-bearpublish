@@ -7,7 +7,7 @@
 
 import Plot
 
-extension Main {
+extension Content {
     struct Hashtag: Component {
         
         let hashtag: String
