@@ -5,7 +5,7 @@ import XCTest
 class TaggedNoteListMakerTests: XCTestCase {
     
     typealias SUT = TaggedNoteListMaker
-    func test_make_() throws {
+    func test_make_deliversRenderedTaggedNoteLists() throws {
         
         let provider = ProviderStub(stub: [TagNoteList(tag: "any-tag", notes: [anyNote()])])
         let renderer = RendererSpy(result: "any rendered content")
