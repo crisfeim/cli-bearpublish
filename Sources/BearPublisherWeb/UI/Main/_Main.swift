@@ -33,7 +33,7 @@ public struct Main: Component {
                 Div {
                     Raw(text: content)
                 }
-                .class("content \(Indicators.mainIndicator)")
+                .class("content main-indicator")
             }
         }
         .class("document-wrapper")
@@ -63,7 +63,7 @@ struct NoteDetailSkeleton: Component {
             Div {}.class("text-placeholder")
             Div {}.class("text-placeholder")
         }
-        .class("skeleton \(Indicators.mainIndicator)")
+        .class("skeleton main-indicator")
         .style("padding-top: 24px")
     }
 }

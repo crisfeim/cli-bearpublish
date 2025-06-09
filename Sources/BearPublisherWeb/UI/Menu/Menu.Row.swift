@@ -50,7 +50,7 @@ extension Menu {
                 .spacing(.xs)
                 .hxGet("/standalone\(model.path)")
                 .hxTarget("nav")
-                .hxIndicator(.id(Indicators.spinner))
+                .hxIndicator(.id("spinner"))
                 .hxPushUrl(model.makePath())
                 .hxSwap("innerHTML scroll:top")
                 .data(named: "count", value: model.count.description)

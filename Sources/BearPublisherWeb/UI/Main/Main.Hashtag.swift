@@ -36,7 +36,7 @@ extension Main {
                 .hxGet("/standalone/tag/\(slug)")
                 .hxTarget("nav")
                 .class("hashtag")
-                .hxIndicator(.id(Indicators.spinner))
+                .hxIndicator(.id("spinner"))
                 .data(named: "count", value: count.description)
                 .hyperScript(script)
         }

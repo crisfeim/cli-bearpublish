@@ -46,7 +46,7 @@ extension NoteListView {
                 .hxTarget("main")
                 .hxPushUrl(pushedUrl)
                 .hxSwap("innerHTML scroll:top")
-                .hxIndicator(.class(Indicators.mainIndicator))
+                .hxIndicator(.class("main-indicator"))
                 .hyperScript("on click take .selected then Layout.toggleNav()")
                 .tabIndex(tabindex)
                 .class(isSelected ? "selected" : "")
@@ -65,12 +65,6 @@ enum Indicator {
         case .id(let value): return "#\(value)"
         }
     }
-}
-
-struct Indicators {
-    private init() {}
-    static let mainIndicator = "main-indicator"
-    static let spinner = "spinner"
 }
 
 extension NoteListView {
