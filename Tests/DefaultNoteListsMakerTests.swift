@@ -7,8 +7,12 @@ struct DefaultNoteListsMaker {
         func get() throws -> [FilteredNoteList]
     }
     
+    protocol Renderer {
+        func render(_ notes: [Note]) -> String
+    }
+    
     let provider: Provider
-    let renderer: NoteListRenderer
+    let renderer: Renderer
     
     func make() throws -> [Resource] {
         try provider.get().map {
@@ -28,7 +32,7 @@ class DefaultNoteListsMakerTests: XCTestCase {
             FilteredNoteList(filter: "All notes", slug: "all", notes: [anyNote()])
         ])
         
-        let renderer = NoteListRendererSpy(result: "any note list rendered content")
+        let renderer = RendererSpy(result: "any note list rendered content")
         let sut = makeSUT(provider: provider, renderer: renderer)
         
         let resources = try sut.make()
@@ -45,7 +49,7 @@ class DefaultNoteListsMakerTests: XCTestCase {
 // MARK: - Helpers
 private extension DefaultNoteListsMakerTests {
     
-    func makeSUT(provider: SUT.Provider, renderer: NoteListRenderer) -> SUT {
+    func makeSUT(provider: SUT.Provider, renderer: SUT.Renderer) -> SUT {
         SUT(provider: provider, renderer: renderer)
     }
     
@@ -57,7 +61,7 @@ private extension DefaultNoteListsMakerTests {
         }
     }
     
-    class NoteListRendererSpy: NoteListRenderer {
+    class RendererSpy: SUT.Renderer {
         
         private let result: String
         private(set) var capturedNotes = [Note]()
