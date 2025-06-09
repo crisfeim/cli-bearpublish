@@ -42,6 +42,6 @@ let package = Package(
         .testTarget(name: "BearPublisherTests", dependencies: ["BearPublisherCLI",
                                                                "BearWebUI",
                                                                "BearMarkdown",
-                                                               "BearDatabase"])
+                                                               "BearDatabase"], resources: [.process("database.sqlite")])
     ]
 )

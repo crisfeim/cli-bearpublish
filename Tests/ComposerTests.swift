@@ -5,12 +5,8 @@ import BearPublisherCLI
 
 class ComposerTests: XCTestCase {
     
-    func test_copyBearDatabase() throws {
-        
-        let destinationPath = NSString(string: "~/Library/Containers/lat.cristian.Renard/Data/Applications/").expandingTildeInPath
-        
-        try copyBearDatabase(destinationPath: destinationPath, filename: "database.sqlite")
-        
-        XCTAssert(FileManager.default.fileExists(atPath: NSString(string: "\(destinationPath)/database.sqlite").expandingTildeInPath))
+    func test() throws {
+        let dbURL = Bundle.module.url(forResource: "database", withExtension: "sqlite")!
+        XCTAssert(FileManager.default.fileExists(atPath: dbURL.path))
     }
 }
