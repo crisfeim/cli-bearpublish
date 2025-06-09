@@ -35,19 +35,40 @@ class CoordinatorTests: XCTestCase {
         XCTAssertEqual(allNotes, expectedResources)
         XCTAssertEqual(notesProvider.capturedFilter, expectedFilter)
     }
+    
+    func test_getTaggedNotes_buildTaggedNoteListsResourcesFromTaggedNotesProviderAndNoteListRenderer() throws {
+    
+        struct NotesByTagListProvider: Coordinator.TaggedNotesProvider {
+            let result: [TagNoteList]
+            func get() throws -> [TagNoteList] {
+                result
+            }
+        }
+       
+        let provider = NotesByTagListProvider(result: [TagNoteList(tag: "any-tag", notes: [anyNote()])])
+        let noteListRenderer = NoteListRendererSpy(result: "any rendered content")
+        let sut = makeSUT(taggedNotesProvider: provider, noteListRenderer: noteListRenderer)
+        let noteListByTag = try sut.getTaggedNotes()
+        let expected = [Resource(filename: "standalone/tag/any-tag", contents: "any rendered content")]
+        
+        XCTAssertEqual(noteListByTag, expected)
+        XCTAssertEqual(noteListRenderer.capturedNotes, [anyNote()])
+    }
 }
 
 // MARK: - Helpers
 private extension CoordinatorTests {
     
     func makeSUT(
-        notesProvider: Coordinator.NotesProvider,
+        notesProvider: Coordinator.NotesProvider = NotesProviderDummy(),
+        taggedNotesProvider: Coordinator.TaggedNotesProvider = TaggedNotesProviderDummy(),
         tagsProvider: Coordinator.TagsProvider = TagsProviderDummy(),
         indexRenderer: Coordinator.IndexRenderer = IndexRendererDummy(),
         noteListRenderer: Coordinator.NoteListRenderer = NoteListRendererDummy()
     ) -> Coordinator {
         Coordinator(
             notesProvider: notesProvider,
+            taggedNotesProvider: taggedNotesProvider,
             tagsProvider: tagsProvider,
             indexRenderer: indexRenderer,
             noteListRenderer: noteListRenderer
@@ -131,6 +152,14 @@ private extension CoordinatorTests {
     
     struct NoteListRendererDummy: Coordinator.NoteListRenderer {
         func render(_ notes: [Note]) throws -> String {""}
+    }
+    
+    struct NotesProviderDummy: Coordinator.NotesProvider {
+        func get(_ filter: NoteListFilter) throws -> [Note] {[]}
+    }
+    
+    struct TaggedNotesProviderDummy: Coordinator.TaggedNotesProvider {
+        func get() throws -> [TagNoteList] {[]}
     }
     
     func anyNote() -> Note {
