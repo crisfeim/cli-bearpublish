@@ -4,8 +4,8 @@
 import Plot
 
 struct Raw: Component {
- let text: String
- var body: Component {
-     Node<HTML.BodyContext>.raw(text)
- }
+    let text: String
+    var body: Component {
+        Node<HTML.BodyContext>.raw(text)
+    }
 }

@@ -4,7 +4,7 @@ import Plot
 
 // MARK: - Node
 // Usage: HTML(.hstack(...))
-public extension Node where Context == HTML.BodyContext {
+extension Node where Context == HTML.BodyContext {
     
     static func hstack(_ nodes: Self...) -> Node {
         .element(named: "hstack", nodes: nodes)
@@ -15,8 +15,7 @@ public extension Node where Context == HTML.BodyContext {
     }
 }
 
-
-public enum StackSpacing: String {
+enum StackSpacing: String {
     case xs
     case s
     case m
@@ -32,10 +31,10 @@ extension Component {
 
 // MARK: - Result builder
 // Usage: HStack { ... }
-public extension ElementDefinitions {
+extension ElementDefinitions {
     enum HStack: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node.hstack }
     enum VStack: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node.vstack }
 }
 
-public typealias HStack  = ElementComponent<ElementDefinitions.HStack>
-public typealias VStack  = ElementComponent<ElementDefinitions.VStack>
+typealias HStack  = ElementComponent<ElementDefinitions.HStack>
+typealias VStack  = ElementComponent<ElementDefinitions.VStack>

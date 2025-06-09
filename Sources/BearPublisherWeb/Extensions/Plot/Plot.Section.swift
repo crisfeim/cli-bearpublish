@@ -3,15 +3,15 @@
 import Plot
 
 // MARK: - Custom definitions
-public extension Node where Context == HTML.BodyContext {
+extension Node where Context == HTML.BodyContext {
     
     static func section(_ nodes: Self...) -> Node {
         .element(named: "section", nodes: nodes)
     }
 }
 
-public extension ElementDefinitions {
+extension ElementDefinitions {
     enum Section: ElementDefinition { nonisolated(unsafe) public static var wrapper = Node.section }
 }
 
-public typealias Section = ElementComponent<ElementDefinitions.Section>
+typealias Section = ElementComponent<ElementDefinitions.Section>

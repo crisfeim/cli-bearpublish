@@ -3,14 +3,13 @@
 
 import Plot
 
-public struct Spacer: Component {
-    public init() {}
-    public var body: Component {
+struct Spacer: Component {
+    var body: Component {
         Node.spacer()
     }
 }
 
-public extension Node where Context == HTML.BodyContext {
+extension Node where Context == HTML.BodyContext {
     static func spacer() -> Self {
         .element(named: "spacer")
     }
