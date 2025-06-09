@@ -29,8 +29,7 @@ extension Menu {
         var body: Component {
             Div {
                 HStack {
-//                    SVGRenderer(model.icon)
-//                        .cssClass(model.isSelected ? "selected-svg" : "")
+                    SVGRenderer(SVG.tag)
                         
                     Span(tag.name)
                     Spacer()
