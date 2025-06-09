@@ -17,6 +17,7 @@ let package = Package(
         .target(
             name: "BearPublisherWeb",
             dependencies: [
+                "BearPublisherDomain",
                 .product(name: "Plot", package: "Plot"),
             ],
             resources: [.process("Resources")]

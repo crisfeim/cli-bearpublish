@@ -7,12 +7,14 @@
 import Foundation
 import Plot
 
+import BearPublisherDomain
+
 public struct NoteList: Component, Equatable {
     
     let title: String
-    let model: [NoteList.Model]
+    let model: [Note]
     
-    public init(title: String, model: [NoteList.Model]) {
+    public init(title: String, model: [Note]) {
         self.title = title
         self.model = model
     }

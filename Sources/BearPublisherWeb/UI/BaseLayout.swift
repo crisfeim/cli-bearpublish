@@ -1,12 +1,13 @@
 import Plot
 
+import BearPublisherDomain
 
 /// Base three panel layout (menu, nav note list and main note content)
 public struct BaseLayout: Equatable {
     fileprivate let title: String
     fileprivate let tags: [Menu.Model]
     fileprivate let navTitle: String?
-    fileprivate let notes: [NoteList.Model]
+    fileprivate let notes: [Note]
     fileprivate let content: String?
     
     fileprivate  let layoutScript = getFileContents("layout", ext: "hs")
@@ -36,7 +37,7 @@ public struct BaseLayout: Equatable {
         title: String,
         tags: [Menu.Model],
         navTitle: String? = nil,
-        notes: [NoteList.Model],
+        notes: [Note],
         content: String? = nil,
     ) {
         self.title = title

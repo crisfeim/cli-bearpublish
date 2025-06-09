@@ -8,8 +8,9 @@
 import BearPublisherDataSource
 import BearPublisherWeb
 import BearPublisherMarkdown
+import BearPublisherDomain
 
-extension Note {
+extension BearPublisherDataSource.Note {
     var isPrivate: Bool { encrypted || content?.contains("#privado") ?? false }
     func isEmpty() -> Bool {
         (title ?? "").isEmpty

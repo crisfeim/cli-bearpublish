@@ -7,18 +7,19 @@
 
 import BearPublisherDataSource
 import BearPublisherWeb
+import BearPublisherDomain
 
 extension Core {
     
     // MARK: - Database models
     
     /// All notes, including trashed & archived
-    var allDbNotes: [Note] {
+    var allDbNotes: [BearPublisherDataSource.Note] {
         (try? notesProvider.fetchAll()) ?? []
     }
     
     /// All notes but trashed & archived
-    var dbNotes: [Note] {
+    var dbNotes: [BearPublisherDataSource.Note] {
         allDbNotes
             .filter { !$0.trashed }
             .filter { !$0.archived }
@@ -36,7 +37,7 @@ extension Core {
         dbTags.toMenuModels()
     }
     
-    var notes: [NoteList.Model] {
+    var notes: [BearPublisherDomain.Note] {
         dbNotes.toNoteListModels()
     }
 }

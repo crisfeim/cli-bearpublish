@@ -6,9 +6,9 @@
 //
 
 import Foundation
+import BearPublisherDomain
 
-
-extension [NoteList.Model] {
+extension [Note] {
    public func defaultSort() -> Self {
         self.sorted(by: { ($0.creationDate ?? Date()) > ($1.creationDate ?? Date()) })
             .sorted(by: { $0.isPinned && !$1.isPinned })

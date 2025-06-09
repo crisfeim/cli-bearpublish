@@ -7,6 +7,7 @@
 import BearPublisherDataSource
 import BearPublisherMarkdown
 import BearPublisherWeb
+import BearPublisherDomain
 import Foundation
 
 
@@ -16,8 +17,8 @@ extension File {
     }
 }
 
-extension [Note] {
-    public func toNoteListModels() -> [NoteList.Model] {
+extension [BearPublisherDataSource.Note] {
+    public func toNoteListModels() -> [BearPublisherDomain.Note] {
         self.map { $0.toNoteListModel() }
             .defaultSort()
     }
@@ -45,7 +46,7 @@ extension Hashtag {
     }
 }
 
-extension Note {
+extension BearPublisherDataSource.Note {
     func makeMethod(from action: @escaping (BearParser.Note) -> String) -> (String, String) -> String {
         return { id, content in
             let note = BearParser.Note(id: id, content: content)
@@ -69,7 +70,7 @@ extension Note {
         )
     }
    
-    func toNoteListModel(isSelected: Bool = false) -> NoteList.Model {
+    func toNoteListModel(isSelected: Bool = false) -> BearPublisherDomain.Note {
         .init(
             id: id,
             title: makeTitle(),
@@ -79,7 +80,8 @@ extension Note {
             isEmpty: isEmpty(),
             subtitle: makeSubtitle(),
             creationDate: creationDate,
-            modificationDate: modificationDate
+            modificationDate: modificationDate,
+            content: content ?? ""
         )
     }
 }

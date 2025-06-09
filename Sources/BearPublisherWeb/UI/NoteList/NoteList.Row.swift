@@ -6,10 +6,11 @@
 //
 
 import Plot
+import BearPublisherDomain
 
 extension NoteList {
     struct Row: Component {
-        let note: NoteList.Model
+        let note: Note
         #warning("Tab index should be different if selected")
         let isSelected: Bool
         var tabindex: Int { isSelected ? 0 : 0}

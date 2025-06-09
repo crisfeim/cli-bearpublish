@@ -6,20 +6,7 @@ import BearPublisherWeb
 
 struct IndexRenderer: IndexMaker.Renderer {
     func render(notes: [Note], tags: [Tag]) -> String {
-        let notes = notes.map {
-            BearPublisherWeb.NoteList.Model.init(
-                id: $0.id,
-                title: $0.title,
-                slug: $0.slug,
-                isPinned: $0.isPinned,
-                isEncrypted: $0.isEncrypted,
-                isEmpty: $0.isEmpty,
-                subtitle: $0.subtitle,
-                creationDate: $0.creationDate,
-                modificationDate: $0.modificationDate
-            )
-        }
-        
+
         let tags = tags.map {
             BearPublisherWeb.Menu.Model.init(
                 name: $0.name,
@@ -43,20 +30,7 @@ struct NoteDetailRenderer: NoteDetailMaker.Renderer {
 
 struct NoteListRenderer: NoteListMaker.Renderer {
     func render(_ list: BearPublisherDomain.NoteList) -> String {
-        let notes = list.notes.map {
-            BearPublisherWeb.NoteList.Model.init(
-                id: $0.id,
-                title: list.title,
-                slug: $0.slug,
-                isPinned: $0.isPinned,
-                isEncrypted: $0.isEncrypted,
-                isEmpty: $0.isEmpty,
-                subtitle: $0.subtitle,
-                creationDate: $0.creationDate,
-                modificationDate: $0.modificationDate
-            )
-        }
         
-        return BearPublisherWeb.StandaloneNoteList(title: list.title, notes: notes).body.render()
+        return BearPublisherWeb.StandaloneNoteList(title: list.title, notes: list.notes).body.render()
     }
 }
