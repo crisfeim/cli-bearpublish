@@ -7,8 +7,12 @@ struct TaggedNoteListMaker {
         func get() throws -> [TagNoteList]
     }
     
+    protocol Renderer {
+        func render(_ notes: [Note]) -> String
+    }
+    
     let provider: Provider
-    let renderer: NoteListRenderer
+    let renderer: Renderer
     
     func make() throws -> [Resource] {
         try provider.get().map {
@@ -25,7 +29,7 @@ class TaggedNoteListMakerTests: XCTestCase {
     func test_make_() throws {
         
         let provider = ProviderStub(stub: [TagNoteList(tag: "any-tag", notes: [anyNote()])])
-        let renderer = NoteListRendererSpy(result: "any rendered content")
+        let renderer = RendererSpy(result: "any rendered content")
         let sut = makeSUT(provider: provider, renderer: renderer)
         let resources = try sut.make()
         let expected = [Resource(filename: "standalone/tag/any-tag", contents: "any rendered content")]
@@ -35,7 +39,7 @@ class TaggedNoteListMakerTests: XCTestCase {
     }
     
     
-    func makeSUT(provider: SUT.Provider, renderer: NoteListRenderer) -> SUT {
+    func makeSUT(provider: SUT.Provider, renderer: SUT.Renderer) -> SUT {
         SUT(provider: provider, renderer: renderer)
     }
     
@@ -45,7 +49,7 @@ class TaggedNoteListMakerTests: XCTestCase {
         func get() throws -> [TagNoteList] { stub }
     }
     
-    class NoteListRendererSpy: NoteListRenderer {
+    class RendererSpy: SUT.Renderer {
         
         private let result: String
         private(set) var capturedNotes = [Note]()
