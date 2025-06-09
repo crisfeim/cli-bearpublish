@@ -68,7 +68,7 @@ extension BearDatabase: IndexMaker.Provider {
     }
     
     func tags() throws -> [BearDomain.Tag] {
-        try fetchTagTree().map(Tag.init(from:))
+        try fetchTagTree().map(HasthagMapper.map)
     }
 }
 
@@ -145,13 +145,13 @@ struct NoteListTaggedAdapterProvider: NoteListMaker.Provider {
     }
 }
 
-extension Tag {
-    init(from hashtag: Hashtag) {
-        self.init(
+enum HasthagMapper {
+    static func map(_ hashtag: Hashtag) -> Tag {
+        Tag(
             name: hashtag.name,
             fullPath: hashtag.path,
             notesCount: hashtag.count,
-            children: hashtag.children.map(Tag.init(from:)),
+            children: hashtag.children.map(Self.map),
             isPinned: hashtag.isPinned
         )
     }
