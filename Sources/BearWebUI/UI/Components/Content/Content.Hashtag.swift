@@ -33,10 +33,10 @@ extension Content {
         
         var body: Component {
             Link(hashtag, url: href)
-                .hxGet("/standalone/tag/\(slug).html")
-                .hxTarget("nav")
+                .hx_get("/standalone/tag/\(slug).html")
+                .hx_target("nav")
                 .class("hashtag")
-                .hxIndicator(.id("spinner"))
+                .hx_indicator(.id("spinner"))
                 .data(named: "count", value: count.description)
                 .hyperscript(script)
         }

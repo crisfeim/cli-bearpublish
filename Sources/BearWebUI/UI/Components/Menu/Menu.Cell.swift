@@ -47,11 +47,11 @@ extension Menu {
                 }
                 .class("content")
                 .spacing(.xs)
-                .hxGet("/standalone\(tag.path)")
-                .hxTarget("nav")
-                .hxIndicator(.id("spinner"))
-                .hxPushUrl(tag.makePath())
-                .hxSwap("innerHTML scroll:top")
+                .hx_get("/standalone\(tag.path)")
+                .hx_target("nav")
+                .hx_indicator(.id("spinner"))
+                .hx_push_url(tag.makePath())
+                .hx_swap("innerHTML scroll:top")
                 .data(named: "count", value: tag.notesCount.description)
                 .hyperscript(hyperscript)
                 

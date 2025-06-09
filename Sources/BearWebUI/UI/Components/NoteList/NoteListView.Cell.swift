@@ -42,11 +42,11 @@ extension NoteList {
                         .style("padding-top: 16px")
                     }
                 }
-                .hxGet("/standalone/note/\(note.slug).html")
-                .hxTarget("main")
-                .hxPushUrl(pushedUrl)
-                .hxSwap("innerHTML scroll:top")
-                .hxIndicator(.class("main-indicator"))
+                .hx_get("/standalone/note/\(note.slug).html")
+                .hx_target("main")
+                .hx_push_url(pushedUrl)
+                .hx_swap("innerHTML scroll:top")
+                .hx_indicator(.class("main-indicator"))
                 .hyperscript("on click take .selected then Layout.toggleNav()")
                 .tabIndex(tabindex)
                 .class(isSelected ? "selected" : "")
