@@ -2,7 +2,7 @@
 
 import XCTest
 import BearDomain
-import BearPublisherWeb
+import BearWebUI
 
 struct IndexRenderer: IndexMaker.Renderer {
     func render(notes: [Note], tags: [Tag]) -> String {

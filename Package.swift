@@ -15,7 +15,7 @@ let package = Package(
     targets: [
         .target(name: "BearDomain"),
         .target(
-            name: "BearPublisherWeb",
+            name: "BearWebUI",
             dependencies: [
                 "BearDomain",
                 .product(name: "Plot", package: "Plot"),
@@ -34,13 +34,13 @@ let package = Package(
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "BearDomain",
-                "BearPublisherWeb",
+                "BearWebUI",
                 "BearPublisherMarkdown",
                 "BearPublisherDataSource"
             ]
         ),
         .testTarget(name: "BearPublisherTests", dependencies: ["BearPublisherCLI",
-                                                               "BearPublisherWeb",
+                                                               "BearWebUI",
                                                                "BearPublisherMarkdown",
                                                                "BearPublisherDataSource"])
     ]
