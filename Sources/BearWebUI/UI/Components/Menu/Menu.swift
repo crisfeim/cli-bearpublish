@@ -12,7 +12,7 @@ struct Menu: Component, Equatable {
     var body: Component {
         Section {
             for tag in tags {
-                Cell(tag: tag, isSelected: false)
+                Cell(tag: tag)
             }
         }
     }

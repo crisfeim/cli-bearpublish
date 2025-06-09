@@ -11,18 +11,15 @@ import BearDomain
 extension Menu {
     struct Cell: Component {
         let tag: Tag
-        let isSelected: Bool
        
         /// This class is used as a unique hash which allows to scroll to the target tag when
         /// user clicks on a hashtag inside a note
         var detailsClass: String {
-            let _isSelected = isSelected ? "selected-menu-item": ""
-            let isSelected = _isSelected.isEmpty ? "" : " " + _isSelected
             let safeHash = tag.fullPath.replacingOccurrences(
                 of: "&",
                 with: "/"
             ).safeHash
-            return safeHash + isSelected
+            return safeHash
         }
        
         
@@ -40,7 +37,7 @@ extension Menu {
                     Div {
                         SVG.chevron.render().makeRawNode()
                     }
-                    .class("chevron \(isSelected ? "selected-chevron" : "")")
+                    .class("chevron")
                     .hyperscript(tag.children.isEmpty ? "" : "on click halt the event then toggle .opened-child on the closest .menu-item then toggle .rotate45 on me")
                     .style("display: flex; \(tag.children.isEmpty ? "opacity: 0" : "opacity: 1")")
                 }
@@ -57,7 +54,7 @@ extension Menu {
                 if !tag.children.isEmpty {
                     Div {
                         for children in tag.children {
-                            Cell(tag: children, isSelected: false)
+                            Cell(tag: children)
                         }
                     }
                     .class("childs")
