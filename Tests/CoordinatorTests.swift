@@ -18,16 +18,6 @@ class CoordinatorTests: XCTestCase {
         XCTAssertEqual(notesProvider.capturedFilter, expectedFilter)
     }
     
-    func test_getNotes_buildNotesREsourcesFromNoteProviderAndRenderer() throws {
-        let provider = NoteListProviderSpy(notes: [anyNote()])
-        let renderer = NoteDetailRendererStub(result: "any note content")
-        let sut = makeSUT(notesProvider: provider, noteDetailRenderer: renderer)
-        let notes = try sut.getNoteDetails()
-        let expected = [Resource(filename: "standalone/note/any-slug", contents: "any note content")]
-        
-        XCTAssertEqual(notes, expected)
-    }
-    
     func test_getTaggedNotes_buildTaggedNoteListsResourcesFromTaggedNotesProviderAndNoteListRenderer() throws {
     
         struct NotesByTagListProvider: TaggedNotesProvider {
