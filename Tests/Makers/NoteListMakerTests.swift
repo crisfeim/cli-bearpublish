@@ -2,9 +2,9 @@
 
 import XCTest
 
-class TaggedNoteListMakerTests: XCTestCase {
+class NoteListMakerTests: XCTestCase {
     
-    typealias SUT = TaggedNoteListMaker
+    typealias SUT = NoteListMaker
     
     func test_make_deliversRenderedTaggedNoteLists() throws {
         
