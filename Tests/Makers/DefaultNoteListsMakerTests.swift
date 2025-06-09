@@ -7,7 +7,7 @@ class DefaultNoteListsMakerTests: XCTestCase {
     typealias SUT = DefaultNoteListsMaker
     func test_make_deliversRenderedDefaultNoteLists() throws {
         let provider = ProviderStub(stubNotes: [
-            FilteredNoteList(filter: "All notes", slug: "all", notes: [anyNote()])
+            NoteList(title: "All notes",  slug: "all", notes: [anyNote()])
         ])
         
         let renderer = RendererSpy(result: "any note list rendered content")
@@ -33,9 +33,9 @@ private extension DefaultNoteListsMakerTests {
     }
     
     struct ProviderStub: SUT.Provider {
-        let stubNotes: [FilteredNoteList]
+        let stubNotes: [NoteList]
     
-        func get() throws -> [FilteredNoteList] {
+        func get() throws -> [NoteList] {
             stubNotes
         }
     }

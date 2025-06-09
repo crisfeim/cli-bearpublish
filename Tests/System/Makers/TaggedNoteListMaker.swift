@@ -2,7 +2,7 @@
 
 struct TaggedNoteListMaker {
     protocol Provider {
-        func get() throws -> [TagNoteList]
+        func get() throws -> [NoteList]
     }
     
     protocol Renderer {
@@ -15,7 +15,7 @@ struct TaggedNoteListMaker {
     func make() throws -> [Resource] {
         try provider.get().map {
             Resource(
-                filename: "standalone/tag/\($0.tag)",
+                filename: "standalone/tag/\($0.slug)",
                 contents: renderer.render($0.notes)
             )
         }

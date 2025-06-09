@@ -2,7 +2,7 @@
 
 struct DefaultNoteListsMaker {
     protocol Provider {
-        func get() throws -> [FilteredNoteList]
+        func get() throws -> [NoteList]
     }
     
     protocol Renderer {

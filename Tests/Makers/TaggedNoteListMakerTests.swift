@@ -7,7 +7,9 @@ class TaggedNoteListMakerTests: XCTestCase {
     typealias SUT = TaggedNoteListMaker
     func test_make_deliversRenderedTaggedNoteLists() throws {
         
-        let provider = ProviderStub(stub: [TagNoteList(tag: "any-tag", notes: [anyNote()])])
+        let provider = ProviderStub(stub: [
+            NoteList(title: "Any tag", slug: "any-tag", notes: [anyNote()])
+        ])
         let renderer = RendererSpy(result: "any rendered content")
         let sut = makeSUT(provider: provider, renderer: renderer)
         let resources = try sut.make()
@@ -24,8 +26,8 @@ class TaggedNoteListMakerTests: XCTestCase {
     
     
     struct ProviderStub: SUT.Provider {
-        let stub: [TagNoteList]
-        func get() throws -> [TagNoteList] { stub }
+        let stub: [NoteList]
+        func get() throws -> [NoteList] { stub }
     }
     
     class RendererSpy: SUT.Renderer {
