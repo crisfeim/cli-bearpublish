@@ -42,7 +42,7 @@ extension NoteList {
                         .style("padding-top: 16px")
                     }
                 }
-                .hxGet("/standalone/note/\(note.slug)")
+                .hxGet("/standalone/note/\(note.slug).html")
                 .hxTarget("main")
                 .hxPushUrl(pushedUrl)
                 .hxSwap("innerHTML scroll:top")

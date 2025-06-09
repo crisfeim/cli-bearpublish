@@ -300,7 +300,7 @@ public extension String {
             
             <a
             href="/?slug=\(href)"
-            hx-get="/standalone/note/\(href)"
+            hx-get="/standalone/note/\(href).html"
             hx-target="main"
             hx-push-url="/?slug=\(href)"
             hx-swap="innerHTML scroll:top"

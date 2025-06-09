@@ -42,7 +42,7 @@ function loadMain(url) {
 
 const slug = urlParams.get('slug');
 if (slug) {
-    const resourceUrl = `/standalone/note/${slug}`;
+    const resourceUrl = `/standalone/note/${slug}.html`;
     var checkbox = document.getElementById("nav-checkbox");
     checkbox.checked = true;
     loadMain(resourceUrl);
