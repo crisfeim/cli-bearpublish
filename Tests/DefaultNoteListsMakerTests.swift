@@ -27,7 +27,7 @@ struct DefaultNoteListsMaker {
 class DefaultNoteListsMakerTests: XCTestCase {
 
     typealias SUT = DefaultNoteListsMaker
-    func test_make() throws {
+    func test_make_deliversRenderedDefaultNoteLists() throws {
         let provider = ProviderStub(stubNotes: [
             FilteredNoteList(filter: "All notes", slug: "all", notes: [anyNote()])
         ])
