@@ -2,7 +2,6 @@ import Plot
 
 import BearPublisherDomain
 
-/// Base three panel layout (menu, nav note list and main note content)
 public struct IndexHTML: Equatable, HTMLDocument {
     private let title: String
     private let tags: [Tag]
