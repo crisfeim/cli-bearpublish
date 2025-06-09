@@ -8,8 +8,12 @@ struct NoteDetailMaker {
         func get() throws -> [Note]
     }
     
+    protocol Renderer {
+        func render(_ note: Note) -> String
+    }
+    
     let provider: Provider
-    let renderer: NoteDetailRenderer
+    let renderer: Renderer
     
     func make() throws -> [Resource] {
         try provider.get().map {
@@ -25,7 +29,7 @@ class NoteDetailMakerTests: XCTestCase {
     typealias SUT = NoteDetailMaker
     func test_make_deliversRenderedNoteDetails() throws {
         let provider = ProviderStub(notes: [anyNote()])
-        let renderer = NoteDetailRendererStub(result: "any note content")
+        let renderer = Renderer(result: "any note content")
         let sut = makeSUT(provider: provider, renderer: renderer)
         let notes = try sut.make()
         let expected = [Resource(filename: "standalone/note/any-slug", contents: "any note content")]
@@ -33,7 +37,7 @@ class NoteDetailMakerTests: XCTestCase {
         XCTAssertEqual(notes, expected)
     }
     
-    private func makeSUT(provider: SUT.Provider, renderer: NoteDetailRenderer) -> SUT {
+    private func makeSUT(provider: SUT.Provider, renderer: SUT.Renderer) -> SUT {
         SUT(provider: provider, renderer: renderer)
     }
     
@@ -42,7 +46,7 @@ class NoteDetailMakerTests: XCTestCase {
         func get() throws -> [Note] {notes}
     }
     
-    struct NoteDetailRendererStub: NoteDetailRenderer {
+    struct Renderer: SUT.Renderer {
         let result: String
         func render(_ note: Note) -> String {result}
     }
