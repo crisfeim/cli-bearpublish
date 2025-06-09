@@ -11,7 +11,7 @@ class NoteListMakerTests: XCTestCase {
         let provider = ProviderStub(stub: [
             NoteList(title: "Any tag", slug: "any-tag", notes: [anyNote()])
         ])
-        let renderer = RendererSpy(result: "any rendered content")
+        let renderer = RendererStub(result: "any rendered content")
         let router: SUT.Router = { "standalone/tag/\($0)" }
         
         let sut = makeSUT(provider: provider, renderer: renderer, router: router)
@@ -19,7 +19,6 @@ class NoteListMakerTests: XCTestCase {
         let expected = [Resource(filename: "standalone/tag/any-tag", contents: "any rendered content")]
         
         XCTAssertEqual(resources, expected)
-        XCTAssertEqual(renderer.capturedNotes, [anyNote()])
     }
     
     
@@ -33,18 +32,9 @@ class NoteListMakerTests: XCTestCase {
         func get() throws -> [NoteList] { stub }
     }
     
-    class RendererSpy: SUT.Renderer {
-        
-        private let result: String
-        private(set) var capturedNotes = [Note]()
-        init(result: String) {
-            self.result = result
-        }
-        
-        func render(_ notes: [Note]) -> String {
-            capturedNotes = notes
-            return result
-        }
+    struct RendererStub: SUT.Renderer {
+        let result: String
+        func render(_ list: NoteList) -> String { result }
     }
     
     func anyNote() -> Note {

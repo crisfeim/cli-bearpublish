@@ -6,7 +6,7 @@ struct NoteListMaker {
     }
     
     protocol Renderer {
-        func render(_ notes: [Note]) -> String
+        func render(_ notes: NoteList) -> String
     }
     
     typealias Router = (String) -> String
@@ -19,7 +19,7 @@ struct NoteListMaker {
         try provider.get().map {
             Resource(
                 filename: router($0.slug),
-                contents: renderer.render($0.notes)
+                contents: renderer.render($0)
             )
         }
     }
