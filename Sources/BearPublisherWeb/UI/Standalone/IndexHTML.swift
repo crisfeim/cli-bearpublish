@@ -3,7 +3,7 @@ import Plot
 import BearPublisherDomain
 
 /// Base three panel layout (menu, nav note list and main note content)
-public struct IndexHTML: Equatable, View {
+public struct IndexHTML: Equatable, HTMLDocument {
     private let title: String
     private let tags: [Tag]
     private let notes: [Note]
@@ -36,7 +36,7 @@ public struct IndexHTML: Equatable, View {
                 .makeCheckbox("menu"),
                 .makeCheckbox("nav"),
                 .menu(.component(Menu(tags: tags)), .class("js-element")),
-                .nav(.component(NoteListView(title: "Notes", notes: notes).list)),
+                .nav(.component(NoteListHTML(title: "Notes", notes: notes).list)),
                 .main(.component(Main(content: nil))),
                 .script(type: "text/hyperscript", layoutScript),
                 .forEach(js.body, { .script(.src($0.fullPath)) })

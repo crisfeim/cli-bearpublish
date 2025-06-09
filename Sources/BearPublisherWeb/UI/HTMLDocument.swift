@@ -2,10 +2,10 @@
 
 import Plot
 
-public protocol View {
+public protocol HTMLDocument {
     var body: HTML { get }
 }
 
-public extension View {
+public extension HTMLDocument {
     func render() -> String { body.render() }
 }

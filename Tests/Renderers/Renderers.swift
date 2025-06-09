@@ -12,12 +12,12 @@ struct IndexRenderer: IndexMaker.Renderer {
 
 struct NoteDetailRenderer: NoteDetailMaker.Renderer {
     func render(_ note: Note) -> String {
-       NoteDetailView(title: note.title, slug: note.slug, content: note.content).render()
+       NoteDetailHTML(title: note.title, slug: note.slug, content: note.content).render()
     }
 }
 
 struct NoteListRenderer: NoteListMaker.Renderer {
     func render(_ list: BearPublisherDomain.NoteList) -> String {
-        NoteListView(title: list.title, notes: list.notes).render()
+        NoteListHTML(title: list.title, notes: list.notes).render()
     }
 }
