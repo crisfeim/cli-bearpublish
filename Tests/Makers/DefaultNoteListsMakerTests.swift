@@ -2,8 +2,6 @@
 
 import XCTest
 
-
-
 class DefaultNoteListsMakerTests: XCTestCase {
 
     typealias SUT = DefaultNoteListsMaker

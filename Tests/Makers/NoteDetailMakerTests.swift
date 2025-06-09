@@ -1,9 +1,6 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 9/6/25.
 
 import XCTest
-import BearPublisherCLI
-
-
 
 class NoteDetailMakerTests: XCTestCase {
     typealias SUT = NoteDetailMaker

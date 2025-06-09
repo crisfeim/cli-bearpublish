@@ -2,7 +2,6 @@
 
 import XCTest
 
-
 class TaggedNoteListMakerTests: XCTestCase {
     
     typealias SUT = TaggedNoteListMaker
