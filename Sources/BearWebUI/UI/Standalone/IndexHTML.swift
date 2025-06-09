@@ -28,7 +28,7 @@ public struct IndexHTML: Equatable, HTMLDocument {
                     .attribute(named: "content", value: "initial-scale=1")
                 ),
                 .forEach(css, {.stylesheet($0.fullPath)}),
-                .forEach(js.head, { .script(.src($0.fullPath)) })
+                .forEach(Self.headJS(), { .script(.src($0.fullPath)) })
             ),
             .body(
                 .class("js-off"),
@@ -38,7 +38,7 @@ public struct IndexHTML: Equatable, HTMLDocument {
                 .nav(.component(NoteList(title: "Notes", notes: notes))),
                 .main(.component(Content(content: nil))),
                 .script(type: "text/hyperscript", layoutScript),
-                .forEach(js.body, { .script(.src($0.fullPath)) })
+                .forEach([Self.bodyJS()], { .script(.src($0.fullPath)) })
             )
         )
     }
@@ -50,24 +50,12 @@ private extension IndexHTML {
     }
     
     var css: [Resource] {
-        Self.makeCSS()
-    }
-    
-    var js : (head: [Resource], body: [Resource]) {
-        Self.makeJS()
+        Self.css()
     }
 }
-
 
 public extension IndexHTML {
-    static func resources() -> [Resource] {
-        Self.makeCSS()
-    }
-}
-
-private extension IndexHTML {
-    static func makeCSS() -> [Resource] {
-        
+    static func css() -> [Resource] {
         let app    = getCSSFile("app")
         let bear   = getCSSFile("bear")
         let layout = getCSSFile("layout")
@@ -82,19 +70,27 @@ private extension IndexHTML {
         return [styles, theme]
     }
     
-    static func makeJS() -> (head: [Resource], body: [Resource]) {
-        
-        let _htmx        = getJSFile("htmx")
-        let _hyperscript = getJSFile("hyperscript")
-        let _js          = getJSFile("js")
-        let _router      = getJSFile("router")
-        let _main = _js + _router
-        
-        let htmx       = Resource(name: "htmx"       , fileExtension: "js", content: _htmx       )
-        let hypercript = Resource(name: "hyperscript", fileExtension: "js", content: _hyperscript)
-        let main       = Resource(name: "main"       , fileExtension: "js", content: _main       )
-        
-        return (head: [htmx, hypercript], body: [main])
+    static func headJS() -> [Resource] {
+        [
+            Resource(
+                name: "htmx",
+                fileExtension: "js",
+                content: getJSFile("htmx")
+            ),
+            Resource(
+                name: "hyperscript",
+                fileExtension: "js",
+                content:   getJSFile("hyperscript")
+            )
+        ]
+    }
+    
+    static func bodyJS() -> Resource {
+        Resource(
+            name: "main",
+            fileExtension: "js",
+            content: getJSFile("js") + getJSFile("router")
+        )
     }
     
 }

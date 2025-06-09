@@ -26,11 +26,15 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
     
     let pages = [index] + notes + lists
     
-    let resources = IndexHTML.resources().map {
+    let css = IndexHTML.css().map {
         Resource(filename: "assets/css/\($0.fileName)", contents: $0.content)
     }
     
-    let all = pages + resources
+    let js = ([IndexHTML.bodyJS()] + IndexHTML.headJS()).map {
+        Resource(filename: "assets/js/\($0.fileName)", contents: $0.content)
+    }
+    
+    let all = pages + css + js
     let ssg = SSG(resources: all, outputURL: outputURL)
     return ssg
 }
