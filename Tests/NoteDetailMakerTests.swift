@@ -4,11 +4,15 @@ import XCTest
 import BearPublisherCLI
 
 struct NoteDetailMaker {
-    let notesProvider: NotesProvider
+    protocol Provider {
+        func get() throws -> [Note]
+    }
+    
+    let provider: Provider
     let renderer: NoteDetailRenderer
     
     func make() throws -> [Resource] {
-        try notesProvider.get(.all).map {
+        try provider.get().map {
             Resource(
                 filename: "standalone/note/\($0.slug)",
                 contents: renderer.render($0)
@@ -18,33 +22,24 @@ struct NoteDetailMaker {
 }
 
 class NoteDetailMakerTests: XCTestCase {
+    typealias SUT = NoteDetailMaker
     func test_make_deliversRenderedNoteDetails() throws {
-        let provider = NoteListProviderSpy(notes: [anyNote()])
+        let provider = ProviderStub(notes: [anyNote()])
         let renderer = NoteDetailRendererStub(result: "any note content")
-        let sut = makeSUT(notesProvider: provider, renderer: renderer)
+        let sut = makeSUT(provider: provider, renderer: renderer)
         let notes = try sut.make()
         let expected = [Resource(filename: "standalone/note/any-slug", contents: "any note content")]
         
         XCTAssertEqual(notes, expected)
     }
     
-    private func makeSUT(notesProvider: NotesProvider, renderer: NoteDetailRenderer) -> NoteDetailMaker {
-        NoteDetailMaker(notesProvider: notesProvider, renderer: renderer)
+    private func makeSUT(provider: SUT.Provider, renderer: NoteDetailRenderer) -> SUT {
+        SUT(provider: provider, renderer: renderer)
     }
     
-    final class NoteListProviderSpy: NotesProvider {
-        private let notes: [Note]
-        
-        private(set) var capturedFilter: NoteListFilter?
-        
-        init(notes: [Note]) {
-            self.notes = notes
-        }
-    
-        func get(_ filter: NoteListFilter) throws -> [Note] {
-           capturedFilter = filter
-           return notes
-        }
+    struct ProviderStub: SUT.Provider {
+        let notes: [Note]
+        func get() throws -> [Note] {notes}
     }
     
     struct NoteDetailRendererStub: NoteDetailRenderer {
