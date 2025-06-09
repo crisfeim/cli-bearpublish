@@ -6,19 +6,7 @@ import BearPublisherWeb
 
 struct IndexRenderer: IndexMaker.Renderer {
     func render(notes: [Note], tags: [Tag]) -> String {
-
-        let tags = tags.map {
-            BearPublisherWeb.Menu.Model.init(
-                name: $0.name,
-                fullPath: $0.fullPath,
-                count: $0.notesCount,
-                children: [], // @todo
-                isPinned: $0.isPinned,
-                isSelected: false,
-            )
-        }
-        
-        return IndexView(title: "Home", tags: tags, notes: notes).render()
+        IndexView(title: "Home", tags: tags, notes: notes).render()
     }
 }
 

@@ -5,7 +5,7 @@ import BearPublisherDomain
 /// Base three panel layout (menu, nav note list and main note content)
 public struct IndexView: Equatable, View {
     fileprivate let title: String
-    fileprivate let tags: [Menu.Model]
+    fileprivate let tags: [Tag]
     fileprivate let notes: [Note]
     fileprivate let content: String?
     
@@ -31,7 +31,7 @@ public struct IndexView: Equatable, View {
     
     public init(
         title: String,
-        tags: [Menu.Model],
+        tags: [Tag],
         notes: [Note],
         content: String? = nil,
     ) {

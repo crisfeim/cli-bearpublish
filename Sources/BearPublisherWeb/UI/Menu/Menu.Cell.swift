@@ -6,18 +6,19 @@
 //
 
 import Plot
-
+import BearPublisherDomain
 
 extension Menu {
-    public struct Row: Component {
-        let model: Model
+    public struct Cell: Component {
+        let tag: Tag
+        let isSelected: Bool
        
         /// This class is used as a unique hash which allows to scroll to the target tag when
         /// user clicks on a hashtag inside a note
         var detailsClass: String {
-            let _isSelected = model.isSelected ? "selected-menu-item": ""
+            let _isSelected = isSelected ? "selected-menu-item": ""
             let isSelected = _isSelected.isEmpty ? "" : " " + _isSelected
-            let safeHash = model.fullPath.replacingOccurrences(
+            let safeHash = tag.fullPath.replacingOccurrences(
                 of: "&",
                 with: "/"
             ).safeHash
@@ -33,33 +34,33 @@ extension Menu {
 //                    SVGRenderer(model.icon)
 //                        .cssClass(model.isSelected ? "selected-svg" : "")
                         
-                    Span(model.name)
+                    Span(tag.name)
                     Spacer()
-                    if model.isPinned {
+                    if tag.isPinned {
                         MenuIcons.pin.svg.makeRawNode()
                     }
                     
                     Div {
                         SVG.chevron.render().makeRawNode()
                     }
-                    .class("chevron \(model.isSelected ? "selected-chevron" : "")")
-                    .hyperScript(model.children.isEmpty ? "" : "on click halt the event then toggle .opened-child on the closest .menu-item then toggle .rotate45 on me")
-                    .style("display: flex; \(model.children.isEmpty ? "opacity: 0" : "opacity: 1")")
+                    .class("chevron \(isSelected ? "selected-chevron" : "")")
+                    .hyperScript(tag.children.isEmpty ? "" : "on click halt the event then toggle .opened-child on the closest .menu-item then toggle .rotate45 on me")
+                    .style("display: flex; \(tag.children.isEmpty ? "opacity: 0" : "opacity: 1")")
                 }
                 .class("content")
                 .spacing(.xs)
-                .hxGet("/standalone\(model.path)")
+                .hxGet("/standalone\(tag.path)")
                 .hxTarget("nav")
                 .hxIndicator(.id("spinner"))
-                .hxPushUrl(model.makePath())
+                .hxPushUrl(tag.makePath())
                 .hxSwap("innerHTML scroll:top")
-                .data(named: "count", value: model.count.description)
+                .data(named: "count", value: tag.notesCount.description)
                 .hyperScript(hyperscript)
                 
-                if !model.children.isEmpty {
+                if !tag.children.isEmpty {
                     Div {
-                        for children in model.children {
-                            Row(model: children)
+                        for children in tag.children {
+                            Cell(tag: children, isSelected: false)
                         }
                     }
                     .class("childs")
@@ -70,30 +71,6 @@ extension Menu {
             .hyperScript(menuItemScript)
         }
         
-        fileprivate var nojs: Component {
-            Details {
-                Summary {
-
-//                    model.icon.render().makeRawNode()
-
-                    Link(model.name, url: model.makePath())
-                    Spacer()
-                    if model.isPinned {
-                        MenuIcons.pin.svg.makeRawNode()
-                    }
-                }
-                .class(model.isSelected ? "selected-summary": "")
-
-                for children in model.children {
-                    Row(model: children)
-                }
-            }
-            .class(detailsClass)
-            .attribute(
-                named: !model.children.isEmpty ? "" : "disabled",
-                value: !model.children.isEmpty ? "" : "true"
-            )
-        }
         let hyperscript = """
         on click remove .selected-menu-item from .selected-menu-item then add .selected-menu-item to my.parentElement then Layout.toggleMenu()
         """
