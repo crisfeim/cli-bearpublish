@@ -8,7 +8,7 @@
 import Plot
 import BearPublisherDomain
 
-extension NoteListHTML {
+extension NoteList {
     struct Cell: Component {
         let note: Note
         let isSelected: Bool
@@ -67,7 +67,7 @@ enum Indicator {
     }
 }
 
-extension NoteListHTML {
+extension NoteList {
     struct EncryptedPlaceholder: Component {
         var body: Component {
             Div {

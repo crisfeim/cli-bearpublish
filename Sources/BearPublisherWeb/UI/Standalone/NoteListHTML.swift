@@ -19,34 +19,8 @@ public struct NoteListHTML: HTMLDocument {
     }
     
     public var body: HTML {
-        HTML(.body(.component(list)))
+        HTML(.body(.component(NoteList(title: title, notes: notes))))
     }
 }
 
-extension NoteListHTML {
-    @ComponentBuilder
-    var list: Component {
-        Header {
-            Label("") {
-                SVG.burger
-                    .render()
-                    .makeRawNode()
-            }
-            .id("menu-toggle")
-            .class("js-element")
-            .attribute(named: "for", value: "menu-checkbox")
-            Spacer()
-            H4(title).class("title")
-            Spacer()
-        }
-        
-        List {}
-            .id("spinner")
-            .class("htmx-indicator")
-        
-        List(notes) { item in
-            Cell(note: item, isSelected: false)
-        }
-        .id("note-list")
-    }
-}
+
