@@ -47,7 +47,7 @@ class CoordinatorTests: XCTestCase {
     
     func test_getTaggedNotes_buildTaggedNoteListsResourcesFromTaggedNotesProviderAndNoteListRenderer() throws {
     
-        struct NotesByTagListProvider: Coordinator.TaggedNotesProvider {
+        struct NotesByTagListProvider: TaggedNotesProvider {
             let result: [TagNoteList]
             func get() throws -> [TagNoteList] {
                 result
@@ -69,12 +69,12 @@ class CoordinatorTests: XCTestCase {
 private extension CoordinatorTests {
     
     func makeSUT(
-        notesProvider: Coordinator.NotesProvider = NotesProviderDummy(),
-        taggedNotesProvider: Coordinator.TaggedNotesProvider = TaggedNotesProviderDummy(),
-        tagsProvider: Coordinator.TagsProvider = TagsProviderDummy(),
-        indexRenderer: Coordinator.IndexRenderer = IndexRendererDummy(),
-        noteListRenderer: Coordinator.NoteListRenderer = NoteListRendererDummy(),
-        noteDetailRenderer: Coordinator.NoteDetailRenderer = NoteDetailRendererDummy()
+        notesProvider: NotesProvider = NotesProviderDummy(),
+        taggedNotesProvider:TaggedNotesProvider = TaggedNotesProviderDummy(),
+        tagsProvider: TagsProvider = TagsProviderDummy(),
+        indexRenderer: IndexRenderer = IndexRendererDummy(),
+        noteListRenderer: NoteListRenderer = NoteListRendererDummy(),
+        noteDetailRenderer:NoteDetailRenderer = NoteDetailRendererDummy()
     ) -> Coordinator {
         Coordinator(
             notesProvider: notesProvider,
@@ -86,7 +86,7 @@ private extension CoordinatorTests {
         )
     }
     
-    final class ProviderSpy: Coordinator.TagsProvider, Coordinator.NotesProvider {
+    final class ProviderSpy: TagsProvider, NotesProvider {
         private let notes: [Note]
         private let tags: [Tag]
         
@@ -107,7 +107,7 @@ private extension CoordinatorTests {
         }
     }
     
-    class IndexRendererSpy: Coordinator.IndexRenderer {
+    class IndexRendererSpy: IndexRenderer {
         private let result: String
         private(set) var capturedNotes = [Note]()
         private(set) var capturedTags  = [Tag]()
@@ -123,7 +123,7 @@ private extension CoordinatorTests {
         }
     }
     
-    final class NoteListProviderSpy: Coordinator.NotesProvider {
+    final class NoteListProviderSpy: NotesProvider {
         private let notes: [Note]
         
         private(set) var capturedFilter: NoteListFilter?
@@ -139,7 +139,7 @@ private extension CoordinatorTests {
     }
     
     
-    class NoteListRendererSpy: Coordinator.NoteListRenderer {
+    class NoteListRendererSpy: NoteListRenderer {
         
         private let result: String
         private(set) var capturedNotes = [Note]()
@@ -153,31 +153,31 @@ private extension CoordinatorTests {
         }
     }
     
-    struct TagsProviderDummy: Coordinator.TagsProvider {
+    struct TagsProviderDummy: TagsProvider {
         func get() throws -> [Tag] {[]}
     }
     
-    struct IndexRendererDummy: Coordinator.IndexRenderer {
+    struct IndexRendererDummy: IndexRenderer {
         func render(notes: [Note], tags: [Tag]) throws -> String {""}
     }
     
-    struct NoteListRendererDummy: Coordinator.NoteListRenderer {
+    struct NoteListRendererDummy: NoteListRenderer {
         func render(_ notes: [Note]) throws -> String {""}
     }
     
-    struct NotesProviderDummy: Coordinator.NotesProvider {
+    struct NotesProviderDummy:NotesProvider {
         func get(_ filter: NoteListFilter) throws -> [Note] {[]}
     }
     
-    struct TaggedNotesProviderDummy: Coordinator.TaggedNotesProvider {
+    struct TaggedNotesProviderDummy: TaggedNotesProvider {
         func get() throws -> [TagNoteList] {[]}
     }
     
-    struct NoteDetailRendererDummy: Coordinator.NoteDetailRenderer {
+    struct NoteDetailRendererDummy: NoteDetailRenderer {
         func render(_ note: Note) -> String {""}
     }
     
-    struct NoteDetailRendererStub: Coordinator.NoteDetailRenderer {
+    struct NoteDetailRendererStub: NoteDetailRenderer {
         let result: String
         func render(_ note: Note) -> String {result}
     }

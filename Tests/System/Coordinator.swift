@@ -8,36 +8,35 @@ struct TagNoteList: Equatable {
 }
 
 
+protocol IndexRenderer {
+    func render(notes: [Note], tags: [Tag]) throws -> String
+}
+
+protocol NoteListRenderer {
+    func render(_ notes: [Note]) throws -> String
+}
+
+protocol NoteDetailRenderer {
+    func render(_ note: Note) -> String
+}
+
+protocol NotesProvider {
+    func get(_ filter: NoteListFilter) throws -> [Note]
+}
+
+protocol TaggedNotesProvider {
+    func get() throws -> [TagNoteList]
+}
+
+protocol TagsProvider {
+    func get() throws -> [Tag]
+}
+
+
 struct Coordinator {
-    
-    protocol IndexRenderer {
-        func render(notes: [Note], tags: [Tag]) throws -> String
-    }
-    
-    protocol NoteListRenderer {
-        func render(_ notes: [Note]) throws -> String
-    }
-    
-    protocol NoteDetailRenderer {
-        func render(_ note: Note) -> String
-    }
-    
-    protocol NotesProvider {
-        func get(_ filter: NoteListFilter) throws -> [Note]
-    }
-    
-    protocol TaggedNotesProvider {
-        func get() throws -> [TagNoteList]
-    }
-    
-    protocol TagsProvider {
-        func get() throws -> [Tag]
-    }
-    
     let notesProvider: NotesProvider
     let taggedNotesProvider: TaggedNotesProvider
     let tagsProvider: TagsProvider
-    
     
     let indexRenderer: IndexRenderer
     let noteListRenderer: NoteListRenderer
