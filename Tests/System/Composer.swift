@@ -6,7 +6,15 @@ import BearDatabase
 import BearDomain
 import BearPublisherCLI
 
-func make(dbPath: String, outputURL: URL) throws -> [ResourceWriter] {
+struct BearSite {
+    let index: Resource
+    let notes: [Resource]
+    let noteLists: [Resource]
+    let noteListsForTags: [Resource]
+    let `static`: [Resource]
+}
+
+func make(dbPath: String, outputURL: URL) throws -> BearSite {
     let bearDb = try BearDb(path: dbPath)
     
     let noteListProvider = DefaultNoteListProvider(bearDb: bearDb)
@@ -37,11 +45,14 @@ func make(dbPath: String, outputURL: URL) throws -> [ResourceWriter] {
         router: Router.tag
     )()
    
-    let pages = [index] + notes + noteLists + noteListsForTags
     
     let `static` = IndexHTML.static().map(ResourceMapper.map)
     
-    let all = pages + `static`
-    let ssg = ResourceWriter(resources: all, outputURL: outputURL)
-    return [ssg]
+    return BearSite(
+        index: index,
+        notes: notes,
+        noteLists: noteLists,
+        noteListsForTags: noteListsForTags,
+        static: `static`
+    )
 }

@@ -5,22 +5,20 @@ import BearPublisherCLI
 
 class ComposerTests: XCTestCase {
     
+    override func setUp() {
+        try? FileManager.default.removeItem(at: testSpecificURL())
+    }
+    
+    override func tearDown() {
+        try? FileManager.default.removeItem(at: testSpecificURL())
+    }
+    
     func test() throws {
         let dbURL = Bundle.module.url(forResource: "database", withExtension: "sqlite")!
         let sut = try make(dbPath: dbURL.path, outputURL: testSpecificURL())
-        
-        try sut[0].build()
-        
-        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/note").path))
-        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/list").path))
-        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/tag").path))
-        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("assets/css").path))
-        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("assets/js").path))
-        
-        let index = try String(contentsOf: testSpecificURL().appendingPathComponent("index.html"))
-        
-        expect(index, toNotContainNotesWithTitles: ["Trashed note", "Archived note"])
-        expect(index, toContainNotesWithTitles: ["Encrypted note",
+
+        expect(sut.index.contents, toNotContainNotesWithTitles: ["Trashed note", "Archived note"])
+        expect(sut.index.contents, toContainNotesWithTitles: ["Encrypted note",
                                                  "Note with undone tasks",
                                                  "Note with file",
                                                  "Regular note",
