@@ -19,7 +19,7 @@ struct IndexMaker {
     let tagsProvider: TagsProvider
     let renderer: Renderer
     
-    func make() throws -> Resource {
+    func callAsFunction() throws -> Resource {
         let notes = try noteListProvider.get()
         let tags = try tagsProvider.get()
         let rendered = renderer.render(notes: notes, tags: tags)

@@ -16,7 +16,7 @@ class IndexMakerTests: XCTestCase {
             renderer: renderer
         )
         
-        let index = try sut.make()
+        let index = try sut()
         
         let expectedIndex = Resource(filename: "index.html", contents: "any renderer")
         

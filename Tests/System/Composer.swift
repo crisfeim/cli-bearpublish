@@ -15,25 +15,25 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
         noteListProvider: noteListProvider,
         tagsProvider: bearDb,
         renderer: IndexRenderer()
-    ).make()
+    )()
     
     let notes = try NoteDetailMaker(
         provider: bearDb,
         renderer: NoteDetailRenderer(),
         router: Router.note
-    ).make()
+    )()
     
     let notesByFilter = try NoteListMaker(
         provider: noteListProvider,
         renderer: NoteListRenderer(),
         router: Router.list
-    ).make()
+    )()
     
     let notesByTags = try NoteListMaker(
         provider: NoteListTaggedAdapterProvider(bearDb: bearDb),
         renderer: NoteListRenderer(),
         router: Router.tag
-    ).make()
+    )()
    
     let pages = [index] + notes + notesByFilter + notesByTags
     

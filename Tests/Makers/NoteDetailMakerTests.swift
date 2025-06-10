@@ -10,7 +10,7 @@ class NoteDetailMakerTests: XCTestCase {
         let renderer = Renderer(result: "any note content")
         let router: SUT.Router = { "standalone/note/\($0).html" }
         let sut = makeSUT(provider: provider, renderer: renderer, router: router)
-        let notes = try sut.make()
+        let notes = try sut()
         let expected = [Resource(filename: "standalone/note/any-slug.html", contents: "any note content")]
         
         XCTAssertEqual(notes, expected)

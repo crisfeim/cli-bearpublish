@@ -16,7 +16,7 @@ class NoteListMakerTests: XCTestCase {
         let router: SUT.Router = { "standalone/tag/\($0).html" }
         
         let sut = makeSUT(provider: provider, renderer: renderer, router: router)
-        let resources = try sut.make()
+        let resources = try sut()
         let expected = [Resource(filename: "standalone/tag/any-tag.html", contents: "any rendered content")]
         
         XCTAssertEqual(resources, expected)

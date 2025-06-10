@@ -16,7 +16,7 @@ struct NoteListMaker {
     let renderer: Renderer
     let router: Router
     
-    func make() throws -> [Resource] {
+    func callAsFunction() throws -> [Resource] {
         try provider.get().map {
             Resource(
                 filename: router($0.slug),
