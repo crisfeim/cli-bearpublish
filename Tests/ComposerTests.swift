@@ -5,12 +5,12 @@ import BearPublisherCLI
 
 class ComposerTests: XCTestCase {
     
-    private var dbURL: URL {
-        Bundle.module.url(forResource: "database", withExtension: "sqlite")!
+    private var dbPath: String {
+        Bundle.module.url(forResource: "database", withExtension: "sqlite")!.path
     }
 
     func test() throws {
-        let sut = try makeSite(dbPath: dbURL.path, outputURL: testSpecificURL())
+        let sut = try makeSite(dbPath: dbPath, outputURL: testSpecificURL())
         
         let allNoteList = try XCTUnwrap(sut.index.notes.filter({ $0.title == "All" }).first)
         
@@ -44,6 +44,17 @@ class ComposerTests: XCTestCase {
             XCTAssertTrue($0.contains("sometag&nested"))
             XCTAssertTrue($0.contains("sometag&nested&nested"))
         }
+    }
+    
+    func test_build_writesResources() async throws {
+        let sut = try makeSite(dbPath: dbPath, outputURL: testSpecificURL())
+        try await sut.build()
+        
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/note").path))
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/list").path))
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/tag").path))
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("assets/css").path))
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("assets/js").path))
     }
 }
 
