@@ -21,7 +21,7 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
     
     let notes = try NotesMaker(
         provider: notesProvider,
-        renderer: NoteDetailRenderer(),
+        renderer: NoteRenderer(),
         router: Router.note
     )()
     
