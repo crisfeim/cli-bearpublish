@@ -6,11 +6,11 @@ import BearPublish
 class ResourceWriterTests: XCTestCase {
     
     override func setUp() {
-        setupEmptyStoreState()
+        try? FileManager.default.removeItem(at: testSpecificURL())
     }
     
     override func tearDown() {
-        undoStoreSideEffects()
+        try? FileManager.default.removeItem(at: testSpecificURL())
     }
     
     func test() throws {
@@ -31,18 +31,6 @@ class ResourceWriterTests: XCTestCase {
     
     private func cachesDirectory() -> URL {
         return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-    }
-    
-    private func setupEmptyStoreState() {
-        try? deleteStoreArtifacts()
-    }
-    
-    private func undoStoreSideEffects() {
-       try? deleteStoreArtifacts()
-    }
-    
-    private func deleteStoreArtifacts() throws{
-        try FileManager.default.removeItem(at: testSpecificURL())
     }
 }
 
