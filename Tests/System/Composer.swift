@@ -14,7 +14,7 @@ struct BearSite {
     let assets: [Resource]
 }
 
-func make(dbPath: String, outputURL: URL) throws -> BearSite {
+func makeSite(dbPath: String, outputURL: URL) throws -> BearSite {
     let bearDb = try BearDb(path: dbPath)
     
     let noteListProvider = DefaultNoteListProvider(bearDb: bearDb)

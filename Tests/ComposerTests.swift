@@ -10,7 +10,7 @@ class ComposerTests: XCTestCase {
     }
 
     func test() throws {
-        let sut = try make(dbPath: dbURL.path, outputURL: testSpecificURL())
+        let sut = try makeSite(dbPath: dbURL.path, outputURL: testSpecificURL())
         
         let allNoteList = try XCTUnwrap(sut.index.notes.filter({ $0.title == "All" }).first)
         
