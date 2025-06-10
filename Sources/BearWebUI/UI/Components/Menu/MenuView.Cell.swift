@@ -33,9 +33,6 @@ extension MenuView {
                         
                     Span(tag.name)
                     Spacer()
-                    if tag.isPinned {
-                        MenuIcons.pin.svg.makeRawNode()
-                    }
                     
                     Div {
                         SVG.chevron.render().makeRawNode()
