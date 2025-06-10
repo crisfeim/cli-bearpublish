@@ -2,21 +2,26 @@
 import BearDomain
 
 struct IndexMaker {
-    protocol Provider {
-        func notes() throws -> [Note]
-        func tags() throws -> [Tag]
+    
+    protocol NoteListProvider {
+        func get() throws -> [NoteList]
+    }
+    
+    protocol TagsProvider {
+        func get() throws -> [Tag]
     }
     
     protocol Renderer {
-        func render(notes: [Note], tags: [Tag]) -> String
+        func render(notes: [NoteList], tags: [Tag]) -> String
     }
     
-    let provider: Provider
+    let noteListProvider: NoteListProvider
+    let tagsProvider: TagsProvider
     let renderer: Renderer
     
     func make() throws -> Resource {
-        let notes = try provider.notes()
-        let tags = try provider.tags()
+        let notes = try noteListProvider.get()
+        let tags = try tagsProvider.get()
         let rendered = renderer.render(notes: notes, tags: tags)
         return Resource(filename: "index.html", contents: rendered)
     }

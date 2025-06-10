@@ -7,10 +7,14 @@ class IndexMakerTests: XCTestCase {
     
     func test_make_deliversRenderedIndexWithProvidedNotesAndTags() throws {
         
-        let provider = ProviderStub(stubNotes: [anyNote()], stubTags: [anyTag()])
+        let provider = ProviderStub(stubNotes: [anyNoteList()], stubTags: [anyTag()])
         let renderer = RendererSpy(result: "any renderer")
         
-        let sut = makeSUT(provider: provider,  renderer: renderer)
+        let sut = makeSUT(
+            noteListProvider: provider,
+            tagsProvider: provider,
+            renderer: renderer
+        )
         
         let index = try sut.make()
         
@@ -18,38 +22,51 @@ class IndexMakerTests: XCTestCase {
         
         XCTAssertEqual(index, expectedIndex)
         XCTAssertEqual(renderer.capturedTags, [anyTag()])
-        XCTAssertEqual(renderer.capturedNotes, [anyNote()])
+        XCTAssertEqual(renderer.capturedNotes, [anyNoteList()])
     }
     
-    func makeSUT(provider: IndexMaker.Provider, renderer: IndexMaker.Renderer) -> IndexMaker {
+    func makeSUT(
+        noteListProvider: IndexMaker.NoteListProvider,
+        tagsProvider: IndexMaker.TagsProvider,
+        renderer: IndexMaker.Renderer
+    ) -> IndexMaker {
          IndexMaker(
-            provider: provider,
+            noteListProvider: noteListProvider,
+            tagsProvider: tagsProvider,
             renderer: renderer
         )
     }
     
-    struct ProviderStub: IndexMaker.Provider {
-        let stubNotes: [Note]
+    struct ProviderStub: IndexMaker.TagsProvider, IndexMaker.NoteListProvider {
+        let stubNotes: [NoteList]
         let stubTags: [Tag]
         
-        func notes() throws -> [Note] { stubNotes }
-        func tags() throws -> [Tag] { stubTags }
+        func get() throws -> [NoteList] { stubNotes }
+        func get() throws -> [Tag] { stubTags }
     }
     
     class RendererSpy: IndexMaker.Renderer {
         private let result: String
-        private(set) var capturedNotes = [Note]()
+        private(set) var capturedNotes = [NoteList]()
         private(set) var capturedTags  = [Tag]()
         
         init(result: String) {
             self.result = result
         }
         
-        func render(notes: [Note], tags: [Tag]) -> String {
+        func render(notes: [NoteList], tags: [Tag]) -> String {
             capturedNotes = notes
             capturedTags  = tags
             return result
         }
+    }
+    
+    func anyNoteList() -> NoteList {
+        NoteList(
+            title: "any note list",
+            slug: "any-slug",
+            notes: [anyNote()]
+        )
     }
     
     func anyNote() -> Note {

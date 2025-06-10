@@ -17,13 +17,13 @@ public struct Menu: Equatable, MenuView.Item {
 
 public struct IndexHTML: Equatable, HTMLDocument {
     let title: String
-    let menu: Menu
+    let menu: Menu?
     let tags: [Tag]
     let notes: [Note]
     
     public init(
         title: String,
-        menu: Menu,
+        menu: Menu?,
         tags: [Tag],
         notes: [Note],
     ) {

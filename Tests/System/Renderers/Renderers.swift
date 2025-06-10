@@ -5,8 +5,8 @@ import BearDomain
 import BearWebUI
 
 struct IndexRenderer: IndexMaker.Renderer {
-    func render(notes: [Note], tags: [Tag]) -> String {
-        IndexHTML(title: "Home", menu: Menu(name: "", fullPath: "", notesCount: 0, children: []), tags: tags, notes: notes).render()
+    func render(notes: [NoteList], tags: [Tag]) -> String {
+        IndexUIComposer.make(title: "Home", lists: notes, tags: tags).render()
     }
 }
 

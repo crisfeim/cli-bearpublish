@@ -9,8 +9,11 @@ import BearPublisherCLI
 func make(dbPath: String, outputURL: URL) throws -> SSG {
     let bearDb = try BearDb(path: dbPath)
     
+    let noteListProvider = NoteListDefaultAdapterProvider(bearDb: bearDb)
+    
     let index = try IndexMaker(
-        provider: bearDb,
+        noteListProvider: noteListProvider,
+        tagsProvider: bearDb,
         renderer: IndexRenderer()
     ).make()
     
@@ -21,7 +24,7 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
     ).make()
     
     let notesByFilter = try NoteListMaker(
-        provider: NoteListDefaultAdapterProvider(bearDb: bearDb),
+        provider: noteListProvider,
         renderer: NoteListRenderer(),
         router: Router.list
     ).make()
@@ -48,30 +51,29 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
 }
 
 
-extension BearDb: IndexMaker.Provider {
-    func notes() throws -> [BearDomain.Note] {
-        try fetchNotes().map(NoteMapper.map)
-    }
+extension BearDb: IndexMaker.TagsProvider {
     
-    func tags() throws -> [BearDomain.Tag] {
+    func get() throws -> [BearDomain.Tag] {
         try fetchTagTree().map(HasthagMapper.map)
     }
 }
 
 extension BearDb: NoteDetailMaker.Provider {
     func get() throws -> [BearDomain.Note] {
-        try notes()
+        try fetchNotes().map(NoteMapper.map)
     }
 }
 
-struct NoteListDefaultAdapterProvider: NoteListMaker.Provider {
+struct NoteListDefaultAdapterProvider: NoteListMaker.Provider, IndexMaker.NoteListProvider {
     let bearDb: BearDb
     
     func get() throws -> [NoteList] {
+        let all      = try bearDb.fetchAll().map(NoteMapper.map)
         let archived = try bearDb.fetchArchived().map(NoteMapper.map)
         let tasks    = try bearDb.fetchTasks().map(NoteMapper.map)
         let trashed  = try bearDb.fetchTrashed().map(NoteMapper.map)
         return [
+            NoteList(title: "All", slug: "all", notes: all),
             NoteList(title: "Archived", slug: "archived", notes: archived),
             NoteList(title: "Tasks", slug: "tasks", notes: tasks),
             NoteList(title: "Trashed", slug: "trashed", notes: trashed)
