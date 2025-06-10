@@ -59,14 +59,14 @@ if (tag) {
 
 const list = urlParams.get('list');
 if (list) {
-    const resourceUrl = `/standalone/list/${list}`;
+    const resourceUrl = `/standalone/list/${list}.html`;
     loadContent(resourceUrl, 'nav');
 }
 
 const backlinks = urlParams.get('backlinks');
 if (backlinks) {
-    const backlinksNoteListUrl = `/standalone/backlinks/${backlinks}`;
-    const noteUrl = `/standalone/note/${backlinks}`
+    const backlinksNoteListUrl = `/standalone/backlinks/${backlinks}.html`;
+    const noteUrl = `/standalone/note/${backlinks}.html`
     loadContent(backlinksNoteListUrl, 'nav');
     loadMain(noteUrl)
 }
