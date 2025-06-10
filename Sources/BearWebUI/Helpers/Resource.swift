@@ -14,7 +14,7 @@ public struct Resource {
     public var fileName: String { "\(name)-\(hash).\(fileExtension)" }
     
     var hash: String { content.makeHash(maxLength: 5) }
-    var fullPath: String { "/assets/\(fileExtension)/\(fileName)" }
+    public var fullPath: String { "/assets/\(fileExtension)/\(fileName)" }
     
     public init(
         name: String,

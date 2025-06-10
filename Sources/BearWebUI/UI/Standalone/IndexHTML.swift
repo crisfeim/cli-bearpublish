@@ -71,6 +71,19 @@ private extension IndexHTML {
 }
 
 public extension IndexHTML {
+    /// Returns a list of static resources needed for the app to work (css and javascript dependencies).
+    /// Consumer of `IndexHTML` will need to write those resources to disk using the `fullPath` property
+    /// of the `Resource` object as the output path destination.
+    static func `static`() -> [Resource] {
+        css() + js()
+    }
+    
+    private static func js() -> [Resource] {
+        headJS() + bodyJS()
+    }
+}
+
+fileprivate extension IndexHTML {
     static func css() -> [Resource] {
         let app    = getCSSFile("app")
         let bear   = getCSSFile("bear")
@@ -107,9 +120,5 @@ public extension IndexHTML {
             fileExtension: "js",
             content: getJSFile("js") + getJSFile("router")
         )]
-    }
-   
-    static func js() -> [Resource] {
-        headJS() + bodyJS()
     }
 }
