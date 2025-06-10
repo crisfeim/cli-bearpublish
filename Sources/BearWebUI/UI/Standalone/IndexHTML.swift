@@ -1,5 +1,4 @@
 import Plot
-
 import BearDomain
 
 public struct IndexHTML: Equatable, HTMLDocument {
