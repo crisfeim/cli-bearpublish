@@ -31,13 +31,13 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
         router: Router.list
     )()
     
-    let tagsNoteList = try NoteListMaker(
+    let noteListsForTags = try NoteListMaker(
         provider: TagsNoteListsProvider(bearDb: bearDb),
         renderer: NoteListRenderer(),
         router: Router.tag
     )()
    
-    let pages = [index] + notes + noteLists + tagsNoteList
+    let pages = [index] + notes + noteLists + noteListsForTags
     
     let `static` = IndexHTML.static().map(ResourceMapper.map)
     
