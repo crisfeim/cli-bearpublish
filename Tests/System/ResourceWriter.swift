@@ -3,7 +3,7 @@
 
 import Foundation
 
-struct SSG {
+struct ResourceWriter {
     let resources: [Resource]
     let outputURL: URL
     

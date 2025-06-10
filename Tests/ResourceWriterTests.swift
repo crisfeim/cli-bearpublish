@@ -2,7 +2,7 @@
 
 import XCTest
 
-class SSGTests: XCTestCase {
+class ResourceWriterTests: XCTestCase {
     
     override func setUp() {
         setupEmptyStoreState()
@@ -15,7 +15,7 @@ class SSGTests: XCTestCase {
     func test() throws {
         let tmpURL = testSpecificURL()
         let resource = Resource(filename: "index.html", contents: "hello world")
-        let sut = SSG(resources: [resource], outputURL: tmpURL)
+        let sut = ResourceWriter(resources: [resource], outputURL: tmpURL)
         try sut.build()
         
         XCTAssertEqual(
