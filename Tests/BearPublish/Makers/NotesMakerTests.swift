@@ -7,23 +7,18 @@ import BearDomain
 class NotesMakerTests: XCTestCase {
     typealias SUT = NotesMaker
     func test_make_deliversRenderedNoteDetails() throws {
-        let provider = ProviderStub(notes: [anyNote()])
         let renderer = Renderer(result: "any note content")
         let router: SUT.Router = { "standalone/note/\($0).html" }
-        let sut = makeSUT(provider: provider, renderer: renderer, router: router)
-        let notes = try sut()
+        let sut = makeSUT(notes: [anyNote()], renderer: renderer, router: router)
+        let notes = sut()
         let expected = [Resource(filename: "standalone/note/any-slug.html", contents: "any note content")]
         
         XCTAssertEqual(notes, expected)
     }
     
-    private func makeSUT(provider: SUT.Provider, renderer: SUT.Renderer, router: @escaping SUT.Router) -> SUT {
-        SUT(provider: provider, renderer: renderer, router: router)
-    }
     
-    struct ProviderStub: SUT.Provider {
-        let notes: [Note]
-        func get() throws -> [Note] {notes}
+    private func makeSUT(notes: [Note], renderer: SUT.Renderer, router: @escaping SUT.Router) -> SUT {
+        SUT(notes: notes, renderer: renderer, router: router)
     }
     
     struct Renderer: SUT.Renderer {

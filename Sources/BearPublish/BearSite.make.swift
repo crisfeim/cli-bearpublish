@@ -20,7 +20,7 @@ extension BearSite {
         )
         
         let notes = NotesMaker(
-            provider: notesProvider,
+            notes: try notesProvider.get(),
             renderer: NoteRenderer(),
             router: Router.note
         )

@@ -5,7 +5,7 @@ import BearWebUI
 import BearDatabase
 import BearDomain
 
-struct NotesProvider: NotesMaker.Provider {
+struct NotesProvider {
     let bearDb: BearDb
     func get() throws -> [BearDomain.Note] {
         try bearDb.fetchAll().map(NoteMapper.map)
