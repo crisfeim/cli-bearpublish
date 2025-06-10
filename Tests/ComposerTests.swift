@@ -114,15 +114,6 @@ private extension ComposerTests {
 }
 
 
-infix operator .*: AdditionPrecedence
-
-@discardableResult
-func .*<T>(lhs: T, rhs: (inout T) -> Void) -> T {
-  var copy = lhs
-  rhs(&copy)
-  return copy
-}
-
 // MARK: - Helpers
 private extension ComposerTests {
     func cachesDirectory() -> URL {
@@ -132,4 +123,15 @@ private extension ComposerTests {
     func testSpecificURL() -> URL {
         cachesDirectory().appendingPathComponent("bearpublisher")
     }
+}
+
+
+// MARK: - My beloved asterisk
+infix operator .*: AdditionPrecedence
+
+@discardableResult
+func .*<T>(lhs: T, rhs: (inout T) -> Void) -> T {
+  var copy = lhs
+  rhs(&copy)
+  return copy
 }
