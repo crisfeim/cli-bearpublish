@@ -4,7 +4,7 @@ import XCTest
 import BearPublish
 import BearDomain
 
-class NoteDetailMakerTests: XCTestCase {
+class NotesMakerTests: XCTestCase {
     typealias SUT = NotesMaker
     func test_make_deliversRenderedNoteDetails() throws {
         let provider = ProviderStub(notes: [anyNote()])
