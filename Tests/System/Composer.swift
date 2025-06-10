@@ -28,46 +28,45 @@ extension BearSite {
     }
 }
 
-func make(dbPath: String, outputURL: URL) throws -> BearSite {
+func make(dbPath: String, outputURL: URL) throws -> (
+    index: IndexMaker,
+    notes: NotesMaker,
+    noteLists: NoteListMaker,
+    noteListsForTags: NoteListMaker,
+    `static`: [Resource]
+) {
     let bearDb = try BearDb(path: dbPath)
     
     let noteListProvider = DefaultNoteListProvider(bearDb: bearDb)
     let tagProvider = TagsProvider(bearDb: bearDb)
     let notesProvider = NotesProvider(bearDb: bearDb)
     
-    let index = try IndexMaker(
-        noteListProvider: noteListProvider,
-        tagsProvider: tagProvider,
+    let index = IndexMaker(
+        notes: try noteListProvider.get(),
+        tags: try tagProvider.get(),
         renderer: IndexRenderer()
-    )()
+    )
     
-    let notes = try NotesMaker(
+    let notes = NotesMaker(
         provider: notesProvider,
         renderer: NoteRenderer(),
         router: Router.note
-    )()
+    )
     
-    let noteLists = try NoteListMaker(
+    let noteLists = NoteListMaker(
         provider: noteListProvider,
         renderer: NoteListRenderer(),
         router: Router.list
-    )()
+    )
     
-    let noteListsForTags = try NoteListMaker(
+    let noteListsForTags = NoteListMaker(
         provider: TagsNoteListsProvider(bearDb: bearDb),
         renderer: NoteListRenderer(),
         router: Router.tag
-    )()
+    )
    
     
     let `static` = IndexHTML.static().map(ResourceMapper.map)
     
-    return BearSite(
-        index: index,
-        notes: notes,
-        noteLists: noteLists,
-        noteListsForTags: noteListsForTags,
-        static: `static`,
-        outputURL: outputURL
-    )
+    return (index: index, notes: notes, noteLists: noteLists, noteListsForTags: noteListsForTags, static: `static`)
 }

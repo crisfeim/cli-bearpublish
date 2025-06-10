@@ -5,7 +5,7 @@ import BearWebUI
 import BearDatabase
 import BearDomain
 
-struct TagsProvider: IndexMaker.TagsProvider {
+struct TagsProvider {
     let bearDb: BearDb
     func get() throws -> [Tag] {
         try bearDb.fetchTagTree().map(HasthagMapper.map)

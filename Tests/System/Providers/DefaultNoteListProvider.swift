@@ -5,7 +5,7 @@ import BearWebUI
 import BearDatabase
 import BearDomain
 
-struct DefaultNoteListProvider: NoteListMaker.Provider, IndexMaker.NoteListProvider {
+struct DefaultNoteListProvider: NoteListMaker.Provider {
     let bearDb: BearDb
     
     func get() throws -> [NoteList] {

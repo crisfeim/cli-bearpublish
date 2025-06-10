@@ -5,44 +5,18 @@ import BearDomain
 
 class IndexMakerTests: XCTestCase {
     
-    func test_make_deliversRenderedIndexWithProvidedNotesAndTags() throws {
+    func test_make_deliversRenderedIndexWithProvidedNotesAndTags() {
         
-        let provider = ProviderStub(stubNotes: [anyNoteList()], stubTags: [anyTag()])
         let renderer = RendererSpy(result: "any renderer")
         
-        let sut = makeSUT(
-            noteListProvider: provider,
-            tagsProvider: provider,
-            renderer: renderer
-        )
-        
-        let index = try sut()
+        let sut = IndexMaker(notes: [anyNoteList()], tags: [anyTag()], renderer: renderer)
+        let index = sut()
         
         let expectedIndex = Resource(filename: "index.html", contents: "any renderer")
         
         XCTAssertEqual(index, expectedIndex)
         XCTAssertEqual(renderer.capturedTags, [anyTag()])
         XCTAssertEqual(renderer.capturedNotes, [anyNoteList()])
-    }
-    
-    func makeSUT(
-        noteListProvider: IndexMaker.NoteListProvider,
-        tagsProvider: IndexMaker.TagsProvider,
-        renderer: IndexMaker.Renderer
-    ) -> IndexMaker {
-         IndexMaker(
-            noteListProvider: noteListProvider,
-            tagsProvider: tagsProvider,
-            renderer: renderer
-        )
-    }
-    
-    struct ProviderStub: IndexMaker.TagsProvider, IndexMaker.NoteListProvider {
-        let stubNotes: [NoteList]
-        let stubTags: [Tag]
-        
-        func get() throws -> [NoteList] { stubNotes }
-        func get() throws -> [Tag] { stubTags }
     }
     
     class RendererSpy: IndexMaker.Renderer {
