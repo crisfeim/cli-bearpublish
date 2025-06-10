@@ -28,7 +28,7 @@ class ComposerTests: XCTestCase {
             XCTAssertTrue($0.contains("Note with done tasks"))
         }
         
-        sut.noteLists.lists.map(\.title) .* {
+        sut.listsByCategory.lists.map(\.title) .* {
             XCTAssertEqual($0.count, 4)
             XCTAssertTrue($0.contains("Archived"))
             XCTAssertTrue($0.contains("Trashed"))
@@ -36,7 +36,7 @@ class ComposerTests: XCTestCase {
             XCTAssertTrue($0.contains("Tasks"))
         }
         
-        sut.noteListsForTags.lists.map(\.slug) .* {
+        sut.listsByHashtag.lists.map(\.slug) .* {
             XCTAssertEqual($0.count, 5)
             XCTAssertTrue($0.contains("dev"))
             XCTAssertTrue($0.contains("code"))

@@ -6,13 +6,15 @@ import BearDatabase
 import BearDomain
 import BearPublisherCLI
 
-func make(dbPath: String, outputURL: URL) throws -> (
-    index: IndexMaker,
-    notes: NotesMaker,
-    noteLists: NoteListMaker,
-    noteListsForTags: NoteListMaker,
-    `static`: [Resource]
-) {
+struct BearSite {
+    let index: IndexMaker
+    let notes: NotesMaker
+    let listsByCategory: NoteListMaker
+    let listsByHashtag: NoteListMaker
+    let assets: [Resource]
+}
+
+func make(dbPath: String, outputURL: URL) throws -> BearSite {
     let bearDb = try BearDb(path: dbPath)
     
     let noteListProvider = DefaultNoteListProvider(bearDb: bearDb)
@@ -46,5 +48,5 @@ func make(dbPath: String, outputURL: URL) throws -> (
     
     let `static` = IndexHTML.static().map(ResourceMapper.map)
     
-    return (index: index, notes: notes, noteLists: noteLists, noteListsForTags: noteListsForTags, static: `static`)
+    return BearSite(index: index, notes: notes, listsByCategory: noteLists, listsByHashtag: noteListsForTags, assets: `static`)
 }
