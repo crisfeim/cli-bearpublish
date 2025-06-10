@@ -9,10 +9,6 @@ class ComposerTests: XCTestCase {
         try? FileManager.default.removeItem(at: testSpecificURL())
     }
     
-    override func tearDown() {
-        try? FileManager.default.removeItem(at: testSpecificURL())
-    }
-    
     private var dbPath: String {
         Bundle.module.url(forResource: "database", withExtension: "sqlite")!.path
     }
