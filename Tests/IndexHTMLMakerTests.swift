@@ -1,35 +1,36 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 10/6/25.
 
 import XCTest
-import BearWebUI
+@testable import BearWebUI
 import BearDomain
 
 class IndexUIComposerTests: XCTestCase {
     
-    struct List: Equatable {
-        let title: String
-        let children: [Self]
-    }
-    
     class IndexUIComposer {
         
+        let title: String
         let lists: [NoteList]
         let tags: [Tag]
         
-        init(lists: [NoteList], tags: [Tag]) {
+        init(title: String, lists: [NoteList], tags: [Tag]) {
+            self.title = title
             self.lists = lists
             self.tags = tags
         }
-     
-        var mainList: List {
+        
+        var menu: Menu {
             let mainNoteList = lists.filter { $0.title == "All" }.first!
             let childLists = lists.filter({ $0.title != "All" }).map {
-                List(title: $0.title, children: [])
+                Menu(title: $0.title, children: [])
             }
             
-            let mainList = List(title: mainNoteList.title, children: childLists)
+            let mainList = Menu(title: mainNoteList.title, children: childLists)
             
             return mainList
+        }
+        
+        func make() -> IndexHTML {
+            IndexHTML(title: title, menu: menu, tags: tags, notes: [])
         }
     }
     
@@ -42,15 +43,16 @@ class IndexUIComposerTests: XCTestCase {
         ]
         
         let tags = [anyTag()]
-        let sut = IndexUIComposer(lists: lists, tags: tags)
+        let sut = IndexUIComposer(title: "title", lists: lists, tags: tags)
         
-        let expectedList = List(title: "All", children: [
-                List(title: "Archived", children: []),
-                List(title: "Trashed", children: [])
-            ])
+        let expectedList = Menu(title: "All", children: [
+            Menu(title: "Archived", children: []),
+            Menu(title: "Trashed", children: [])
+        ])
         
+        let index = sut.make()
         
-        XCTAssertEqual(sut.mainList, expectedList)
+        XCTAssertEqual(index.menu, expectedList)
     }
     
     

@@ -1,17 +1,30 @@
 import Plot
 import BearDomain
 
+public struct Menu: Equatable {
+    let title: String
+    let children: [Self]
+    
+    public init(title: String, children: [Self]) {
+        self.title = title
+        self.children = children
+    }
+}
+
 public struct IndexHTML: Equatable, HTMLDocument {
-    private let title: String
-    private let tags: [Tag]
-    private let notes: [Note]
+    let title: String
+    let menu: Menu
+    let tags: [Tag]
+    let notes: [Note]
     
     public init(
         title: String,
+        menu: Menu,
         tags: [Tag],
         notes: [Note],
     ) {
         self.title = title
+        self.menu = menu
         self.tags = tags
         self.notes = notes
     }
