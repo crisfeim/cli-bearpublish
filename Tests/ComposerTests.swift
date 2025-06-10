@@ -4,7 +4,7 @@ import XCTest
 import BearPublisherCLI
 
 class ComposerTests: XCTestCase {
-
+    
     func test() throws {
         let dbURL = Bundle.module.url(forResource: "database", withExtension: "sqlite")!
         let sut = try make(dbPath: dbURL.path, outputURL: testSpecificURL())
@@ -16,13 +16,40 @@ class ComposerTests: XCTestCase {
         XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/tag").path))
         XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("assets/css").path))
         XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("assets/js").path))
+        
+        let index = try String(contentsOf: testSpecificURL().appendingPathComponent("index.html"))
+        
+        expect(index, toNotContainNotesWithTitles: ["Trashed note", "Archived note"])
+        expect(index, toContainNotesWithTitles: ["Encrypted note",
+                                                 "Note with undone tasks",
+                                                 "Note with file",
+                                                 "Regular note",
+                                                 "Note with tag",
+                                                 "Pinned note",
+                                                 "Note with source code",
+                                                 "Note with done tasks"])
     }
     
-    private func cachesDirectory() -> URL {
+}
+
+private extension ComposerTests {
+    func expect(_ string: String, toNotContainNotesWithTitles titles: [String], file: StaticString = #filePath, line: UInt = #line) {
+        titles.forEach {
+            XCTAssertFalse(string.contains($0), "Expected to not contain \($0)", file: file, line: line)
+        }
+    }
+    
+    func expect(_ string: String, toContainNotesWithTitles titles: [String], file: StaticString = #filePath, line: UInt = #line) {
+        titles.forEach {
+            XCTAssert(string.contains($0), "Expected to contain \($0)", file: file, line: line)
+        }
+    }
+    
+    func cachesDirectory() -> URL {
         return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
     }
     
-    private func testSpecificURL() -> URL {
+    func testSpecificURL() -> URL {
         cachesDirectory().appendingPathComponent("bearpublisher")
     }
 }

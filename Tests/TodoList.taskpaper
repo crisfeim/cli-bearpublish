@@ -1,6 +1,5 @@
 - Paralellize with structured concurrency.
 - More exhaustive testing
-	- Write test to ensure nor trashed, archived notes are shown on index
 	- Guarantee routing is handled correctly
 	- Notes
 		- Untagged
