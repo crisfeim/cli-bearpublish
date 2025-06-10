@@ -12,6 +12,8 @@ extension MenuView {
     struct Cell: Component {
         let icon: SVG
         let tag: Tag
+        let getRouter: (String) -> String
+        let pushedURL: (String) -> String
        
         /// This class is used as a unique hash which allows to scroll to the target tag when
         /// user clicks on a hashtag inside a note
@@ -44,10 +46,10 @@ extension MenuView {
                 }
                 .class("content")
                 .spacing(.xs)
-                .hx_get("/standalone/tag/\(tag.fullPath).html")
+                .hx_get(getRouter(tag.fullPath))
                 .hx_target("nav")
                 .hx_indicator(.id("spinner"))
-                .hx_push_url("/?tag=\(tag.fullPath.replacingOccurrences(of: "&", with: "/"))")
+                .hx_push_url(pushedURL(tag.fullPath))
                 .hx_swap("innerHTML scroll:top")
                 .data(named: "count", value: tag.notesCount.description)
                 .hyperscript(hyperscript)
@@ -55,7 +57,12 @@ extension MenuView {
                 if !tag.children.isEmpty {
                     Div {
                         for children in tag.children {
-                            Cell(icon: .tag, tag: children)
+                            Cell(
+                                icon: icon,
+                                tag: children,
+                                getRouter: getRouter,
+                                pushedURL: pushedURL
+                            )
                         }
                     }
                     .class("childs")

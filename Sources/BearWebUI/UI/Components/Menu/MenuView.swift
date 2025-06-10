@@ -13,7 +13,13 @@ struct MenuView: Component, Equatable {
     var body: Component {
         Section {
             for tag in tags {
-                Cell(icon: .tag, tag: tag)
+                Cell(
+                    icon: .tag,
+                    tag: tag,
+                    getRouter: { "/standalone/tag/\($0).html" },
+                    pushedURL: {
+                    "/?tag=\($0.replacingOccurrences(of: "&", with: "/"))"
+                })
             }
         }
     }
