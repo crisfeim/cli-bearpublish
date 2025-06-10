@@ -10,7 +10,7 @@ class ComposerTests: XCTestCase {
     }
     
     func test() throws {
-        let sut = try makeSite(dbPath: dbPath, outputURL: testSpecificURL())
+        let sut = try BearSite.make(dbPath: dbPath, outputURL: testSpecificURL())
         
         let allNoteList = try XCTUnwrap(sut.index.notes.filter({ $0.title == "All" }).first)
         
@@ -47,7 +47,7 @@ class ComposerTests: XCTestCase {
     }
     
     func test_build_writesResources() async throws {
-        let sut = try makeSite(dbPath: dbPath, outputURL: testSpecificURL())
+        let sut = try BearSite.make(dbPath: dbPath, outputURL: testSpecificURL())
         try await sut.build()
         
         expectFileAtPathToExist("index.html")
