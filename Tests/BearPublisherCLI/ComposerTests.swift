@@ -46,7 +46,7 @@ class ComposerTests: XCTestCase {
         }
     }
     
-    func test_build_writesResources() async throws {
+    func test_build_writesExpectedResources() async throws {
         let sut = try BearSite.make(dbPath: dbPath, outputURL: testSpecificURL())
         try await sut.build()
         
