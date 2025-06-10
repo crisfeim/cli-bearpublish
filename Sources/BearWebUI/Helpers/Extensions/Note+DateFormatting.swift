@@ -3,7 +3,7 @@ import BearDomain
 
 extension Note {
     var dateTime: String {
-        creationDate?.dMMMyyyy() ?? "@todo"
+        creationDate?.dMMMyyyy() ?? "No date"
     }
 }
 

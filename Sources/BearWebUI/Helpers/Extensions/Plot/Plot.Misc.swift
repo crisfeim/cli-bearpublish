@@ -25,7 +25,6 @@ extension Node<HTML.BodyContext> {
             .name("\(sidebarName)-checkbox"),
             .attribute(named: "type", value: "checkbox"),
             .attribute(named: "style", value: "display:none"),
-            //  @todo: Redundat class due to hashtag regex preventing hyperscript to work with id
             .class("\(sidebarName)-checkbox")
         )
     }
