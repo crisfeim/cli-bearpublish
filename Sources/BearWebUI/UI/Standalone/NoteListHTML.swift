@@ -18,7 +18,7 @@ public struct NoteListHTML: HTMLDocument {
     }
     
     public var body: HTML {
-        HTML(.body(.component(NoteList(title: title, notes: notes))))
+        HTML(.body(.component(NoteListView(title: title, notes: notes))))
     }
 }
 

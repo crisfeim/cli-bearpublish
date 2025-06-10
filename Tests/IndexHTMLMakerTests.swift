@@ -13,10 +13,10 @@ class IndexUIComposerTests: XCTestCase {
     
     class IndexUIComposer {
         
-        let lists: [BearDomain.NoteList]
+        let lists: [NoteList]
         let tags: [Tag]
         
-        init(lists: [BearDomain.NoteList], tags: [Tag]) {
+        init(lists: [NoteList], tags: [Tag]) {
             self.lists = lists
             self.tags = tags
         }
@@ -35,7 +35,7 @@ class IndexUIComposerTests: XCTestCase {
     
     func test() {
         
-        let lists: [BearDomain.NoteList] = [
+        let lists: [NoteList] = [
             NoteList(title: "All", slug: "all", notes: [anyNote()]),
             NoteList(title: "Archived", slug: "archived", notes: [anyNote()]),
             NoteList(title: "Trashed", slug: "trashed", notes: [anyNote()]),

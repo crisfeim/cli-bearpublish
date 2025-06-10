@@ -4,7 +4,7 @@
 import Plot
 import BearDomain
 
-struct NoteList: Component {
+struct NoteListView: Component {
     let title: String
     let notes: [Note]
     

@@ -8,7 +8,7 @@
 import Plot
 import BearDomain
 
-extension Menu {
+extension MenuView {
     struct Cell: Component {
         let tag: Tag
        

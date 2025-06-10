@@ -17,7 +17,7 @@ struct NoteDetailRenderer: NoteDetailMaker.Renderer {
 }
 
 struct NoteListRenderer: NoteListMaker.Renderer {
-    func render(_ list: BearDomain.NoteList) -> String {
+    func render(_ list: NoteList) -> String {
         NoteListHTML(title: list.title, notes: list.notes).render()
     }
 }
