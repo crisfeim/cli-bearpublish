@@ -13,7 +13,7 @@ struct MenuView: Component, Equatable {
     var body: Component {
         Section {
             for tag in tags {
-                Cell(tag: tag)
+                Cell(icon: .tag, tag: tag)
             }
         }
     }

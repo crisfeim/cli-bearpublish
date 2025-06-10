@@ -10,6 +10,7 @@ import BearDomain
 
 extension MenuView {
     struct Cell: Component {
+        let icon: SVG
         let tag: Tag
        
         /// This class is used as a unique hash which allows to scroll to the target tag when
@@ -26,7 +27,7 @@ extension MenuView {
         var body: Component {
             Div {
                 HStack {
-                    SVGRenderer(SVG.tag)
+                    SVGRenderer(icon)
                         
                     Span(tag.name)
                     Spacer()
@@ -54,7 +55,7 @@ extension MenuView {
                 if !tag.children.isEmpty {
                     Div {
                         for children in tag.children {
-                            Cell(tag: children)
+                            Cell(icon: .tag, tag: children)
                         }
                     }
                     .class("childs")
