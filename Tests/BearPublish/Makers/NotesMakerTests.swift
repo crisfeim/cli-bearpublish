@@ -7,23 +7,46 @@ import BearDomain
 class NotesMakerTests: XCTestCase {
     typealias SUT = NotesMaker
     func test_make_deliversRenderedNoteDetails() throws {
-        let renderer = Renderer(result: "any note content")
+        let renderer = RendererStub(result: "any note content")
         let router: SUT.Router = { "standalone/note/\($0).html" }
-        let sut = makeSUT(notes: [anyNote()], renderer: renderer, router: router)
+        let sut = makeSUT(notes: [anyNote()], parser: ParserDummy(), renderer: renderer, router: router)
         let notes = sut()
         let expected = [Resource(filename: "standalone/note/any-slug.html", contents: "any note content")]
         
         XCTAssertEqual(notes, expected)
     }
     
-    
-    private func makeSUT(notes: [Note], renderer: SUT.Renderer, router: @escaping SUT.Router) -> SUT {
-        SUT(notes: notes, renderer: renderer, router: router)
+    func test_make_callsParser() throws {
+        let parser = ParserSpy()
+        let sut = makeSUT(notes: [anyNote()], parser: parser, renderer: RendererDummy(), router: routerDummy())
+        _ = sut()
+        
+        XCTAssertEqual(parser.callCount, 1)
     }
     
-    struct Renderer: SUT.Renderer {
+    
+    private func makeSUT(notes: [Note], parser: SUT.Parser, renderer: SUT.Renderer, router: @escaping SUT.Router) -> SUT {
+        SUT(notes: notes, parser: parser, renderer: renderer, router: router)
+    }
+    
+    private func routerDummy() -> (String) -> String {{ _ in "" }}
+    
+    class ParserSpy: SUT.Parser {
+        var callCount = 0
+        func parse(_ string: String) -> String { callCount += 1 ; return ""}
+    }
+    
+    struct ParserDummy: SUT.Parser {
+        func parse(_ string: String) -> String { return ""}
+    }
+    
+    struct RendererDummy: SUT.Renderer {
+        func render(title: String, slug: String, content: String) -> String {""}
+    }
+    
+    struct RendererStub: SUT.Renderer {
         let result: String
-        func render(_ note: Note) -> String {result}
+        func render(title: String, slug: String, content: String) -> String {result}
     }
     
     func anyNote() -> Note {

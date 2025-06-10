@@ -11,8 +11,8 @@ struct IndexRenderer: IndexMaker.Renderer {
 }
 
 struct NoteRenderer: NotesMaker.Renderer {
-    func render(_ note: Note) -> String {
-       NoteDetailHTML(title: note.title, slug: note.slug, content: note.content).render()
+    func render(title: String, slug: String, content: String) -> String {
+        NoteDetailHTML(title: title, slug: slug, content: content).render()
     }
 }
 

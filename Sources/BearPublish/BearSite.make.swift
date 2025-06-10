@@ -4,6 +4,7 @@ import Foundation
 import BearWebUI
 import BearDatabase
 import BearDomain
+import BearMarkdown
 
 extension BearSite {
    public static func make(dbPath: String, outputURL: URL) throws -> BearSite {
@@ -21,6 +22,7 @@ extension BearSite {
         
         let notes = NotesMaker(
             notes: try notesProvider.get(),
+            parser: BearkMarkdown(),
             renderer: NoteRenderer(),
             router: Router.note
         )
@@ -47,5 +49,11 @@ extension BearSite {
             assets: `static`,
             outputURL: outputURL
         )
+    }
+}
+
+extension BearkMarkdown: NotesMaker.Parser {
+    public func parse(_ content: String) -> String {
+        ""
     }
 }

@@ -17,7 +17,8 @@ let package = Package(
         .target(name: "BearPublish", dependencies: [
             "BearDomain",
             "BearWebUI",
-            "BearDatabase"
+            "BearDatabase",
+            "BearMarkdown"
         ]),
         .target(
             name: "BearWebUI",
@@ -46,6 +47,7 @@ let package = Package(
             dependencies: [
                 "BearPublish",
                 "BearPublishCLI",
+                "BearMarkdown",
                 "BearWebUI",
                 "BearDatabase"],
             resources: [.process("database.sqlite")]
