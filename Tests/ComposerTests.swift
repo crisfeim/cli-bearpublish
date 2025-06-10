@@ -26,6 +26,13 @@ class ComposerTests: XCTestCase {
             XCTAssertTrue($0.contains("Note with source code"))
             XCTAssertTrue($0.contains("Note with done tasks"))
         }
+        
+        sut.noteLists.lists.map(\.title) .* {
+            XCTAssertTrue($0.contains("Archived"))
+            XCTAssertTrue($0.contains("Trashed"))
+            XCTAssertTrue($0.contains("All"))
+            XCTAssertTrue($0.contains("Tasks"))
+        }
     }
 }
 

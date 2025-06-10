@@ -54,13 +54,13 @@ func make(dbPath: String, outputURL: URL) throws -> (
     )
     
     let noteLists = NoteListMaker(
-        provider: noteListProvider,
+        lists: try noteListProvider.get(),
         renderer: NoteListRenderer(),
         router: Router.list
     )
     
     let noteListsForTags = NoteListMaker(
-        provider: TagsNoteListsProvider(bearDb: bearDb),
+        lists: try TagsNoteListsProvider(bearDb: bearDb).get(),
         renderer: NoteListRenderer(),
         router: Router.tag
     )

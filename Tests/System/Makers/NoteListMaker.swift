@@ -2,9 +2,6 @@
 import BearDomain
 
 struct NoteListMaker {
-    protocol Provider {
-        func get() throws -> [NoteList]
-    }
     
     protocol Renderer {
         func render(_ notes: NoteList) -> String
@@ -12,12 +9,12 @@ struct NoteListMaker {
     
     typealias Router = (String) -> String
     
-    let provider: Provider
+    let lists: [NoteList]
     let renderer: Renderer
     let router: Router
     
     func callAsFunction() throws -> [Resource] {
-        try provider.get().map {
+        lists.map {
             Resource(
                 filename: router($0.slug),
                 contents: renderer.render($0)

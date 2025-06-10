@@ -9,13 +9,12 @@ class NoteListMakerTests: XCTestCase {
     
     func test_make_deliversRenderedTaggedNoteLists() throws {
         
-        let provider = ProviderStub(stub: [
-            NoteList(title: "Any tag", slug: "any-tag", notes: [anyNote()])
-        ])
         let renderer = RendererStub(result: "any rendered content")
         let router: SUT.Router = { "standalone/tag/\($0).html" }
         
-        let sut = makeSUT(provider: provider, renderer: renderer, router: router)
+        let sut = makeSUT(lists:  [
+            NoteList(title: "Any tag", slug: "any-tag", notes: [anyNote()])
+        ], renderer: renderer, router: router)
         let resources = try sut()
         let expected = [Resource(filename: "standalone/tag/any-tag.html", contents: "any rendered content")]
         
@@ -23,14 +22,8 @@ class NoteListMakerTests: XCTestCase {
     }
     
     
-    func makeSUT(provider: SUT.Provider, renderer: SUT.Renderer, router: @escaping SUT.Router) -> SUT {
-        SUT(provider: provider, renderer: renderer, router: router)
-    }
-    
-    
-    struct ProviderStub: SUT.Provider {
-        let stub: [NoteList]
-        func get() throws -> [NoteList] { stub }
+    func makeSUT(lists: [NoteList], renderer: SUT.Renderer, router: @escaping SUT.Router) -> SUT {
+        SUT(lists: lists, renderer: renderer, router: router)
     }
     
     struct RendererStub: SUT.Renderer {
