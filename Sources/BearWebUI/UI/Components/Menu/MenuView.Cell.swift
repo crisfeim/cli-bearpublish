@@ -43,7 +43,7 @@ extension MenuView {
                 }
                 .class("content")
                 .spacing(.xs)
-                .hx_get("/standalone\(tag.path)")
+                .hx_get("/standalone/tag/\(tag.fullPath).html")
                 .hx_target("nav")
                 .hx_indicator(.id("spinner"))
                 .hx_push_url(tag.makePath())
