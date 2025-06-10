@@ -28,6 +28,18 @@ class ComposerTests: XCTestCase {
                                                  "Note with done tasks"])
     }
     
+    func test_build_writesResources() async throws {
+        let dbURL = Bundle.module.url(forResource: "database", withExtension: "sqlite")!
+        let sut = try make(dbPath: dbURL.path, outputURL: testSpecificURL())
+        
+        try await sut.build()
+        
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/note").path))
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/list").path))
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/tag").path))
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("assets/css").path))
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("assets/js").path))
+    }
 }
 
 private extension ComposerTests {

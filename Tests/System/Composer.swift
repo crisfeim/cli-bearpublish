@@ -12,6 +12,20 @@ struct BearSite {
     let noteLists: [Resource]
     let noteListsForTags: [Resource]
     let `static`: [Resource]
+    
+    let outputURL: URL
+}
+
+extension BearSite {
+    func build() async throws {
+        async let writeIndex: () = ResourceWriter(resources: [index], outputURL: outputURL).build()
+        async let writeNotes: () = ResourceWriter(resources: notes, outputURL: outputURL).build()
+        async let writeNoteLists: () = ResourceWriter(resources: noteLists, outputURL: outputURL).build()
+        async let writeNoteListsForTags: () = ResourceWriter(resources: noteListsForTags, outputURL: outputURL).build()
+        async let writeStatic: () = ResourceWriter(resources: `static`, outputURL: outputURL).build()
+        
+        _ = try await (writeIndex, writeNotes, writeNoteLists, writeNoteListsForTags, writeStatic)
+    }
 }
 
 func make(dbPath: String, outputURL: URL) throws -> BearSite {
@@ -53,6 +67,7 @@ func make(dbPath: String, outputURL: URL) throws -> BearSite {
         notes: notes,
         noteLists: noteLists,
         noteListsForTags: noteListsForTags,
-        static: `static`
+        static: `static`,
+        outputURL: outputURL
     )
 }
