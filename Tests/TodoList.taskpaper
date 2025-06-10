@@ -1,4 +1,5 @@
 - Paralellize with structured concurrency.
+- Add license of Pylon
 - More exhaustive testing
 	- Guarantee routing is handled correctly
 	- Notes
