@@ -6,7 +6,7 @@ import BearDatabase
 import BearDomain
 import BearPublisherCLI
 
-func make(dbPath: String, outputURL: URL) throws -> ResourceWriter {
+func make(dbPath: String, outputURL: URL) throws -> [ResourceWriter] {
     let bearDb = try BearDb(path: dbPath)
     
     let noteListProvider = DefaultNoteListProvider(bearDb: bearDb)
@@ -43,5 +43,5 @@ func make(dbPath: String, outputURL: URL) throws -> ResourceWriter {
     
     let all = pages + `static`
     let ssg = ResourceWriter(resources: all, outputURL: outputURL)
-    return ssg
+    return [ssg]
 }

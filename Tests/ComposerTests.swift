@@ -9,7 +9,7 @@ class ComposerTests: XCTestCase {
         let dbURL = Bundle.module.url(forResource: "database", withExtension: "sqlite")!
         let sut = try make(dbPath: dbURL.path, outputURL: testSpecificURL())
         
-        try sut.build()
+        try sut[0].build()
         
         XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/note").path))
         XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent("standalone/list").path))
