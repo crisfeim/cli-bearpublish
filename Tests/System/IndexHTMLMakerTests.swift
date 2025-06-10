@@ -6,6 +6,8 @@ import BearDomain
 
 class IndexUIComposerTests: XCTestCase {
     
+    
+    
     func test() {
         let allNotes = [anyNote(), anyNote()]
         let lists: [NoteList] = [
