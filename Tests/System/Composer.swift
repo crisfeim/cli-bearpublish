@@ -71,7 +71,7 @@ struct DefaultNoteListProvider: NoteListMaker.Provider, IndexMaker.NoteListProvi
     let bearDb: BearDb
     
     func get() throws -> [NoteList] {
-        let all      = try bearDb.fetchAll().map(NoteMapper.map)
+        let all      = try bearDb.fetchNotes().map(NoteMapper.map)
         let archived = try bearDb.fetchArchived().map(NoteMapper.map)
         let tasks    = try bearDb.fetchTasks().map(NoteMapper.map)
         let trashed  = try bearDb.fetchTrashed().map(NoteMapper.map)
