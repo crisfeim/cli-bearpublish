@@ -33,6 +33,14 @@ class ComposerTests: XCTestCase {
             XCTAssertTrue($0.contains("All"))
             XCTAssertTrue($0.contains("Tasks"))
         }
+        
+        sut.noteListsForTags.lists.map(\.slug) .* {
+            XCTAssertTrue($0.contains("dev"))
+            XCTAssertTrue($0.contains("code"))
+            XCTAssertTrue($0.contains("sometag"))
+            XCTAssertTrue($0.contains("sometag&nested"))
+            XCTAssertTrue($0.contains("sometag&nested&nested"))
+        }
     }
 }
 
