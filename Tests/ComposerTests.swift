@@ -5,8 +5,11 @@ import BearPublisherCLI
 
 class ComposerTests: XCTestCase {
     
+    private var dbURL: URL {
+        Bundle.module.url(forResource: "database", withExtension: "sqlite")!
+    }
+
     func test() throws {
-        let dbURL = Bundle.module.url(forResource: "database", withExtension: "sqlite")!
         let sut = try make(dbPath: dbURL.path, outputURL: testSpecificURL())
         
         let allNoteList = try XCTUnwrap(sut.index.notes.filter({ $0.title == "All" }).first)
