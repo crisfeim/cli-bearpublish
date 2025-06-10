@@ -1,9 +1,17 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 9/6/25.
 
 import XCTest
-import BearPublisherCLI
+import BearPublish
 
 class ComposerTests: XCTestCase {
+    
+    override func setUp() {
+        try? FileManager.default.removeItem(at: testSpecificURL())
+    }
+    
+    override func tearDown() {
+        try? FileManager.default.removeItem(at: testSpecificURL())
+    }
     
     private var dbPath: String {
         Bundle.module.url(forResource: "database", withExtension: "sqlite")!.path

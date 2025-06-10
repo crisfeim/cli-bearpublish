@@ -14,6 +14,11 @@ let package = Package(
     ],
     targets: [
         .target(name: "BearDomain"),
+        .target(name: "BearPublish", dependencies: [
+            "BearDomain",
+            "BearWebUI",
+            "BearDatabase"
+        ]),
         .target(
             name: "BearWebUI",
             dependencies: [
@@ -33,15 +38,17 @@ let package = Package(
             name: "BearPublisherCLI",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                "BearDomain",
-                "BearWebUI",
-                "BearMarkdown",
-                "BearDatabase"
+                "BearPublish"
             ]
         ),
-        .testTarget(name: "BearPublisherTests", dependencies: ["BearPublisherCLI",
-                                                               "BearWebUI",
-                                                               "BearMarkdown",
-                                                               "BearDatabase"], resources: [.process("database.sqlite")])
+        .testTarget(
+            name: "BearPublisherTests",
+            dependencies: [
+                "BearPublish",
+                "BearPublisherCLI",
+                "BearWebUI",
+                "BearDatabase"],
+            resources: [.process("database.sqlite")]
+        )
     ]
 )

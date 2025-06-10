@@ -2,6 +2,7 @@
 
 import XCTest
 import BearDomain
+import BearPublish
 
 class IndexMakerTests: XCTestCase {
     

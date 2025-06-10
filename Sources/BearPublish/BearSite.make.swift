@@ -4,10 +4,9 @@ import Foundation
 import BearWebUI
 import BearDatabase
 import BearDomain
-import BearPublisherCLI
 
 extension BearSite {
-    static func make(dbPath: String, outputURL: URL) throws -> BearSite {
+   public static func make(dbPath: String, outputURL: URL) throws -> BearSite {
         let bearDb = try BearDb(path: dbPath)
         
         let noteListProvider = DefaultNoteListProvider(bearDb: bearDb)

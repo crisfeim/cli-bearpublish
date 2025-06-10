@@ -3,7 +3,6 @@
 
 import BearDatabase
 import BearDomain
-import BearPublisherCLI
 
 enum NoteMapper {
     static func map(_ note: BearDatabase.Note) -> BearDomain.Note {

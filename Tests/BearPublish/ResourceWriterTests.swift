@@ -1,6 +1,7 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 4/6/25.
 
 import XCTest
+import BearPublish
 
 class ResourceWriterTests: XCTestCase {
     

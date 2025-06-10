@@ -1,11 +1,10 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 10/6/25.
 
-import BearWebUI
 import BearDomain
 
-enum IndexUIComposer {
+public enum IndexUIComposer {
     
-    static func make(title: String, lists: [NoteList], tags: [Tag]) -> IndexHTML {
+    public static func make(title: String, lists: [NoteList], tags: [Tag]) -> IndexHTML {
         let mainNoteList = lists.filter { $0.title == "All" }.first
         return IndexHTML(
             title: title,

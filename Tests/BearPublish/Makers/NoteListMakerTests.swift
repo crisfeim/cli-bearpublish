@@ -2,6 +2,7 @@
 
 import XCTest
 import BearDomain
+import BearPublish
 
 class NoteListMakerTests: XCTestCase {
     
