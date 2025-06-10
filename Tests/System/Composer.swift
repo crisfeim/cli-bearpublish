@@ -63,7 +63,7 @@ struct TagsProvider: IndexMaker.TagsProvider {
 struct NotesProvider: NoteDetailMaker.Provider {
     let bearDb: BearDb
     func get() throws -> [BearDomain.Note] {
-        try bearDb.fetchNotes().map(NoteMapper.map)
+        try bearDb.fetchAll().map(NoteMapper.map)
     }
 }
 
