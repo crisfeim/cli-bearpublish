@@ -46,7 +46,7 @@ extension MenuView {
                 .hx_get("/standalone/tag/\(tag.fullPath).html")
                 .hx_target("nav")
                 .hx_indicator(.id("spinner"))
-                .hx_push_url(tag.makePath())
+                .hx_push_url("/?tag=\(tag.fullPath.replacingOccurrences(of: "&", with: "/"))")
                 .hx_swap("innerHTML scroll:top")
                 .data(named: "count", value: tag.notesCount.description)
                 .hyperscript(hyperscript)
