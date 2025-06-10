@@ -110,8 +110,7 @@ enum MenuIcons {
             """
         case .pin:
             let strokeWidth = "1.5"
-            return
-            """
+            return """
             <svg class="pin" xmlns="http://www.w3.org/2000/svg" width="7.667" height="12.789" viewBox="0 0 8.667 13.789">
               <g id="Grupo_1" data-name="Grupo 1" transform="translate(-28.25 -107)">
                 <g id="Elipse_3" data-name="Elipse 3" transform="translate(29 107)" fill="none" stroke-width="\(strokeWidth)">
