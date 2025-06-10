@@ -9,7 +9,7 @@ import BearPublisherCLI
 func make(dbPath: String, outputURL: URL) throws -> SSG {
     let bearDb = try BearDb(path: dbPath)
     
-    let noteListProvider = NoteListDefaultAdapterProvider(bearDb: bearDb)
+    let noteListProvider = DefaultNoteListProvider(bearDb: bearDb)
     let tagProvider = TagsProvider(bearDb: bearDb)
     let notesProvider = NotesProvider(bearDb: bearDb)
     
@@ -25,19 +25,19 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
         router: Router.note
     )()
     
-    let notesByFilter = try NoteListMaker(
+    let noteLists = try NoteListMaker(
         provider: noteListProvider,
         renderer: NoteListRenderer(),
         router: Router.list
     )()
     
-    let notesByTags = try NoteListMaker(
-        provider: NoteListTaggedAdapterProvider(bearDb: bearDb),
+    let tagsNoteList = try NoteListMaker(
+        provider: TagsNoteListsProvider(bearDb: bearDb),
         renderer: NoteListRenderer(),
         router: Router.tag
     )()
    
-    let pages = [index] + notes + notesByFilter + notesByTags
+    let pages = [index] + notes + noteLists + tagsNoteList
     
     let css = IndexHTML.css().map {
         Resource(filename: "assets/css/\($0.fileName)", contents: $0.content)
@@ -67,8 +67,7 @@ struct NotesProvider: NoteDetailMaker.Provider {
     }
 }
 
-
-struct NoteListDefaultAdapterProvider: NoteListMaker.Provider, IndexMaker.NoteListProvider {
+struct DefaultNoteListProvider: NoteListMaker.Provider, IndexMaker.NoteListProvider {
     let bearDb: BearDb
     
     func get() throws -> [NoteList] {
@@ -85,7 +84,7 @@ struct NoteListDefaultAdapterProvider: NoteListMaker.Provider, IndexMaker.NoteLi
     }
 }
 
-struct NoteListTaggedAdapterProvider: NoteListMaker.Provider {
+struct TagsNoteListsProvider: NoteListMaker.Provider {
     let bearDb: BearDb
     
     func get() throws -> [NoteList] {
