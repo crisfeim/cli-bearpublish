@@ -12,7 +12,7 @@ struct IndexRenderer: IndexMaker.Renderer {
 
 struct NoteRenderer: NotesMaker.Renderer {
     func render(title: String, slug: String, content: String) -> String {
-        NoteDetailHTML(title: title, slug: slug, content: content).render()
+        NoteHTML(title: title, slug: slug, content: content).render()
     }
 }
 

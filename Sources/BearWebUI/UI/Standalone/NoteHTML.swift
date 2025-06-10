@@ -7,7 +7,7 @@
 
 import Plot
 
-public struct NoteDetailHTML: HTMLDocument {
+public struct NoteHTML: HTMLDocument {
     
     private let title: String
     private let content: String
