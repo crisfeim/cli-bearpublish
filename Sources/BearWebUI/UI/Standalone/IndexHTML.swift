@@ -1,12 +1,16 @@
 import Plot
 import BearDomain
 
-public struct Menu: Equatable {
-    let title: String
+public struct Menu: Equatable, MenuView.Item {
+    let name: String
+    let fullPath: String
+    let notesCount: Int
     let children: [Self]
     
-    public init(title: String, children: [Self]) {
-        self.title = title
+    public init(name: String, fullPath: String, notesCount: Int, children: [Self]) {
+        self.name = name
+        self.fullPath = fullPath
+        self.notesCount = notesCount
         self.children = children
     }
 }

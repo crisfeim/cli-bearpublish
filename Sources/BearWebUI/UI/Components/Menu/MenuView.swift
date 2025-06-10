@@ -12,10 +12,17 @@ struct MenuView: Component, Equatable {
     @ComponentBuilder
     var body: Component {
         Section {
+            Cell(
+                icon: .note,
+                item: menu,
+                getRouter: { _ in "" },
+                pushedURL: { _ in "" })
+        }
+        Section {
             for tag in tags {
                 Cell(
                     icon: .tag,
-                    tag: tag,
+                    item: tag,
                     getRouter: { "/standalone/tag/\($0).html" },
                     pushedURL: {
                     "/?tag=\($0.replacingOccurrences(of: "&", with: "/"))"
@@ -24,5 +31,7 @@ struct MenuView: Component, Equatable {
         }
     }
 }
+
+extension Tag: MenuView.Item {}
 
 

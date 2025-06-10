@@ -21,10 +21,10 @@ class IndexUIComposerTests: XCTestCase {
         var menu: Menu {
             let mainNoteList = lists.filter { $0.title == "All" }.first!
             let childLists = lists.filter({ $0.title != "All" }).map {
-                Menu(title: $0.title, children: [])
+                Menu(name: $0.title, fullPath: $0.slug, notesCount: $0.notes.count, children: [])
             }
             
-            let mainList = Menu(title: mainNoteList.title, children: childLists)
+            let mainList = Menu(name: "All", fullPath: "all", notesCount: mainNoteList.notes.count, children: childLists)
             
             return mainList
         }
@@ -52,9 +52,9 @@ class IndexUIComposerTests: XCTestCase {
         let tags = [anyTag()]
         let sut = IndexUIComposer(title: "title", lists: lists, tags: tags)
         
-        let expectedList = Menu(title: "All", children: [
-            Menu(title: "Archived", children: []),
-            Menu(title: "Trashed", children: [])
+        let expectedList = Menu(name: "All", fullPath: "all", notesCount: 2, children: [
+            Menu(name: "Archived", fullPath: "archived", notesCount: 1, children: []),
+            Menu(name: "Trashed", fullPath: "trashed", notesCount: 1, children: [])
         ])
         
         let index = sut.make()

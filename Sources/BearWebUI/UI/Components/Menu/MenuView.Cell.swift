@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Cristian Felipe Patiño Rojas on 08/09/2023.
 //
@@ -8,55 +8,63 @@
 import Plot
 import BearDomain
 
+
 extension MenuView {
+    protocol Item {
+        var name: String {get }
+        var fullPath: String {get }
+        var notesCount: Int {get }
+        var children: [Self] {get }
+    }
+    
     struct Cell: Component {
         let icon: SVG
-        let tag: Tag
+        let item: Item
         let getRouter: (String) -> String
         let pushedURL: (String) -> String
-       
+        
         /// This class is used as a unique hash which allows to scroll to the target tag when
         /// user clicks on a hashtag inside a note
         var detailsClass: String {
-            let safeHash = tag.fullPath.replacingOccurrences(
+            let safeHash = item.fullPath.replacingOccurrences(
                 of: "&",
                 with: "/"
             ).safeHash
             return safeHash
         }
-       
+        
         
         var body: Component {
             Div {
                 HStack {
                     SVGRenderer(icon)
-                        
-                    Span(tag.name)
+                    
+                    Span(item.name)
                     Spacer()
                     
                     Div {
                         SVG.chevron.render().makeRawNode()
                     }
                     .class("chevron")
-                    .hyperscript(tag.children.isEmpty ? "" : "on click halt the event then toggle .opened-child on the closest .menu-item then toggle .rotate45 on me")
-                    .style("display: flex; \(tag.children.isEmpty ? "opacity: 0" : "opacity: 1")")
+                    .hyperscript(item.children.isEmpty ? "" : "on click halt the event then toggle .opened-child on the closest .menu-item then toggle .rotate45 on me")
+                    .style("display: flex; \(item.children.isEmpty ? "opacity: 0" : "opacity: 1")")
                 }
                 .class("content")
                 .spacing(.xs)
-                .hx_get(getRouter(tag.fullPath))
+                .hx_get(getRouter(item.fullPath))
                 .hx_target("nav")
                 .hx_indicator(.id("spinner"))
-                .hx_push_url(pushedURL(tag.fullPath))
+                .hx_push_url(pushedURL(item.fullPath))
                 .hx_swap("innerHTML scroll:top")
-                .data(named: "count", value: tag.notesCount.description)
+                .data(named: "count", value: item.notesCount.description)
                 .hyperscript(hyperscript)
                 
-                if !tag.children.isEmpty {
+                if !item.children.isEmpty {
                     Div {
-                        for children in tag.children {
+                        for children in item.children {
                             Cell(
                                 icon: icon,
-                                tag: children,
+                                item: children,
                                 getRouter: getRouter,
                                 pushedURL: pushedURL
                             )
