@@ -30,14 +30,21 @@ class IndexUIComposerTests: XCTestCase {
         }
         
         func make() -> IndexHTML {
-            IndexHTML(title: title, menu: menu, tags: tags, notes: [])
+            let mainNoteList = lists.filter { $0.title == "All" }.first!
+            return IndexHTML(
+                title: title,
+                menu: menu,
+                tags: tags,
+                notes: mainNoteList.notes
+            )
         }
     }
     
     func test() {
         
+        let allNotes = [anyNote(), anyNote()]
         let lists: [NoteList] = [
-            NoteList(title: "All", slug: "all", notes: [anyNote()]),
+            NoteList(title: "All", slug: "all", notes: allNotes),
             NoteList(title: "Archived", slug: "archived", notes: [anyNote()]),
             NoteList(title: "Trashed", slug: "trashed", notes: [anyNote()]),
         ]
@@ -53,6 +60,9 @@ class IndexUIComposerTests: XCTestCase {
         let index = sut.make()
         
         XCTAssertEqual(index.menu, expectedList)
+        XCTAssertEqual(index.title, "title")
+        XCTAssertEqual(index.tags, tags)
+        XCTAssertEqual(index.notes, allNotes)
     }
     
     
