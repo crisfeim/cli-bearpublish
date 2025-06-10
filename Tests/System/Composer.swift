@@ -38,7 +38,7 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
         Resource(filename: "assets/css/\($0.fileName)", contents: $0.content)
     }
     
-    let js = ([IndexHTML.bodyJS()] + IndexHTML.headJS()).map {
+    let js = IndexHTML.js().map {
         Resource(filename: "assets/js/\($0.fileName)", contents: $0.content)
     }
     

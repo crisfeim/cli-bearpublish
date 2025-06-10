@@ -38,7 +38,7 @@ public struct IndexHTML: Equatable, HTMLDocument {
                 .nav(.component(NoteList(title: "Notes", notes: notes))),
                 .main(.component(Content(content: nil))),
                 .script(type: "text/hyperscript", layoutScript),
-                .forEach([Self.bodyJS()], { .script(.src($0.fullPath)) })
+                .forEach(Self.bodyJS(), { .script(.src($0.fullPath)) })
             )
         )
     }
@@ -85,12 +85,15 @@ public extension IndexHTML {
         ]
     }
     
-    static func bodyJS() -> Resource {
-        Resource(
+    static func bodyJS() -> [Resource] {
+        [Resource(
             name: "main",
             fileExtension: "js",
             content: getJSFile("js") + getJSFile("router")
-        )
+        )]
     }
-    
+   
+    static func js() -> [Resource] {
+        headJS() + bodyJS()
+    }
 }
