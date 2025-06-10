@@ -10,15 +10,17 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
     let bearDb = try BearDb(path: dbPath)
     
     let noteListProvider = NoteListDefaultAdapterProvider(bearDb: bearDb)
+    let tagProvider = TagsProvider(bearDb: bearDb)
+    let notesProvider = NotesProvider(bearDb: bearDb)
     
     let index = try IndexMaker(
         noteListProvider: noteListProvider,
-        tagsProvider: bearDb,
+        tagsProvider: tagProvider,
         renderer: IndexRenderer()
     )()
     
     let notes = try NoteDetailMaker(
-        provider: bearDb,
+        provider: notesProvider,
         renderer: NoteDetailRenderer(),
         router: Router.note
     )()
@@ -51,18 +53,20 @@ func make(dbPath: String, outputURL: URL) throws -> SSG {
 }
 
 
-extension BearDb: IndexMaker.TagsProvider {
-    
-    func get() throws -> [BearDomain.Tag] {
-        try fetchTagTree().map(HasthagMapper.map)
+struct TagsProvider: IndexMaker.TagsProvider {
+    let bearDb: BearDb
+    func get() throws -> [Tag] {
+        try bearDb.fetchTagTree().map(HasthagMapper.map)
     }
 }
 
-extension BearDb: NoteDetailMaker.Provider {
+struct NotesProvider: NoteDetailMaker.Provider {
+    let bearDb: BearDb
     func get() throws -> [BearDomain.Note] {
-        try fetchNotes().map(NoteMapper.map)
+        try bearDb.fetchNotes().map(NoteMapper.map)
     }
 }
+
 
 struct NoteListDefaultAdapterProvider: NoteListMaker.Provider, IndexMaker.NoteListProvider {
     let bearDb: BearDb
