@@ -32,7 +32,7 @@ extension BearSite: @unchecked Sendable {
     public func build() async throws {
         cleanOutputFolder()
         async let writeIndex: () = ResourceWriter(resources: [index()], outputURL: outputURL).build()
-        async let writeNotes: () = ResourceWriter(resources: try notes(), outputURL: outputURL).build()
+        async let writeNotes: () = ResourceWriter(resources: notes(), outputURL: outputURL).build()
         async let writeCategoryLists: () = ResourceWriter(resources: try listsByCategory(), outputURL: outputURL).build()
         async let writeHashtagLists: () = ResourceWriter(resources: try listsByHashtag(), outputURL: outputURL).build()
         async let writeAssets: () = ResourceWriter(resources: assets, outputURL: outputURL).build()
