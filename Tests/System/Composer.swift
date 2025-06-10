@@ -70,10 +70,11 @@ struct NoteListDefaultAdapterProvider: NoteListMaker.Provider {
     func get() throws -> [NoteList] {
         let archived = try bearDb.fetchArchived().map(NoteMapper.map)
         let tasks    = try bearDb.fetchTasks().map(NoteMapper.map)
-        
+        let trashed  = try bearDb.fetchTrashed().map(NoteMapper.map)
         return [
             NoteList(title: "Archived", slug: "archived", notes: archived),
-            NoteList(title: "Tasks", slug: "tasks", notes: tasks)
+            NoteList(title: "Tasks", slug: "tasks", notes: tasks),
+            NoteList(title: "Trashed", slug: "trashed", notes: trashed)
         ]
     }
 }
