@@ -6,30 +6,19 @@ import BearDomain
 
 class IndexUIComposerTests: XCTestCase {
     
-    class IndexUIComposer {
-        
-        let title: String
-        let lists: [NoteList]
-        let tags: [Tag]
-        
-        init(title: String, lists: [NoteList], tags: [Tag]) {
-            self.title = title
-            self.lists = lists
-            self.tags = tags
-        }
-        
-        var menu: Menu {
-            let mainNoteList = lists.filter { $0.title == "All" }.first!
-            let childLists = lists.filter({ $0.title != "All" }).map {
-                Menu(name: $0.title, fullPath: $0.slug, notesCount: $0.notes.count, children: [])
+    enum IndexUIComposer {
+        static func make(title: String, lists: [NoteList], tags: [Tag]) -> IndexHTML {
+            var menu: Menu {
+                let mainNoteList = lists.filter { $0.title == "All" }.first!
+                let childLists = lists.filter({ $0.title != "All" }).map {
+                    Menu(name: $0.title, fullPath: $0.slug, notesCount: $0.notes.count, children: [])
+                }
+                
+                let mainList = Menu(name: "All", fullPath: "all", notesCount: mainNoteList.notes.count, children: childLists)
+                
+                return mainList
             }
             
-            let mainList = Menu(name: "All", fullPath: "all", notesCount: mainNoteList.notes.count, children: childLists)
-            
-            return mainList
-        }
-        
-        func make() -> IndexHTML {
             let mainNoteList = lists.filter { $0.title == "All" }.first!
             return IndexHTML(
                 title: title,
@@ -41,7 +30,6 @@ class IndexUIComposerTests: XCTestCase {
     }
     
     func test() {
-        
         let allNotes = [anyNote(), anyNote()]
         let lists: [NoteList] = [
             NoteList(title: "All", slug: "all", notes: allNotes),
@@ -50,14 +38,13 @@ class IndexUIComposerTests: XCTestCase {
         ]
         
         let tags = [anyTag()]
-        let sut = IndexUIComposer(title: "title", lists: lists, tags: tags)
-        
+
         let expectedList = Menu(name: "All", fullPath: "all", notesCount: 2, children: [
             Menu(name: "Archived", fullPath: "archived", notesCount: 1, children: []),
             Menu(name: "Trashed", fullPath: "trashed", notesCount: 1, children: [])
         ])
         
-        let index = sut.make()
+        let index = IndexUIComposer.make(title: "title", lists: lists, tags: tags)
         
         XCTAssertEqual(index.menu, expectedList)
         XCTAssertEqual(index.title, "title")
