@@ -15,6 +15,7 @@ class ComposerTests: XCTestCase {
         let allNoteList = try XCTUnwrap(sut.index.notes.filter({ $0.title == "All" }).first)
         
         allNoteList.notes.map(\.title) .* {
+            XCTAssertEqual($0.count, 8)
             XCTAssertFalse($0.contains("Trashed note"))
             XCTAssertFalse($0.contains("Archived note"))
             XCTAssertTrue($0.contains("Encrypted note"))
@@ -28,6 +29,7 @@ class ComposerTests: XCTestCase {
         }
         
         sut.noteLists.lists.map(\.title) .* {
+            XCTAssertEqual($0.count, 4)
             XCTAssertTrue($0.contains("Archived"))
             XCTAssertTrue($0.contains("Trashed"))
             XCTAssertTrue($0.contains("All"))
@@ -35,6 +37,7 @@ class ComposerTests: XCTestCase {
         }
         
         sut.noteListsForTags.lists.map(\.slug) .* {
+            XCTAssertEqual($0.count, 5)
             XCTAssertTrue($0.contains("dev"))
             XCTAssertTrue($0.contains("code"))
             XCTAssertTrue($0.contains("sometag"))
