@@ -46,7 +46,7 @@ public struct IndexHTML: Equatable, HTMLDocument {
                 .class("js-off"),
                 .makeCheckbox("menu"),
                 .makeCheckbox("nav"),
-                .menu(.component(MenuView(tags: tags)), .class("js-element")),
+                .menu(.component(MenuView(menu: menu, tags: tags)), .class("js-element")),
                 .nav(.component(NoteListView(title: "Notes", notes: notes))),
                 .main(.component(ContentView(content: nil))),
                 .script(type: "text/hyperscript", layoutScript),

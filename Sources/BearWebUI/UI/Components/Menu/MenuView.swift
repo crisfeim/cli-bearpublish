@@ -6,6 +6,7 @@ import Plot
 import BearDomain
 
 struct MenuView: Component, Equatable {
+    let menu: Menu
     let tags: [Tag]
    
     @ComponentBuilder
