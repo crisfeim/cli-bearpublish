@@ -1,0 +1,21 @@
+- Paralellize with structured concurrency.
+- More exhaustive testing
+	- Write test to ensure nor trashed, archived notes are shown on index
+	- Guarantee routing is handled correctly
+	- Notes
+		- Untagged
+		- Tasks
+		- Pin
+	- Archived
+	- Trashed
+- Routing
+	- Decide if routing should be injectable from BearWebUI consumers or not.
+	- Replace hardcoding routing everywhere with default Router.
+- Update menu to match original app.
+	- Use icons
+- Add parsing
+- Default sort notes: pinned > creationDate
+- Default sort tags:  pinned > alphabetically
+- Make `creationDate` and `modificationDate` non optional on Note's model (BearDatabase module)
+- Snapshot testing?
+- Export files & images
