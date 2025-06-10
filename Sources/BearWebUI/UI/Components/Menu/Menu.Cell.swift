@@ -74,10 +74,6 @@ extension Menu {
         then remove .selected-chevron from .selected-chevron then add .selected-chevron to the first .chevron in me
         """
         
-//        let detailsScript = """
-//        on mutation of @class if I match .selected-menu-item remove .selected-summary from .selected-summary then add .selected-summary to the first <summary/> in me
-//        """
-        
         let linkScript = """
         on click remove .selected-menu-item from .selected-menu-item then add .selected-menu-item to the closest <details/>
         then Layout.toggleMenu()
