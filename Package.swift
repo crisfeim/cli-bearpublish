@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "BearPublisher",
+    name: "BearPublish",
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.2.0"),
         .package(url: "https://github.com/johnsundell/plot.git", from: "0.9.0"),
@@ -35,7 +35,7 @@ let package = Package(
             .product(name: "SQLite", package: "SQLite.swift")
         ]),
         .executableTarget(
-            name: "BearPublisherCLI",
+            name: "BearPublishCLI",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "BearPublish"
@@ -45,7 +45,7 @@ let package = Package(
             name: "BearPublisherTests",
             dependencies: [
                 "BearPublish",
-                "BearPublisherCLI",
+                "BearPublishCLI",
                 "BearWebUI",
                 "BearDatabase"],
             resources: [.process("database.sqlite")]
