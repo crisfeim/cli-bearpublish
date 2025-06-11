@@ -6,6 +6,7 @@
 //
 
 import Plot
+import BearDomain
 
 public enum FileBlock {}
 
@@ -28,29 +29,12 @@ public extension FileBlock {
 }
 
 public extension FileBlock {
-    struct Data {
-        public init(id: String, name: String, date: Date? = nil, `extension`: String, size: Int) {
-            self.id = id
-            self.name = name
-            self.date = date
-            self.`extension` = `extension`
-            self.size = size
-        }
-        
-        let id: String
-        let name: String
-        let date: Date?
-        let `extension`: String
-        let size: Int
-        
-    }
-    
     struct Renderer: Component {
-        public init(data: FileBlock.Data) {
+        public init(data: File) {
             self.data = data
         }
         
-        let data: Data
+        let data: File
         private var `extension`: Extension { .init(value: data.extension) }
         
         @ComponentBuilder
@@ -67,7 +51,7 @@ public extension FileBlock {
 fileprivate extension FileBlock {
     
     struct HTML: Component {
-        let data: Data
+        let data: File
         var body: Component {
             Div {
                 IFrame(url: "/files/\(data.id)/\(data.name)", addBorder: false, allowFullScreen: false, enabledFeatureNames: [])
@@ -81,7 +65,7 @@ fileprivate extension FileBlock {
     }
     
     struct Description: Component {
-        let data: Data
+        let data: File
         var body: Component {
             
             Link(url: "/files/\(data.id)/\(data.name)") {
@@ -100,7 +84,7 @@ fileprivate extension FileBlock {
     }
     
     struct Video: Component {
-        let data: Data
+        let data: File
         var body: Component {
             Element(name: "video") {
                 Element(name: "source") {}

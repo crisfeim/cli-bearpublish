@@ -132,8 +132,8 @@ extension BearDb {
 }
 
 enum FileMapper {
-    static func map(_ file: File) -> FileBlock.Data {
-        FileBlock.Data(
+    static func map(_ file: BearDatabase.File) -> BearDomain.File {
+        File(
             id: file.id,
             name: file.name,
             extension: file.extension,
