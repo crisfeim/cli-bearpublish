@@ -12,7 +12,7 @@ extension BearSite {
         let bearDb = try BearDb(path: dbPath)
         let parser = BearMarkdown(
             slugify: slugify,
-            imgProcessor: { _ in "" },
+            imgProcessor: bearDb.imgProcessor,
             hashtagProcessor: { _ in "" },
             fileBlockProcessor: { _ in "" }
         )
@@ -60,3 +60,14 @@ extension BearSite {
 }
 
 extension BearMarkdown: NotesMaker.Parser {}
+extension BearDb {
+    func imgProcessor(_ img: String) -> String {
+        guard let id = try? getFileId(with: img.removingPercentEncoding ?? img) else {
+            return "<p>id not found for \(img)</p>"
+        }
+        
+        return """
+       <img src="/images/\(id)/\(img)"/>
+       """
+    }
+}

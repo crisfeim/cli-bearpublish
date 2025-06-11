@@ -13,11 +13,11 @@ class ResourceWriterTests: XCTestCase {
         try? FileManager.default.removeItem(at: testSpecificURL())
     }
     
-    func test() throws {
+    func test() async throws {
         let tmpURL = testSpecificURL()
         let resource = Resource(filename: "index.html", contents: "hello world")
         let sut = ResourceWriter(resources: [resource], outputURL: tmpURL)
-        try sut.write()
+        try await sut.write()
         
         XCTAssertEqual(
             try String(contentsOf: tmpURL.appendingPathComponent(resource.filename)),

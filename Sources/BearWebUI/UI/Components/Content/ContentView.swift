@@ -7,11 +7,11 @@
 
 import Plot
 
-struct ContentView: Component {
+public struct ContentView: Component {
     let content: String?
    
     @ComponentBuilder
-    var body: Component {
+    public var body: Component {
         Header {
             Label("") {
                 SVG.chevron.render().makeRawNode()
