@@ -11,16 +11,6 @@ fileprivate let leftArrow = """
 public typealias Processor = (String) -> String
 
 public final class BearMarkdown: HtmlGenerator {
-  
-    public struct Note {
-        let id: String
-        let content: String
-        
-        public init(id: String, content: String) {
-            self.id = id
-            self.content = content
-        }
-    }
     
     var _slugify: Processor?
     var imgProcessor: Processor?
@@ -46,9 +36,9 @@ public final class BearMarkdown: HtmlGenerator {
         _slugify = processor
     }
 
-    public func parse(noteId: String, content: String) -> String {
+    public func parse(_ content: String) -> String {
         // Custom pre-parsing
-        let note = Note(id: noteId, content: content).content
+        let note = content
             .parseImages(imgProcessor: imgProcessor)
             .parseAndReplaceHexColors()
          

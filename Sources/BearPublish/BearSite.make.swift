@@ -52,8 +52,4 @@ extension BearSite {
     }
 }
 
-extension BearMarkdown: NotesMaker.Parser {
-    public func parse(_ content: String) -> String {
-        parse(noteId: "@todo", content: content)
-    }
-}
+extension BearMarkdown: NotesMaker.Parser {}
