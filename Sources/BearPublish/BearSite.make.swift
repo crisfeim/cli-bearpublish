@@ -22,7 +22,7 @@ extension BearSite {
         
         let notes = NotesMaker(
             notes: try notesProvider.get(),
-            parser: BearkMarkdown(),
+            parser: BearMarkdown(),
             renderer: NoteRenderer(),
             router: Router.note
         )
@@ -52,7 +52,7 @@ extension BearSite {
     }
 }
 
-extension BearkMarkdown: NotesMaker.Parser {
+extension BearMarkdown: NotesMaker.Parser {
     public func parse(_ content: String) -> String {
         parse(noteId: "@todo", content: content)
     }

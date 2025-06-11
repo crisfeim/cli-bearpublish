@@ -10,7 +10,7 @@ fileprivate let leftArrow = """
 
 public typealias Processor = (String) -> String
 
-public final class BearkMarkdown: HtmlGenerator {
+public final class BearMarkdown: HtmlGenerator {
   
     public struct Note {
         let id: String
