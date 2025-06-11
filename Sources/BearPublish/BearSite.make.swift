@@ -14,7 +14,7 @@ extension BearSite {
             slugify: slugify,
             imgProcessor: bearDb.imgProcessor,
             hashtagProcessor: bearDb.hashtagProcessor,
-            fileBlockProcessor: { _ in "" }
+            fileBlockProcessor: bearDb.fileblockProcessor
         )
         
         let noteListProvider = DefaultNoteListProvider(bearDb: bearDb)
@@ -123,10 +123,21 @@ extension [Hashtag] {
 
 extension BearDb {
     func fileblockProcessor(_ title: String) -> String {
-          guard let data = try? getFileData(from: title)?.toFileBlock() else {
+          guard let data = try? getFileData(from: title) else {
               return "@todo: Error, handle this case"
           }
           
-          return FileBlock.Renderer(data: data).render()
+        return FileBlock.Renderer(data: FileMapper.map(data)).render()
       }
+}
+
+enum FileMapper {
+    static func map(_ file: File) -> FileBlock.Data {
+        FileBlock.Data(
+            id: file.id,
+            name: file.name,
+            extension: file.extension,
+            size: file.size
+        )
+    }
 }
