@@ -6,7 +6,7 @@ import BearPublish
 class ComposerTests: XCTestCase {
     
     override func setUp() {
-        try? FileManager.default.removeItem(at: testSpecificURL())
+//        try? FileManager.default.removeItem(at: testSpecificURL())
     }
     
     private var dbPath: String {
@@ -89,6 +89,8 @@ class ComposerTests: XCTestCase {
         try expectFileWithHashToExist(parentFolder: "assets/js", fileNamePrefix: "main")
         
         expectFileAtPathToExist("assets/js")
+        
+        NSWorkspace.shared.open(testSpecificURL())
     }
     
 }
