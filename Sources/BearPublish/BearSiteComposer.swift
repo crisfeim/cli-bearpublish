@@ -46,14 +46,14 @@ public enum BearSiteComposer {
             router: Router.tag
         )
         
-        let `static` = IndexHTML.static().map(ResourceMapper.map)
+        let assets = IndexHTML.static().map(ResourceMapper.map)
         
         return BearSite(
             index: index,
             notes: notes,
             listsByCategory: noteLists,
             listsByHashtag: noteListsForTags,
-            assets: `static`,
+            assets: assets,
             outputURL: outputURL
         )
     }
@@ -131,13 +131,4 @@ extension BearDb {
       }
 }
 
-enum FileMapper {
-    static func map(_ file: BearDatabase.File) -> BearDomain.File {
-        File(
-            id: file.id,
-            name: file.name,
-            extension: file.extension,
-            size: file.size
-        )
-    }
-}
+
