@@ -119,3 +119,14 @@ extension [Hashtag] {
         }
     }
 }
+
+
+extension BearDb {
+    func fileblockProcessor(_ title: String) -> String {
+          guard let data = try? getFileData(from: title)?.toFileBlock() else {
+              return "@todo: Error, handle this case"
+          }
+          
+          return FileBlock.Renderer(data: data).render()
+      }
+}
