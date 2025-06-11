@@ -10,109 +10,36 @@ fileprivate let leftArrow = """
 
 public typealias Processor = (String) -> String
 
-public final class BearMarkdown: HtmlGenerator {
+public final class BearMarkdown {
     
-    var _slugify: Processor?
-    var imgProcessor: Processor?
-    var hashtagProcessor: Processor?
-    var fileBlockProcessor: Processor?
+    private let slugify: Processor
+    private let imgProcessor: Processor
+    private let hashtagProcessor: Processor
+    private let fileBlockProcessor: Processor
+    private let generator: BearHTMLGenerator
     
-    var slugify: Processor {
-        _slugify ?? { _ in "no slugify founded injected yet" }
+    public init(
+        slugify: @escaping Processor,
+        imgProcessor: @escaping Processor,
+        hashtagProcessor: @escaping Processor,
+        fileBlockProcessor: @escaping Processor
+    ) {
+        self.slugify = slugify
+        self.imgProcessor = imgProcessor
+        self.hashtagProcessor = hashtagProcessor
+        self.fileBlockProcessor = fileBlockProcessor
+        self.generator = BearHTMLGenerator()
+        generator.setSlugify(slugify)
+        generator.setImgProcessor(imgProcessor)
+        generator.setHashtagProcessor(hashtagProcessor)
+        generator.setBlockProcessor(fileBlockProcessor)
     }
     
-    public func setImgProcessor(_ processor: @escaping Processor) {
-        imgProcessor = processor
-    }
-    public func setHashtagProcessor(_ processor: @escaping Processor) {
-        hashtagProcessor = processor
-    }
-    
-    public func setBlockProcessor(_ processor: @escaping Processor) {
-        fileBlockProcessor = processor
-    }
-    
-    public func setSlugify(_ processor: @escaping Processor) {
-        _slugify = processor
-    }
-
     public func parse(_ content: String) -> String {
-        // Custom pre-parsing
-        let note = content
-            .parseImages(imgProcessor: imgProcessor)
-            .parseAndReplaceHexColors()
-         
-        
-        let doc = ExtendedMarkdownParser.standard.parse(note)
-        return generate(doc: doc)
-            .parseWikilinks(slugify: slugify)
-            .correctWikilinksCode()
-    }
-
-    func parseCode(lang: String, code: String) -> String {
-        return "<pre><code>" + code + "</pre></code>"
-    }
-    
-    public func generate(block: Block, tight: Bool = false) -> String {
-        switch block {
-        case let .heading(n, text):
-            let text  = self.generate(text: text)
-            let leftIndicator = """
-            <span class="heading-level">
-            <a>\(n)</a>
-            </span>
-            """
-            let open  = "<h\(n > 0 && n < 7 ? n : 1) id=\"\(slugify(text))\">"
-            let close = "</h\(n)>\n"
-            return "\(open)\(leftIndicator)\(text)\(close)"
-        case .fencedCode(let lang, let lines):
-            if let language = lang {
-                let lines = self.generate(lines: lines, separator: "").encodingPredefinedXmlEntities()
-                let parsed = parseCode(lang: language, code: lines)
-                return parsed
-            } else {
-                return "<pre><code>" +
-                self.generate(lines: lines, separator: "").encodingPredefinedXmlEntities() +
-                "</code></pre>\n"
-            }
-        default:
-            return super.generate(block: block, parent: .none, tight: tight)
-        }
-    }
-    
-    public override func generate(lines: Lines, separator: String = "\n") -> String {
-        let lines = super.generate(lines:  lines, separator: "")
-        
-        return lines.parseWikilinksCode()
-    }
-    
-    
-    public override func generate(textFragment fragment: TextFragment) -> String {
-        switch fragment {
-        case let .text(text):
-            return String(text)
-                .decodingNamedCharacters()
-                .encodingPredefinedXmlEntities()
-                .highlightText()
-                .parseWikilinks(slugify: slugify)
-                .parseNumberalEndingHashtags(processor: hashtagProcessor)
-                .parseRegularHashtags(processor: hashtagProcessor)
-                .parseUnderline()
-            
-            
-        case let .link(text, uri, title):
-            if let uri = uri, isRelativeURL(uri) {
-                let titleAttr = title == nil ? "" : " title=\"\(title!)\""
-                return fileBlockProcessor?(text.rawDescription) ?? "<a href=\"\(uri)\"\(titleAttr)>" + self.generate(text: text) + "</a>"
-            } else {
-                let titleAttr = title == nil ? "" : " title=\"\(title!)\""
-                return "<a href=\"\(uri ?? "")\"\(titleAttr)>" + self.generate(text: text) + "</a>"
-            }
-        default:
-            return super.generate(textFragment: fragment)
-        }
+        generator.parse(content)
     }
 }
+
 
 func isRelativeURL(_ url: String) -> Bool {
     guard let urlComponents = URLComponents(string: url) else {

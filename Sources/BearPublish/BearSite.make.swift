@@ -7,8 +7,15 @@ import BearDomain
 import BearMarkdown
 
 extension BearSite {
-   public static func make(dbPath: String, outputURL: URL) throws -> BearSite {
+    public static func make(dbPath: String, outputURL: URL) throws -> BearSite {
+        
         let bearDb = try BearDb(path: dbPath)
+        let parser = BearMarkdown(
+            slugify: slugify,
+            imgProcessor: { _ in "" },
+            hashtagProcessor: { _ in "" },
+            fileBlockProcessor: { _ in "" }
+        )
         
         let noteListProvider = DefaultNoteListProvider(bearDb: bearDb)
         let tagProvider = TagsProvider(bearDb: bearDb)
@@ -22,7 +29,7 @@ extension BearSite {
         
         let notes = NotesMaker(
             notes: try notesProvider.get(),
-            parser: BearMarkdown(),
+            parser: parser,
             renderer: NoteRenderer(),
             router: Router.note
         )
