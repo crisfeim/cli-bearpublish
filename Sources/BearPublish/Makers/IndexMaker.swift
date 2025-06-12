@@ -4,7 +4,7 @@ import BearDomain
 public struct IndexMaker {
     
     public protocol Renderer {
-        func render(notes: [NoteList], tags: [Tag]) -> String
+        func render(title: String, notes: [NoteList], tags: [Tag]) -> String
     }
     
     public let notes: [NoteList]
@@ -18,7 +18,7 @@ public struct IndexMaker {
     }
     
     public func callAsFunction() -> Resource {
-        let rendered = renderer.render(notes: notes, tags: tags)
+        let rendered = renderer.render(title: "Home", notes: notes, tags: tags)
         return Resource(filename: "index.html", contents: rendered)
     }
 }

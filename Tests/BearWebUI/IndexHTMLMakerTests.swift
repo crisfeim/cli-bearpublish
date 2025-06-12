@@ -3,8 +3,9 @@
 import XCTest
 @testable import BearWebUI
 import BearDomain
+import BearPublish
 
-class IndexUIComposerTests: XCTestCase {
+class IndexRendererTests: XCTestCase {
     
     func test() {
         let allNotes = [anyNote(), anyNote()]
@@ -21,10 +22,10 @@ class IndexUIComposerTests: XCTestCase {
             Menu(name: "Trashed", fullPath: "trashed", notesCount: 1, children: [])
         ])
         
-        let index = IndexUIComposer.make(title: "title", lists: lists, tags: tags)
+        let index: IndexHTML = IndexRenderer().render(title: "Home", notes: lists, tags: tags)
         
         XCTAssertEqual(index.menu, expectedList)
-        XCTAssertEqual(index.title, "title")
+        XCTAssertEqual(index.title, "Home")
         XCTAssertEqual(index.tags, tags)
         XCTAssertEqual(index.notes, allNotes)
     }

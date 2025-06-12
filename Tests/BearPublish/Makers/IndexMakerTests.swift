@@ -22,6 +22,7 @@ class IndexMakerTests: XCTestCase {
     
     class RendererSpy: IndexMaker.Renderer {
         private let result: String
+        private(set) var capturedTitle: String?
         private(set) var capturedNotes = [NoteList]()
         private(set) var capturedTags  = [Tag]()
         
@@ -29,7 +30,8 @@ class IndexMakerTests: XCTestCase {
             self.result = result
         }
         
-        func render(notes: [NoteList], tags: [Tag]) -> String {
+        func render(title: String, notes: [NoteList], tags: [Tag]) -> String {
+            capturedTitle = title
             capturedNotes = notes
             capturedTags  = tags
             return result
