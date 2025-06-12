@@ -2,12 +2,6 @@ import Foundation
 import RubyGateway
 import MarkdownKit
 
-
-fileprivate let rightArrow = "test"
-fileprivate let leftArrow = """
-    <svg style="margin: 0px 3px" width="11px" height="10px" viewBox="0 0 11 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="left-arrow" transform="translate(5.500000, 5.000000) scale(-1, 1) translate(-5.500000, -5.000000)"><path d="M1.77635684e-14,5 L9,5" id="rod" stroke="#000000" stroke-width="2"></path> <path d="M11,5 L6,0.5 L6,9.5 L11,5 Z" id="point" fill="#000000"></path></g></svg>
-    """
-
 public typealias Processor = (String) -> String
 
 public final class BearMarkdown {
