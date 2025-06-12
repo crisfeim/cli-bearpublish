@@ -11,7 +11,7 @@ class CLITests: XCTestCase {
     }
     
     func test() async throws {
-        var cli = try BearPublisherCLI.parse([
+        let cli = try BearPublisherCLI.parse([
             "--db-path", dbPath,
             "--output-path", testSpecificURL().path
         ])
