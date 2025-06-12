@@ -8,14 +8,10 @@ import MarkdownKit
 extension BearMarkdown {
     final class BearHTMLGenerator: HtmlGenerator {
         
-        var _slugify: Processor?
-        var imgProcessor: Processor?
-        var hashtagProcessor: Processor?
-        var fileBlockProcessor: Processor?
-        
-        var slugify: Processor {
-            _slugify ?? { _ in "no slugify founded injected yet" }
-        }
+        var slugify: Processor!
+        var imgProcessor: Processor!
+        var hashtagProcessor: Processor!
+        var fileBlockProcessor: Processor!
         
         func setImgProcessor(_ processor: @escaping Processor) {
             imgProcessor = processor
@@ -29,7 +25,7 @@ extension BearMarkdown {
         }
         
         func setSlugify(_ processor: @escaping Processor) {
-            _slugify = processor
+            slugify = processor
         }
         
         func parse(_ content: String) -> String {
