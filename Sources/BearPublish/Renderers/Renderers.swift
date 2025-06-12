@@ -10,7 +10,7 @@ public struct IndexRenderer: IndexMaker.Renderer {
     public func render(title: String, notes: [NoteList], tags: [Tag]) -> IndexHTML {
         IndexUIComposer.make(
             title: title,
-            menu: menu(from: notes)!,
+            menu: menu(from: notes),
             notes: notes.first(where: { $0.title == "All" })?.notes ?? [],
             tags: tags
         )
@@ -21,25 +21,21 @@ public struct IndexRenderer: IndexMaker.Renderer {
     }
 
     
-    private func menu(from lists: [NoteList]) -> Menu? {
-        guard let mainNoteList = lists.filter({ $0.title == "All" }).first else {
-            return nil
-        }
-        let childLists = lists.filter({ $0.title != "All" }).map {
-            Menu(
-                name: $0.title,
-                fullPath: $0.slug,
-                notesCount: $0.notes.count,
-                children: []
-            )
-        }
+    private func menu(from lists: [NoteList]) -> [Menu] {
+        let main = lists.first(where: { $0.title == "All" })
+        let trashed = lists.first(where: { $0.title == "Trashed" })
+        let archived = lists.first(where: { $0.title == "Archived" })
+        let tasks = lists.first(where: { $0.title == "Tasks" })
+        let untagged = lists.first(where: { $0.title == "Untagged" })
         
-        return Menu(
-            name: "All",
-            fullPath: "all",
-            notesCount: mainNoteList.notes.count,
-            children: childLists
-        )
+        return [
+            Menu(name: "All", fullPath: "all", notesCount: main!.notes.count, children: [
+                Menu(name: "Untagged", fullPath: "untagged", notesCount: untagged!.notes.count, children: []),
+                Menu(name: "Tasks", fullPath: "tasks", notesCount: tasks!.notes.count, children: [])
+            ]),
+            Menu(name: "Archived", fullPath: "archived", notesCount: archived!.notes.count, children: []),
+            Menu(name: "Trashed", fullPath: "trashed", notesCount: trashed!.notes.count, children: [])
+        ]
     }
 }
 

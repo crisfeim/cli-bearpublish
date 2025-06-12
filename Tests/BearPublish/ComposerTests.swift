@@ -33,11 +33,12 @@ class ComposerTests: XCTestCase {
         }
         
         sut.listsByCategory.lists.map(\.title) .* {
-            XCTAssertEqual($0.count, 4)
+            XCTAssertEqual($0.count, 5)
             XCTAssertTrue($0.contains("Archived"))
             XCTAssertTrue($0.contains("Trashed"))
             XCTAssertTrue($0.contains("All"))
             XCTAssertTrue($0.contains("Tasks"))
+            XCTAssertTrue($0.contains("Untagged"))
         }
         
         sut.listsByHashtag.lists.map(\.slug) .* {

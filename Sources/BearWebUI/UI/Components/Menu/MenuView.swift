@@ -6,20 +6,22 @@ import Plot
 import BearDomain
 
 struct MenuView: Component, Equatable {
-    let menu: Menu?
+    let menu: [Menu]
     let tags: [Tag]
    
     @ComponentBuilder
     var body: Component {
-        if let menu {
-            Section {
+
+        Section {
+            for item in menu {
                 Cell(
                     icon: .note,
-                    item: menu,
+                    item: item,
                     getRouter: { "/standalone/list/\($0).html" },
                     pushedURL: { "/?list=\($0)" })
             }
         }
+        
         Section {
             for tag in tags {
                 Cell(

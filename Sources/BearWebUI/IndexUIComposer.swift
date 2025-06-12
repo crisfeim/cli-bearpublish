@@ -4,7 +4,7 @@ import BearDomain
 
 public enum IndexUIComposer {
     
-    public static func make(title: String, menu: Menu, notes: [Note], tags: [Tag]) -> IndexHTML {
+    public static func make(title: String, menu: [Menu], notes: [Note], tags: [Tag]) -> IndexHTML {
         return IndexHTML(
             title: title,
             menu: menu,

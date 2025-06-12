@@ -11,16 +11,24 @@ class IndexRendererTests: XCTestCase {
         let allNotes = [anyNote(), anyNote()]
         let lists: [NoteList] = [
             NoteList(title: "All", slug: "all", notes: allNotes),
-            NoteList(title: "Archived", slug: "archived", notes: [anyNote()]),
-            NoteList(title: "Trashed", slug: "trashed", notes: [anyNote()]),
+            NoteList(title: "Archived", slug: "archived", notes: []),
+            NoteList(title: "Trashed", slug: "trashed", notes: []),
+            NoteList(title: "Untagged", slug: "archived", notes: []),
+            NoteList(title: "Tasks", slug: "archived", notes: []),
         ]
         
         let tags = [anyTag()]
 
-        let expectedList = Menu(name: "All", fullPath: "all", notesCount: 2, children: [
-            Menu(name: "Archived", fullPath: "archived", notesCount: 1, children: []),
-            Menu(name: "Trashed", fullPath: "trashed", notesCount: 1, children: [])
-        ])
+        let expectedList =
+        
+        [
+            Menu(name: "All", fullPath: "all", notesCount: 2, children: [
+                Menu(name: "Untagged", fullPath: "untagged", notesCount: 0, children: []),
+                Menu(name: "Tasks", fullPath: "tasks", notesCount: 0, children: [])
+            ]),
+            Menu(name: "Archived", fullPath: "archived", notesCount: 0, children: []),
+            Menu(name: "Trashed", fullPath: "trashed", notesCount: 0, children: [])
+        ]
         
         let index: IndexHTML = IndexRenderer().render(title: "Home", notes: lists, tags: tags)
         
