@@ -2,12 +2,17 @@
 
 import ArgumentParser
 import Foundation
+import BearPublish
 
 @main
-struct CLI: ParsableCommand {
+struct BearPublisherCLI: AsyncParsableCommand {
     
-    @Option var destination: String
-    mutating func run() throws {}
-    
-    func execute() throws {}
+    @Option(name: .shortAndLong, help: "The Bear sqlite database path") var dbPath: String
+    @Option(name: .shortAndLong, help: "The site's build path") var outputPath: String
+
+    func run() async throws {
+        let outputURL = URL(fileURLWithPath: outputPath)
+        let sut = try BearSiteComposer.compose(dbPath: dbPath, outputURL: outputURL)
+        try await sut.build()
+    }
 }
