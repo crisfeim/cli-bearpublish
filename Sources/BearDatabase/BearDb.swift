@@ -266,6 +266,11 @@ public final class BearDb {
         
         return try db.prepare(sqlQuery).map {note(from: $0)}
     }
+    
+    public func getHashtagCount(_ hashtag: String) -> Int {
+        guard let tree = try? fetchTagTree() else { return 0 }
+        return tree.flat().filter { $0.path == hashtag }.first?.count ?? 0
+    }
 }
 
 public struct SearchResultItem {
