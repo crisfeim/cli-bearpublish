@@ -17,17 +17,18 @@ class BearSiteBuilderTests: XCTestCase {
     func test_execute_deliversErrorOnNotesProviderError() throws {
         let sut = BearSiteBuilder(notesProvider: {
             throw NSError(domain: "any error", code: 0)
-        }, listsByCategoryProvider: {[]})
+        }, listsByCategoryProvider: anyProviderDummy)
         
         XCTAssertThrowsError(try sut.execute())
     }
     
     func test_execute_deliversErrorOnListsByCategoryProviderError() throws {
-        let sut = BearSiteBuilder(notesProvider: {[]}, listsByCategoryProvider: {
+        let sut = BearSiteBuilder(notesProvider: anyProviderDummy, listsByCategoryProvider: {
             throw NSError(domain: "any error", code: 0)
         })
         
         XCTAssertThrowsError(try sut.execute())
     }
     
+    func anyProviderDummy<T>() throws -> [T] {[T]()}
 }
