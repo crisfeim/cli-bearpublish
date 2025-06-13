@@ -8,14 +8,17 @@ class BearSiteBuilderTests: XCTestCase {
     struct BearSiteBuilder {
         typealias NotesProvider = () throws -> [Note]
         typealias NoteListProvider = () throws -> [NoteList]
+        typealias TagsProvider = () throws -> [Tag]
         
         let notesProvider: NotesProvider
         let listsByCategoryProvider: NoteListProvider
         let listsByTagProvider: NoteListProvider
+        let tagsProvider: TagsProvider
         func execute() throws {
             _ = try notesProvider()
             _ = try listsByCategoryProvider()
             _ = try listsByTagProvider()
+            _ = try tagsProvider()
         }
     }
     
@@ -33,6 +36,11 @@ class BearSiteBuilderTests: XCTestCase {
         let sut = makeSUT(listsByTagProvider: anyThrowingProvider)
         XCTAssertThrowsError(try sut.execute())
     }
+    
+    func test_execute_deliversErrorOnTagProviderError() throws {
+        let sut = makeSUT(tagsProvider: anyThrowingProvider)
+        XCTAssertThrowsError(try sut.execute())
+    }
 }
     
 private extension BearSiteBuilderTests {
@@ -40,12 +48,14 @@ private extension BearSiteBuilderTests {
      func makeSUT(
         notesProvider: @escaping SUT.NotesProvider = anyProviderDummy,
         listsByCategoryProvider: @escaping SUT.NoteListProvider = anyProviderDummy,
-        listsByTagProvider: @escaping SUT.NoteListProvider = anyProviderDummy
+        listsByTagProvider: @escaping SUT.NoteListProvider = anyProviderDummy,
+        tagsProvider: @escaping SUT.TagsProvider = anyProviderDummy
     ) -> SUT {
         SUT(
             notesProvider: notesProvider,
             listsByCategoryProvider: listsByCategoryProvider,
-            listsByTagProvider: listsByTagProvider
+            listsByTagProvider: listsByTagProvider,
+            tagsProvider: tagsProvider
         )
     }
 
