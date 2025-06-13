@@ -62,6 +62,7 @@ private extension BearPublisherComposer {
         }
     }
 
+    #warning("@todo: Add content markdown parsing")
     struct NoteRenderer: BearSiteRenderer.NoteRenderer {
         func render(title: String, slug: String, content: String) -> Resource {
             let html = NoteHTML(title: title, slug: slug, content: content)
