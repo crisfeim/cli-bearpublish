@@ -42,6 +42,16 @@ class BearSiteRendererTests: XCTestCase {
         XCTAssertEqual(renderer.capturedLists, site.listsByCategory)
         XCTAssertEqual(renderer.capturedTags, site.tags)
     }
+    
+    func test_execute_deliversRenderedIndexResourceFromIndexRenderer() throws {
+        let stub = Resource(filename: "index.html", contents: "index contents")
+        let renderer = IndexRendererStub(stub: stub)
+        let site = anyBearSite()
+        let sut = BearSiteRenderer(site: site, indexRenderer: renderer)
+        let rendered = sut.execute()
+        
+        XCTAssertEqual(rendered.index, stub)
+    }
 }
 
 private extension BearSiteRendererTests {
@@ -76,6 +86,13 @@ private extension BearSiteRendererTests {
     
     func anyTag() -> Tag {
         Tag(name: "any tag", fullPath: "any-tag", notesCount: 0, children: [], isPinned: false)
+    }
+    
+    struct IndexRendererStub: BearSiteRenderer.IndexRenderer {
+        let stub: Resource
+        func render(title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource {
+            stub
+        }
     }
     
     class IndexRendererSpy: BearSiteRenderer.IndexRenderer {
