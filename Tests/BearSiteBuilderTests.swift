@@ -11,33 +11,33 @@ struct BearSite {
     let listsByTag: [NoteList]
 }
 
+struct BearSiteBuilder {
+    typealias NotesProvider = () throws -> [Note]
+    typealias NoteListProvider = () throws -> [NoteList]
+    typealias TagsProvider = () throws -> [Tag]
+    
+    let sitesTitle: String
+    let notesProvider: NotesProvider
+    let listsByCategoryProvider: NoteListProvider
+    let listsByTagProvider: NoteListProvider
+    let tagsProvider: TagsProvider
+    func execute() throws -> BearSite {
+        let notes = try notesProvider()
+        let tags = try tagsProvider()
+        let listsByCategory = try listsByCategoryProvider()
+        let listsByTag = try listsByTagProvider()
+        return BearSite(
+            title: sitesTitle,
+            notes: notes,
+            tags: tags,
+            listsByCategory: listsByCategory,
+            listsByTag: listsByTag,
+        )
+    }
+}
+
 
 class BearSiteBuilderTests: XCTestCase {
-
-    struct BearSiteBuilder {
-        typealias NotesProvider = () throws -> [Note]
-        typealias NoteListProvider = () throws -> [NoteList]
-        typealias TagsProvider = () throws -> [Tag]
-        
-        let sitesTitle: String
-        let notesProvider: NotesProvider
-        let listsByCategoryProvider: NoteListProvider
-        let listsByTagProvider: NoteListProvider
-        let tagsProvider: TagsProvider
-        func execute() throws -> BearSite {
-            let notes = try notesProvider()
-            let tags = try tagsProvider()
-            let listsByCategory = try listsByCategoryProvider()
-            let listsByTag = try listsByTagProvider()
-            return BearSite(
-                title: sitesTitle,
-                notes: notes,
-                tags: tags,
-                listsByCategory: listsByCategory,
-                listsByTag: listsByTag,
-            )
-        }
-    }
     
     func test_execute_deliversSiteWithGivenTitle() throws {
         let sut = makeSUT(sitesTitle: "site's title")
