@@ -6,6 +6,7 @@ import BearDomain
 class BearSiteBuilderTests: XCTestCase {
     
     struct BearSite {
+        let title: String
         let notes: [Note]
         let tags: [Tag]
         let listsByCategory: [NoteList]
@@ -17,6 +18,7 @@ class BearSiteBuilderTests: XCTestCase {
         typealias NoteListProvider = () throws -> [NoteList]
         typealias TagsProvider = () throws -> [Tag]
         
+        let sitesTitle: String
         let notesProvider: NotesProvider
         let listsByCategoryProvider: NoteListProvider
         let listsByTagProvider: NoteListProvider
@@ -27,12 +29,19 @@ class BearSiteBuilderTests: XCTestCase {
             let listsByCategory = try listsByCategoryProvider()
             let listsByTag = try listsByTagProvider()
             return BearSite(
+                title: sitesTitle,
                 notes: notes,
                 tags: tags,
                 listsByCategory: listsByCategory,
                 listsByTag: listsByTag,
             )
         }
+    }
+    
+    func test_execute_deliversSiteWithGivenTitle() throws {
+        let sut = makeSUT(sitesTitle: "site's title")
+        let site = try sut.execute()
+        XCTAssertEqual(site.title, "site's title")
     }
     
     func test_execute_deliversErrorOnNotesProviderError() throws {
@@ -91,12 +100,14 @@ class BearSiteBuilderTests: XCTestCase {
 private extension BearSiteBuilderTests {
     typealias SUT = BearSiteBuilder
      func makeSUT(
+        sitesTitle: String = "any title",
         notesProvider: @escaping SUT.NotesProvider = anyProviderDummy,
         listsByCategoryProvider: @escaping SUT.NoteListProvider = anyProviderDummy,
         listsByTagProvider: @escaping SUT.NoteListProvider = anyProviderDummy,
         tagsProvider: @escaping SUT.TagsProvider = anyProviderDummy
     ) -> SUT {
         SUT(
+            sitesTitle: sitesTitle,
             notesProvider: notesProvider,
             listsByCategoryProvider: listsByCategoryProvider,
             listsByTagProvider: listsByTagProvider,
