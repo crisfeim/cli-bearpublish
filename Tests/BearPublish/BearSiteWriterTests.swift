@@ -3,9 +3,6 @@
 import XCTest
 import BearPublish
 
-
-
-
 class BearSiteWriterTests: XCTestCase {
     
     override func setUp() {

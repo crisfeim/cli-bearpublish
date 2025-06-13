@@ -1,7 +1,6 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 13/6/25.
 
 import XCTest
-
 import BearDomain
 import BearPublish
 

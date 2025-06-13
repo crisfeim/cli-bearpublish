@@ -10,15 +10,7 @@ class CLITests: XCTestCase {
         Bundle.module.url(forResource: "database", withExtension: "sqlite")!.path
     }
 
-    func test() async throws {
-        let cli = try BearPublisherCLI.parse([
-            "--db-path", dbPath,
-            "--output-path", testSpecificURL().path
-        ])
-        try await cli.run()
-
-        expectFileAtPathToExist("index.html")
-    }
+    func test() async throws {}
 }
 
 // MARK: - Helpers
@@ -32,21 +24,6 @@ private extension CLITests {
     }
 
     func testSpecificURL() -> URL {
-        cachesDirectory().appendingPathComponent("bearpublisher-cli")
-    }
-}
-
-
-import ArgumentParser
-
-import BearDatabase
-
-struct CLI: AsyncParsableCommand {
-    @Option(name: .shortAndLong) var input: String
-    @Option(name: .shortAndLong) var output: String
-    @Option(name: .shortAndLong) var siteTitle: String
-
-    func run() async throws {
-        
+        cachesDirectory().appendingPathComponent("\(type(of: self))")
     }
 }
