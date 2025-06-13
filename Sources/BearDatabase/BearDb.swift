@@ -9,8 +9,8 @@ public final class BearDb {
     var db: Connection!
     
     // MARK: -  Common Tables & Expressions
-    private let archived = SQLite.Expression<Bool>(Note.CodingKeys.isArchived.rawValue)
-    private let  trashed = SQLite.Expression<Bool>(Note.CodingKeys.isTrashed.rawValue )
+    private let archived = SQLite.Expression<Bool>(DBNote.CodingKeys.isArchived.rawValue)
+    private let  trashed = SQLite.Expression<Bool>(DBNote.CodingKeys.isTrashed.rawValue )
     
     var slugify: ((SQLite.Expression<String>) -> SQLite.Expression<String>)?
     
@@ -30,32 +30,32 @@ public final class BearDb {
     
     // MARK: - Notes
     /// Fetches all notes. Including trashed and archived
-    public func fetchAll() throws -> [Note] {
+    public func fetchAll() throws -> [DBNote] {
         try db.prepare(Self.notes().table).map { try $0.decode() }
     }
     
     /// Fetches all notes but archived and trashed
-    public func fetchNotes() throws -> [Note] {
+    public func fetchNotes() throws -> [DBNote] {
         let query = Self.notes().table.filter(!archived && !trashed)
         return try db.prepare(query).map { try $0.decode() }
     }
     
     /// Fetches all archived notes but trashed
-    public func fetchArchived() throws -> [Note] {
+    public func fetchArchived() throws -> [DBNote] {
         let query = Self.notes().table.filter(archived && !trashed)
         return try db.prepare(query).map { try $0.decode() }
     }
     
     /// Fetches all trashed notes, may be archived or not
-    public func fetchTrashed() throws -> [Note] {
+    public func fetchTrashed() throws -> [DBNote] {
         let query = Self.notes().table.filter(trashed)
         return try db.prepare(query).map { try $0.decode() }
     }
     
     /// Fetches all encrypted notes but archived & trashed
-    public func fetchEncrypted() throws -> [Note] {
+    public func fetchEncrypted() throws -> [DBNote] {
         
-        let encrypted = Expression<Bool>(Note.CodingKeys.isEncrypted.rawValue)
+        let encrypted = Expression<Bool>(DBNote.CodingKeys.isEncrypted.rawValue)
         let query = Self.notes().table.filter(encrypted && !archived && !trashed)
         return try db.prepare(query).map { try $0.decode() }
     }
@@ -64,7 +64,7 @@ public final class BearDb {
     ///     - Range dates goes from 22 to 22
     ///     - Use SQlite.swift methods
     /// Fetches today notes, not trashed & not archived
-    public func fetchToday() throws -> [Note] {
+    public func fetchToday() throws -> [DBNote] {
         let calendar = Calendar.current
         let start = calendar.startOfDay(for: Date())
         let end = calendar.date(byAdding: .day, value: 1, to: start)!
@@ -72,14 +72,14 @@ public final class BearDb {
     }
     
     /// Fetches notes with active incompleted tasks that aren't archived or trashed
-    public func fetchTasks() throws -> [Note] {
-        let tasks = Expression<Int>(Note.CodingKeys.todoIncompleted.rawValue)
+    public func fetchTasks() throws -> [DBNote] {
+        let tasks = Expression<Int>(DBNote.CodingKeys.todoIncompleted.rawValue)
         let query = Self.notes().table.filter(tasks >= 1 && !archived && !trashed)
         return try db.prepare(query).map { try $0.decode() }
     }
     
     /// Fetches all untaggged notes that aren't archived or trashed
-    public func fetchUntagged() throws -> [Note] {
+    public func fetchUntagged() throws -> [DBNote] {
         
         let note_id    = Expression<Int>("Z_PK")
         let join_table = Table("Z_5TAGS")
@@ -95,12 +95,12 @@ public final class BearDb {
     
    
     // MARK: - Tag
-    public func fetchTagTree() throws -> [Hashtag] {
+    public func fetchTagTree() throws -> [DBTag] {
         let tags = try fetchTags()
         return TagParser.parse(tags: tags)
     }
     
-    public func fetchTags() throws -> [Hashtag] {
+    public func fetchTags() throws -> [DBTag] {
         let query = """
         SELECT
         ZSFNOTETAG.Z_PK,
@@ -121,7 +121,7 @@ public final class BearDb {
     // MARK: - Note Detail
     /// @nicetohave: "Use lib methods for uniform project conventions"
     /// Fetches all tagged notes that aren't trashed or archived
-    public func fetchNotes(with tag: String) throws -> [Note] {
+    public func fetchNotes(with tag: String) throws -> [DBNote] {
         let query = """
         SELECT
         ZSFNOTE.Z_PK,
@@ -152,19 +152,19 @@ public final class BearDb {
     }
     
     // MARK: - Detail
-    public func fetchNote(id: Int) throws -> Note? {
+    public func fetchNote(id: Int) throws -> DBNote? {
         let _id = Expression<Int>("Z_PK")
         let query = Self.notes().table.where(_id == id)
         return try db.pluck(query).map { try $0.decode() }
     }
     
-    public func fetchNote(uuid: String) throws -> Note? {
+    public func fetchNote(uuid: String) throws -> DBNote? {
         let _uuid = Expression<String?>("ZUNIQUEIDENTIFIER")
         let query = Self.notes().table.where(_uuid == uuid)
         return try db.pluck(query).map { try $0.decode() }
     }
     
-    public func fetchNote(slug: String) throws -> Note? {
+    public func fetchNote(slug: String) throws -> DBNote? {
         guard let slugify = slugify else { return nil }
         let title = Expression<String?>("ZTITLE")
         
@@ -174,7 +174,7 @@ public final class BearDb {
     
     /// @nicetohave: Use lib methods for project consistency
     /// Fetches backlins of a note (that are not trashed or archived)
-    public func fetchNoteBacklinks(id: Int) throws -> [Note] {
+    public func fetchNoteBacklinks(id: Int) throws -> [DBNote] {
         let query = """
          SELECT
          ZSFNOTE.Z_PK,
@@ -202,7 +202,7 @@ public final class BearDb {
         return try db.prepare(query).map { note(from: $0) }.filterDuplicates()
     }
     
-    public func getFileData(from fileName: String) throws -> File? {
+    public func getFileData(from fileName: String) throws -> DBFile? {
         let query = """
         SELECT
             ZUNIQUEIDENTIFIER,
@@ -217,7 +217,7 @@ public final class BearDb {
         return try db.prepare(query).map {file(from: $0)}.first
     }
     
-    public func getFileData(id: String) throws -> File? {
+    public func getFileData(id: String) throws -> DBFile? {
         let query = """
         SELECT
             ZUNIQUEIDENTIFIER,
@@ -240,7 +240,7 @@ public final class BearDb {
         []
     }
     
-    public func searchNotes(query: String) throws -> [Note] {
+    public func searchNotes(query: String) throws -> [DBNote] {
         let lowercaseQuery = query.lowercased()
         let sqlQuery = """
         SELECT
@@ -277,9 +277,9 @@ public struct SearchResultItem {
     public init() {}
 }
 
-extension Array where Element == Note {
-    func filterDuplicates() -> [Note] {
-        var uniqueNotes: [Note] = []
+extension Array where Element == DBNote {
+    func filterDuplicates() -> [DBNote] {
+        var uniqueNotes: [DBNote] = []
         var processedIDs: Set<Int> = []
 
         for note in self {
@@ -296,7 +296,7 @@ extension Array where Element == Note {
 // MARK: - Helpers
 extension BearDb {
     
-    func file(from row: Statement.Element) -> File {
+    func file(from row: Statement.Element) -> DBFile {
         var creationDate: Date?
         if let creationDouble = row[2] as? Double {
             creationDate = Date(timeIntervalSinceReferenceDate: creationDouble)
@@ -305,7 +305,7 @@ extension BearDb {
         if let creationInt = row[2] as? Int64 {
             creationDate = Date(timeIntervalSinceReferenceDate: Double(creationInt))
         }
-       return File(
+       return DBFile(
             id: row[0] as! String,
             name: row[1] as! String,
             date: creationDate,
@@ -357,7 +357,7 @@ extension BearDb {
         return (table: notes.select(select), select: select)
     }
     
-    func note(from row: Statement.Element) -> Note {
+    func note(from row: Statement.Element) -> DBNote {
         var creationDate: Date?
         if let creationDouble = row[14] as? Double {
             creationDate = Date(timeIntervalSinceReferenceDate: creationDouble)
@@ -372,7 +372,7 @@ extension BearDb {
             modificationDate = Date(timeIntervalSinceReferenceDate: modificationDouble)
         }
         
-       return Note(
+       return DBNote(
            id: Int(row[0] as! Int64),
            uuid: row[1] as! String,
            title: row[2] as? String,
@@ -393,7 +393,7 @@ extension BearDb {
        )
     }
     
-    func tag(from row: Statement.Element) -> Hashtag? {
+    func tag(from row: Statement.Element) -> DBTag? {
 //        let id = Int(row[0] as! Int64)
         let path = (row[1] as? String) ?? ""
         let isPinned = row[3] as? Int64

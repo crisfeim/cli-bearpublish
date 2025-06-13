@@ -4,7 +4,7 @@ import BearDatabase
 import BearDomain
 
 enum HasthagMapper {
-    static func map(_ hashtag: Hashtag) -> Tag {
+    static func map(_ hashtag: DBTag) -> Tag {
         Tag(
             name: hashtag.name,
             fullPath: hashtag.path.replacingOccurrences(of: "/", with: "&"),

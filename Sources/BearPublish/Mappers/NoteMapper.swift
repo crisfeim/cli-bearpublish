@@ -5,7 +5,7 @@ import BearDatabase
 import BearDomain
 
 enum NoteMapper {
-    static func map(_ note: BearDatabase.Note) -> BearDomain.Note {
+    static func map(_ note: DBNote) -> Note {
         Note(
             id: note.id,
             title: note.title ?? "New note",

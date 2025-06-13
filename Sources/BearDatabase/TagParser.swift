@@ -8,7 +8,7 @@
 import Foundation
 
 public enum TagParser {
-    public typealias Tag = Hashtag
+    public typealias Tag = DBTag
     
     public static func parse(tags: [Tag]) -> [Tag] {
         var mergedTags: [Tag] = []
@@ -36,9 +36,9 @@ public enum TagParser {
     }
     
     
-    public static func makeTag(from string: String, count: Int, isPinned: Bool) -> Hashtag? {
+    public static func makeTag(from string: String, count: Int, isPinned: Bool) -> DBTag? {
         var array = string.splitted()
-        var tag: Hashtag?
+        var tag: DBTag?
         
         while !array.isEmpty {
             let slug = array.joined(separator: "/")

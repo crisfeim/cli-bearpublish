@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct File {
+public struct DBFile {
     public let id: String
     public let name: String
     public let date: Date?

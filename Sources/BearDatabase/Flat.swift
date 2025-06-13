@@ -17,7 +17,7 @@ struct FlatHashtag {
     let count: Int
 }
 
-extension [Hashtag] {
+extension [DBTag] {
     
     /// Use to map a hashtag tree with nested Hashtags to an array of FlatHashtag
     func flat() -> [FlatHashtag] {

@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct Hashtag {
+public struct DBTag {
     public let id      : UUID
     public let path    : String
     public let count   : Int
@@ -18,7 +18,7 @@ public struct Hashtag {
         path: String,
         count: Int,
         isPinned: Bool,
-        children: [Hashtag]
+        children: [DBTag]
     ) {
         self.id = UUID()
         self.path = path

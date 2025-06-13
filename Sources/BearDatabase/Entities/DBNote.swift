@@ -3,7 +3,7 @@
 
 import Foundation
 
-public struct Note {
+public struct DBNote {
     public let id: Int
     public let uuid: String
     public let title: String?
@@ -61,7 +61,7 @@ public struct Note {
     }
 }
 
-extension Note: Codable {
+extension DBNote: Codable {
     enum CodingKeys: String, CodingKey {
         case id = "Z_PK"
         case uuid = "ZUNIQUEIDENTIFIER"
