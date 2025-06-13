@@ -1,14 +1,13 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 13/6/25.
 
 import BearDomain
-import BearPublish
 import Foundation
 
-struct BearPublisher {
+public struct BearPublisher {
     
-    let execute: () async throws -> Void
+    public let execute: () async throws -> Void
     
-    init(
+    public init(
         outputURL: URL,
         siteTitle: String,
         notesProvider: @escaping () throws -> [Note],
