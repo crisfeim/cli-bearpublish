@@ -1,23 +1,22 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 13/6/25.
 
 import BearDomain
-import BearPublish
 
-struct BearSiteRenderer {
+public struct BearSiteRenderer {
    
-    protocol IndexRenderer {
+    public protocol IndexRenderer {
         func render(title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource
     }
     
-    protocol NoteRenderer {
+    public protocol NoteRenderer {
         func render(title: String, slug: String, content: String) -> Resource
     }
     
-    protocol ListRenderer {
+    public protocol ListRenderer {
         func render(title: String, slug: String, notes: [Note]) -> Resource
     }
     
-    typealias AssetsProvider = () -> [Resource]
+    public typealias AssetsProvider = () -> [Resource]
     
     let site: BearSite
     let indexRenderer: IndexRenderer
@@ -25,8 +24,17 @@ struct BearSiteRenderer {
     let listsByCategoryRenderer: ListRenderer
     let listsByTagRenderer: ListRenderer
     let assetsProvider: AssetsProvider
+   
+    public init(site: BearSite, indexRenderer: IndexRenderer, noteRenderer: NoteRenderer, listsByCategoryRenderer: ListRenderer, listsByTagRenderer: ListRenderer, assetsProvider: @escaping AssetsProvider) {
+        self.site = site
+        self.indexRenderer = indexRenderer
+        self.noteRenderer = noteRenderer
+        self.listsByCategoryRenderer = listsByCategoryRenderer
+        self.listsByTagRenderer = listsByTagRenderer
+        self.assetsProvider = assetsProvider
+    }
     
-    func execute() -> BearRenderedSite {
+    public func execute() -> BearRenderedSite {
         BearRenderedSite(
             index: indexRenderer.render(
                 title: site.title,
