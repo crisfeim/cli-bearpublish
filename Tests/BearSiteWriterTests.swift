@@ -1,0 +1,92 @@
+// © 2025  Cristian Felipe Patiño Rojas. Created on 13/6/25.
+
+import XCTest
+import BearPublish
+
+class BearSiteWriterTests: XCTestCase {
+    
+    struct BearSiteGenerator: @unchecked Sendable {
+        let site: BearRenderedSite
+        let outputURL: URL
+        
+        private func cleanOutputFolder() {
+            try? FileManager.default.removeItem(at: outputURL)
+        }
+    
+         func execute() async throws {
+            cleanOutputFolder()
+             async let writeIndex: () = write([site.index])
+             async let writeNotes: () = write(site.notes)
+             async let writeCategoryLists: () = write(site.listsByCategory)
+             async let writeHashtagLists: () = write(site.listsByTag)
+             async let writeAssets: () = write(site.assets)
+            
+            _ = try await [writeIndex, writeNotes, writeCategoryLists, writeHashtagLists, writeAssets]
+        }
+        
+        private func write(_ resources: [Resource]) throws {
+            try ResourceWriter(resources: resources, outputURL: outputURL).write()
+        }
+    }
+    
+    override func setUp() {
+        try? FileManager.default.removeItem(at: testSpecificURL())
+    }
+    
+    override func tearDown() {
+        try? FileManager.default.removeItem(at: testSpecificURL())
+    }
+    
+    func test_execute_writesSiteToOutputURL() async throws {
+        let index = Resource(filename: "index.html", contents: "index contents")
+        let notes = [Resource(filename: "notes/somenote.html", contents: "some note contents")]
+        let listsByCategory = [
+            Resource(filename: "list/somecategorylist.html", contents: "some category list contents")
+        ]
+        let listsByTag = [
+            Resource(filename: "tag/sometaglist.html", contents: "some tag list contents")
+        ]
+        
+        let assets = [
+            Resource(filename: "css/somecss.css", contents: "css content"),
+            Resource(filename: "js/somejs.js", contents: "js content"),
+        ]
+        
+        let site = BearRenderedSite(
+            index: index,
+            notes: notes,
+            listsByCategory: listsByCategory,
+            listsByTag: listsByTag,
+            assets: assets
+        )
+        
+        let sut = BearSiteGenerator(site: site, outputURL: testSpecificURL())
+        
+        try await sut.execute()
+        
+        expectFileAtPathToExist("index.html")
+        expectFileAtPathToExist("notes/somenote.html")
+        expectFileAtPathToExist("list/somecategorylist.html")
+        expectFileAtPathToExist("tag/sometaglist.html")
+        expectFileAtPathToExist("css/somecss.css")
+        expectFileAtPathToExist("js/somejs.js")
+    }
+}
+
+// Custom expectations
+private extension BearSiteWriterTests {
+    func expectFileAtPathToExist(_ path: String, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssert(FileManager.default.fileExists(atPath: testSpecificURL().appendingPathComponent(path).path))
+    }
+}
+
+// MARK: - Helpers
+private extension BearSiteWriterTests {
+    func cachesDirectory() -> URL {
+        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+    }
+    
+    func testSpecificURL() -> URL {
+        cachesDirectory().appendingPathComponent("\(type(of: self))")
+    }
+}
