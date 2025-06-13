@@ -48,19 +48,7 @@ class BearSiteBuilderTests: XCTestCase {
     }
     
     func test_execute_deliversSiteWithProvidedTitleOnNotesProviderSuccess() throws {
-        let stubedNote = Note(
-            id: 0,
-            title: "any note",
-            slug: "any slug",
-            isPinned: false,
-            isEncrypted: false,
-            isEmpty: false,
-            subtitle: "any subtitle",
-            creationDate: nil,
-            modificationDate: nil,
-            content: "any note content"
-        )
-        
+        let stubedNote = anyNote()
         let sut = makeSUT(notesProvider: { [stubedNote] })
         let site = try sut.execute()
         
@@ -86,6 +74,21 @@ private extension BearSiteBuilderTests {
 
     func anyThrowingProvider<T>() throws -> [T] {
         throw NSError(domain: "any error", code: 0)
+    }
+    
+    func anyNote() -> Note {
+        Note(
+            id: 0,
+            title: "any note",
+            slug: "any slug",
+            isPinned: false,
+            isEncrypted: false,
+            isEmpty: false,
+            subtitle: "any subtitle",
+            creationDate: nil,
+            modificationDate: nil,
+            content: "any note content"
+        )
     }
 }
 
