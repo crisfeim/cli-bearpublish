@@ -6,7 +6,11 @@ import BearPublish
 class ComposerTests: XCTestCase {
     
     override func setUp() {
-//        try? FileManager.default.removeItem(at: testSpecificURL())
+        try? FileManager.default.removeItem(at: testSpecificURL())
+    }
+    
+    override func tearDown() {
+        try? FileManager.default.removeItem(at: testSpecificURL())
     }
     
     private var dbPath: String {
