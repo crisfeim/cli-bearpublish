@@ -90,8 +90,6 @@ class ComposerTests: XCTestCase {
         try expectFileWithHashToExist(parentFolder: "assets/js", fileNamePrefix: "main")
         
         expectFileAtPathToExist("assets/js")
-        
-        NSWorkspace.shared.open(testSpecificURL())
     }
     
 }
