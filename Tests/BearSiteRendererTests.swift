@@ -106,13 +106,18 @@ private extension BearSiteRendererTests {
         )
     }
     
-    func anyBearSite(notes: [Note] = [anyNote()]) -> BearSite {
+    func anyBearSite(
+        notes: [Note] = [anyNote()],
+        tags: [Tag] = [anyTag()],
+        listsByCategory: [NoteList] = [anyNoteList()],
+        listsByTag: [NoteList] = [anyNoteList()]
+    ) -> BearSite {
         BearSite(
             title: "title",
             notes: notes,
-            tags: [anyTag()],
-            listsByCategory: [anyNoteList(), anyNoteList()],
-            listsByTag: [anyNoteList()]
+            tags: tags,
+            listsByCategory: listsByCategory,
+            listsByTag: listsByTag
         )
     }
     
@@ -135,11 +140,11 @@ private extension BearSiteRendererTests {
         Self.anyNote()
     }
     
-    func anyNoteList() -> NoteList {
+    static func anyNoteList() -> NoteList {
         NoteList(title: "any note list", slug: "any-note-list", notes: [anyNote()])
     }
     
-    func anyTag() -> Tag {
+    static func anyTag() -> Tag {
         Tag(name: "any tag", fullPath: "any-tag", notesCount: 0, children: [], isPinned: false)
     }
     
