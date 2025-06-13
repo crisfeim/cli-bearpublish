@@ -6,8 +6,8 @@ import BearDatabase
 import BearDomain
 import BearMarkdown
 
-public enum BearSiteComposer {
-    public static func compose(dbPath: String, outputURL: URL) throws -> BearSite {
+public enum BearPublisherComposer {
+    public static func make(dbPath: String, outputURL: URL) throws -> BearSite {
         
         let bearDb = try BearDb(path: dbPath)
         let parser = BearMarkdown(

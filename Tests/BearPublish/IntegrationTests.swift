@@ -18,7 +18,7 @@ class IntegrationTests: XCTestCase {
     }
     
     func test() throws {
-        let sut = try BearSiteComposer.compose(dbPath: dbPath, outputURL: testSpecificURL())
+        let sut = try BearPublisherComposer.make(dbPath: dbPath, outputURL: testSpecificURL())
         
         let allNoteList = try XCTUnwrap(sut.index.notes.filter({ $0.title == "All" }).first)
         
@@ -56,7 +56,7 @@ class IntegrationTests: XCTestCase {
     }
     
     func test_build_writesExpectedResources() async throws {
-        let sut = try BearSiteComposer.compose(dbPath: dbPath, outputURL: testSpecificURL())
+        let sut = try BearPublisherComposer.make(dbPath: dbPath, outputURL: testSpecificURL())
         try await sut.build()
         
         expectFileAtPathToExist("index.html")
