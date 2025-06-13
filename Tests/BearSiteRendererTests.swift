@@ -10,7 +10,7 @@ class BearSiteRendererTests: XCTestCase {
         let index: Resource
         let notes: [Resource]
         let listsByCategory: [Resource]
-        let listsByTags: [Resource]
+        let listsByTag: [Resource]
     }
     
     struct BearSiteRenderer {
@@ -42,7 +42,7 @@ class BearSiteRendererTests: XCTestCase {
                 ),
                 notes: site.notes.map(renderNote),
                 listsByCategory: site.listsByCategory.map(renderList),
-                listsByTags: site.listsByTag.map(renderList)
+                listsByTag: site.listsByTag.map(renderList)
             )
         }
         
@@ -119,6 +119,23 @@ class BearSiteRendererTests: XCTestCase {
                 ListRendererSpy.Captured(title: $0.title, notes: $0.notes)
             }
         )
+    }
+    
+    func test_execute_deliversRenderedNoteListsFromListRenderer() throws {
+        let stubbedResource = Resource(filename: "list/somelist.html", contents: "any list contents")
+        let renderer = ListRendererStub(stub: stubbedResource)
+        let stubbedListsByCategory = [anyNoteList(), anyNoteList()]
+        let stubbedListsByTag = [anyNoteList(), anyNoteList(), anyNoteList()]
+        let site = anyBearSite(
+            listsByCategory: stubbedListsByCategory,
+            listsByTag: stubbedListsByTag
+        )
+        
+        let sut = makeSUT(site: site, listRenderer: renderer)
+        let rendered = sut.execute()
+        
+        XCTAssertEqual(rendered.listsByCategory, stubbedListsByCategory.map { _ in stubbedResource })
+        XCTAssertEqual(rendered.listsByTag, stubbedListsByTag.map { _ in stubbedResource })
     }
 }
 
@@ -256,6 +273,13 @@ private extension BearSiteRendererTests {
     struct ListRendererDummy: BearSiteRenderer.ListRenderer {
         func render(title: String, notes: [Note]) -> Resource {
             Resource(filename: "", contents: "")
+        }
+    }
+    
+    struct ListRendererStub: BearSiteRenderer.ListRenderer {
+        let stub: Resource
+        func render(title: String, notes: [Note]) -> Resource {
+            stub
         }
     }
 }
