@@ -9,6 +9,8 @@ class BearSiteRendererTests: XCTestCase {
     struct BearRenderedSite {
         let index: Resource
         let notes: [Resource]
+        let listsByCategory: [Resource]
+        let listsByTags: [Resource]
     }
     
     struct BearSiteRenderer {
@@ -21,9 +23,14 @@ class BearSiteRendererTests: XCTestCase {
             func render(title: String, slug: String, content: String) -> Resource
         }
         
+        protocol ListRenderer {
+            func render(title: String, notes: [Note]) -> Resource
+        }
+        
         let site: BearSite
         let indexRenderer: IndexRenderer
         let noteRenderer: NoteRenderer
+        let listRenderer: ListRenderer
         
         func execute() -> BearRenderedSite {
             BearRenderedSite(
@@ -33,16 +40,22 @@ class BearSiteRendererTests: XCTestCase {
                     notes: site.notes,
                     tags: site.tags
                 ),
-                notes: site.notes.map(renderNote)
+                notes: site.notes.map(renderNote),
+                listsByCategory: site.listsByCategory.map(renderList),
+                listsByTags: site.listsByTag.map(renderList)
             )
         }
         
-        func renderNote(_ note: Note) -> Resource {
+        private func renderNote(_ note: Note) -> Resource {
             noteRenderer.render(
                 title: note.title,
                 slug: note.slug,
                 content: note.content
             )
+        }
+        
+        private func renderList(_ noteList: NoteList) -> Resource {
+            listRenderer.render(title: noteList.title, notes: noteList.notes)
         }
     }
     
@@ -90,6 +103,23 @@ class BearSiteRendererTests: XCTestCase {
         
         XCTAssertEqual(rendered.notes, stubbedNotes.map { _ in stubbedResource })
     }
+    
+    func test_execute_passCorrectArgumentsToNoteListRenderer() throws {
+        let renderer = ListRendererSpy()
+        let stubbedListsByCategory = [anyNoteList()]
+        let stubbedListsByTag = [anyNoteList()]
+        
+        let site = anyBearSite(listsByCategory: stubbedListsByCategory, listsByTag: stubbedListsByTag)
+        let sut = makeSUT(site: site, listRenderer: renderer)
+        _ = sut.execute()
+        
+        XCTAssertEqual(
+            renderer.capturedLists,
+            (stubbedListsByCategory + stubbedListsByTag).map {
+                ListRendererSpy.Captured(title: $0.title, notes: $0.notes)
+            }
+        )
+    }
 }
 
 private extension BearSiteRendererTests {
@@ -97,12 +127,14 @@ private extension BearSiteRendererTests {
     func makeSUT(
         site: BearSite,
         indexRenderer: SUT.IndexRenderer = IndexRendererDummy(),
-        noteRenderer: SUT.NoteRenderer = NoteRendererDummy()
+        noteRenderer: SUT.NoteRenderer = NoteRendererDummy(),
+        listRenderer: SUT.ListRenderer = ListRendererDummy()
     ) -> SUT {
         SUT(
             site: site,
             indexRenderer: indexRenderer,
-            noteRenderer: noteRenderer
+            noteRenderer: noteRenderer,
+            listRenderer: listRenderer
         )
     }
     
@@ -138,6 +170,10 @@ private extension BearSiteRendererTests {
     
     func anyNote() -> Note {
         Self.anyNote()
+    }
+    
+    func anyNoteList() -> NoteList {
+        Self.anyNoteList()
     }
     
     static func anyNoteList() -> NoteList {
@@ -200,6 +236,25 @@ private extension BearSiteRendererTests {
     
     struct NoteRendererDummy: BearSiteRenderer.NoteRenderer {
         func render(title: String, slug: String, content: String) -> Resource {
+            Resource(filename: "", contents: "")
+        }
+    }
+    
+    class ListRendererSpy: BearSiteRenderer.ListRenderer {
+        struct Captured: Equatable {
+            let title: String
+            let notes: [Note]
+        }
+        var capturedLists = [Captured]()
+        
+        func render(title: String, notes: [Note]) -> Resource {
+            capturedLists.append(Captured(title: title, notes: notes))
+            return Resource(filename: "", contents: "")
+        }
+    }
+    
+    struct ListRendererDummy: BearSiteRenderer.ListRenderer {
+        func render(title: String, notes: [Note]) -> Resource {
             Resource(filename: "", contents: "")
         }
     }
