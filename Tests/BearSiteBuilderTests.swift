@@ -3,16 +3,17 @@
 import XCTest
 import BearDomain
 
+struct BearSite {
+    let title: String
+    let notes: [Note]
+    let tags: [Tag]
+    let listsByCategory: [NoteList]
+    let listsByTag: [NoteList]
+}
+
+
 class BearSiteBuilderTests: XCTestCase {
-    
-    struct BearSite {
-        let title: String
-        let notes: [Note]
-        let tags: [Tag]
-        let listsByCategory: [NoteList]
-        let listsByTag: [NoteList]
-    }
-    
+
     struct BearSiteBuilder {
         typealias NotesProvider = () throws -> [Note]
         typealias NoteListProvider = () throws -> [NoteList]
