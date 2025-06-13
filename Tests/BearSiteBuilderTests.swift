@@ -7,6 +7,7 @@ class BearSiteBuilderTests: XCTestCase {
     
     struct BearSite {
         let notes: [Note]
+        let listsByCategory: [NoteList]
     }
     
     struct BearSiteBuilder {
@@ -20,10 +21,13 @@ class BearSiteBuilderTests: XCTestCase {
         let tagsProvider: TagsProvider
         func execute() throws -> BearSite {
             let notes = try notesProvider()
-            _ = try listsByCategoryProvider()
+            let listsByCategory = try listsByCategoryProvider()
             _ = try listsByTagProvider()
             _ = try tagsProvider()
-            return BearSite(notes: notes)
+            return BearSite(
+                notes: notes,
+                listsByCategory: listsByCategory
+            )
         }
     }
     
@@ -54,6 +58,14 @@ class BearSiteBuilderTests: XCTestCase {
         
         XCTAssertEqual(site.notes, [stubedNote])
     }
+    
+    func test_execute_deliversSiteWithProvidedListsByCategoryOnProviderSuccess() throws {
+        let stubedNoteList = anyNoteList()
+        let sut = makeSUT(listsByCategoryProvider: { [stubedNoteList] })
+        let site = try sut.execute()
+        
+        XCTAssertEqual(site.listsByCategory, [stubedNoteList])
+    }
 }
     
 private extension BearSiteBuilderTests {
@@ -76,6 +88,7 @@ private extension BearSiteBuilderTests {
         throw NSError(domain: "any error", code: 0)
     }
     
+    
     func anyNote() -> Note {
         Note(
             id: 0,
@@ -89,6 +102,10 @@ private extension BearSiteBuilderTests {
             modificationDate: nil,
             content: "any note content"
         )
+    }
+    
+    func anyNoteList() -> NoteList {
+        NoteList(title: "any note list", slug: "any-note-list", notes: [anyNote()])
     }
 }
 
