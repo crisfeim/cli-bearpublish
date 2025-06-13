@@ -6,6 +6,7 @@ import BearDatabase
 import BearDomain
 import BearMarkdown
 
+#warning("@todo: add media provider (files & images)")
 public enum BearPublisherComposer {
     public static func make(dbPath: String, outputURL: URL, siteTitle: String) throws  -> BearPublisher {
         let bearDB = try BearDb(path: dbPath)
