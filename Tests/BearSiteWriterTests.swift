@@ -3,31 +3,32 @@
 import XCTest
 import BearPublish
 
-class BearSiteWriterTests: XCTestCase {
+
+struct BearSiteGenerator: @unchecked Sendable {
+    let site: BearRenderedSite
+    let outputURL: URL
     
-    struct BearSiteGenerator: @unchecked Sendable {
-        let site: BearRenderedSite
-        let outputURL: URL
-        
-        private func cleanOutputFolder() {
-            try? FileManager.default.removeItem(at: outputURL)
-        }
-    
-         func execute() async throws {
-            cleanOutputFolder()
-             async let writeIndex: () = write([site.index])
-             async let writeNotes: () = write(site.notes)
-             async let writeCategoryLists: () = write(site.listsByCategory)
-             async let writeHashtagLists: () = write(site.listsByTag)
-             async let writeAssets: () = write(site.assets)
-            
-            _ = try await [writeIndex, writeNotes, writeCategoryLists, writeHashtagLists, writeAssets]
-        }
-        
-        private func write(_ resources: [Resource]) throws {
-            try ResourceWriter(resources: resources, outputURL: outputURL).write()
-        }
+    private func cleanOutputFolder() {
+        try? FileManager.default.removeItem(at: outputURL)
     }
+
+     func execute() async throws {
+        cleanOutputFolder()
+         async let writeIndex: () = write([site.index])
+         async let writeNotes: () = write(site.notes)
+         async let writeCategoryLists: () = write(site.listsByCategory)
+         async let writeHashtagLists: () = write(site.listsByTag)
+         async let writeAssets: () = write(site.assets)
+        
+        _ = try await [writeIndex, writeNotes, writeCategoryLists, writeHashtagLists, writeAssets]
+    }
+    
+    private func write(_ resources: [Resource]) throws {
+        try ResourceWriter(resources: resources, outputURL: outputURL).write()
+    }
+}
+
+class BearSiteWriterTests: XCTestCase {
     
     override func setUp() {
         try? FileManager.default.removeItem(at: testSpecificURL())
