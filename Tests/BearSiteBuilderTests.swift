@@ -7,7 +7,9 @@ class BearSiteBuilderTests: XCTestCase {
     
     struct BearSite {
         let notes: [Note]
+        let tags: [Tag]
         let listsByCategory: [NoteList]
+        let listsByTag: [NoteList]
     }
     
     struct BearSiteBuilder {
@@ -21,12 +23,14 @@ class BearSiteBuilderTests: XCTestCase {
         let tagsProvider: TagsProvider
         func execute() throws -> BearSite {
             let notes = try notesProvider()
+            let tags = try tagsProvider()
             let listsByCategory = try listsByCategoryProvider()
-            _ = try listsByTagProvider()
-            _ = try tagsProvider()
+            let listsByTag = try listsByTagProvider()
             return BearSite(
                 notes: notes,
-                listsByCategory: listsByCategory
+                tags: tags,
+                listsByCategory: listsByCategory,
+                listsByTag: listsByTag,
             )
         }
     }
@@ -65,6 +69,22 @@ class BearSiteBuilderTests: XCTestCase {
         let site = try sut.execute()
         
         XCTAssertEqual(site.listsByCategory, [stubedNoteList])
+    }
+    
+    func test_execute_deliversSiteWithProvidedListsByTagOnProviderSuccess() throws {
+        let stubedNoteList = anyNoteList()
+        let sut = makeSUT(listsByTagProvider: { [stubedNoteList] })
+        let site = try sut.execute()
+        
+        XCTAssertEqual(site.listsByTag, [stubedNoteList])
+    }
+    
+    func test_execute_deliversSiteWithProvidedTagsOnProviderSuccess() throws {
+        let stubedTag = anyTag()
+        let sut = makeSUT(tagsProvider: { [stubedTag] })
+        let site = try sut.execute()
+        
+        XCTAssertEqual(site.tags, [stubedTag])
     }
 }
     
@@ -106,6 +126,10 @@ private extension BearSiteBuilderTests {
     
     func anyNoteList() -> NoteList {
         NoteList(title: "any note list", slug: "any-note-list", notes: [anyNote()])
+    }
+    
+    func anyTag() -> Tag {
+        Tag(name: "any tag", fullPath: "any-tag", notesCount: 0, children: [], isPinned: false)
     }
 }
 
