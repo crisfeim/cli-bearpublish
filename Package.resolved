@@ -1,15 +1,6 @@
 {
-  "originHash" : "027248ce39e91e4edb8722c9d2f7f42d0543e07d8b0bb61e492fc1a25159720c",
+  "originHash" : "e6b5e7b41611dcb96c05f6be1125f30f42a60aae6818891ef33fca46e6e84ab1",
   "pins" : [
-    {
-      "identity" : "cruby",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/johnfairh/CRuby",
-      "state" : {
-        "revision" : "07ee7e6c164d7d234785319e81a83c8e4d321d3f",
-        "version" : "2.1.0"
-      }
-    },
     {
       "identity" : "plot",
       "kind" : "remoteSourceControl",
@@ -17,15 +8,6 @@
       "state" : {
         "revision" : "271926b4413fe868739d99f5eadcf2bd6cd62fb8",
         "version" : "0.14.0"
-      }
-    },
-    {
-      "identity" : "rubygateway",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/johnfairh/RubyGateway",
-      "state" : {
-        "revision" : "a20885b15e67da38002a65f5b60e4d21cf755244",
-        "version" : "5.5.0"
       }
     },
     {
