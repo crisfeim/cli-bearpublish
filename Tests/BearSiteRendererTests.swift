@@ -4,14 +4,15 @@ import XCTest
 import BearDomain
 import BearPublish
 
+struct BearRenderedSite {
+    let index: Resource
+    let notes: [Resource]
+    let listsByCategory: [Resource]
+    let listsByTag: [Resource]
+    let assets: [Resource]
+}
+
 class BearSiteRendererTests: XCTestCase {
-    
-    struct BearRenderedSite {
-        let index: Resource
-        let notes: [Resource]
-        let listsByCategory: [Resource]
-        let listsByTag: [Resource]
-    }
     
     struct BearSiteRenderer {
        
@@ -27,10 +28,13 @@ class BearSiteRendererTests: XCTestCase {
             func render(title: String, notes: [Note]) -> Resource
         }
         
+        typealias AssetsProvider = () -> [Resource]
+        
         let site: BearSite
         let indexRenderer: IndexRenderer
         let noteRenderer: NoteRenderer
         let listRenderer: ListRenderer
+        let assetsProvider: AssetsProvider
         
         func execute() -> BearRenderedSite {
             BearRenderedSite(
@@ -42,7 +46,8 @@ class BearSiteRendererTests: XCTestCase {
                 ),
                 notes: site.notes.map(renderNote),
                 listsByCategory: site.listsByCategory.map(renderList),
-                listsByTag: site.listsByTag.map(renderList)
+                listsByTag: site.listsByTag.map(renderList),
+                assets: assetsProvider()
             )
         }
         
@@ -137,6 +142,15 @@ class BearSiteRendererTests: XCTestCase {
         XCTAssertEqual(rendered.listsByCategory, stubbedListsByCategory.map { _ in stubbedResource })
         XCTAssertEqual(rendered.listsByTag, stubbedListsByTag.map { _ in stubbedResource })
     }
+    
+    func test_execute_deliversAssetsFromAssetsProvider() throws {
+        let sut = makeSUT(site: anyBearSite(), assetsProvider: {[
+            Resource(filename: "css/somecss.css", contents: "somecss contents")
+        ]})
+        
+        let rendered = sut.execute()
+        XCTAssertEqual(rendered.assets, [Resource(filename: "css/somecss.css", contents: "somecss contents")])
+    }
 }
 
 private extension BearSiteRendererTests {
@@ -145,13 +159,15 @@ private extension BearSiteRendererTests {
         site: BearSite,
         indexRenderer: SUT.IndexRenderer = IndexRendererDummy(),
         noteRenderer: SUT.NoteRenderer = NoteRendererDummy(),
-        listRenderer: SUT.ListRenderer = ListRendererDummy()
+        listRenderer: SUT.ListRenderer = ListRendererDummy(),
+        assetsProvider: @escaping SUT.AssetsProvider = { [ ] }
     ) -> SUT {
         SUT(
             site: site,
             indexRenderer: indexRenderer,
             noteRenderer: noteRenderer,
-            listRenderer: listRenderer
+            listRenderer: listRenderer,
+            assetsProvider: assetsProvider
         )
     }
     
