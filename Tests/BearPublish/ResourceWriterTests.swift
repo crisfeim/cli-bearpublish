@@ -17,7 +17,7 @@ class ResourceWriterTests: XCTestCase {
         let tmpURL = testSpecificURL()
         let resource = Resource(filename: "index.html", contents: "hello world")
         let sut = ResourceWriter(resources: [resource], outputURL: tmpURL)
-        try sut.write()
+        try sut.execute()
         
         XCTAssertEqual(
             try String(contentsOf: tmpURL.appendingPathComponent(resource.filename)),

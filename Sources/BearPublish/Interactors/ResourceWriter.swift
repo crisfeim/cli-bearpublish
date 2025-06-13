@@ -12,7 +12,7 @@ public struct ResourceWriter {
         self.outputURL = outputURL
     }
     
-    public func write() throws {
+    public func execute() throws {
         try resources.forEach {
             let url = outputURL.appendingPathComponent($0.filename)
             let directory = url.deletingLastPathComponent()

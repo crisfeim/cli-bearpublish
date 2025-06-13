@@ -27,6 +27,6 @@ public struct BearSiteGenerator: @unchecked Sendable {
     }
     
     private func write(_ resources: [Resource]) throws {
-        try ResourceWriter(resources: resources, outputURL: outputURL).write()
+        try ResourceWriter(resources: resources, outputURL: outputURL).execute()
     }
 }
