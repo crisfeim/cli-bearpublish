@@ -7,7 +7,7 @@ import BearDomain
 
 struct NotesProvider {
     let bearDb: BearDb
-    func get() throws -> [BearDomain.Note] {
+    func get() throws -> [Note] {
         try bearDb.fetchAll().map(NoteMapper.map)
     }
 }
