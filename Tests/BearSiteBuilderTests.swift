@@ -10,24 +10,27 @@ class BearSiteBuilderTests: XCTestCase {
         let listsByCategoryProvider: () throws -> [NoteList]
         let listsByTagProvider: () throws -> [NoteList]
         func execute() throws {
-           _ = try notesProvider()
-           _ = try listsByCategoryProvider()
+            _ = try notesProvider()
+            _ = try listsByCategoryProvider()
             _ = try listsByTagProvider()
         }
     }
     
     func test_execute_deliversErrorOnNotesProviderError() throws {
-        let sut = BearSiteBuilder(notesProvider: {
-            throw NSError(domain: "any error", code: 0)
-        }, listsByCategoryProvider: anyProviderDummy, listsByTagProvider: anyProviderDummy)
+        let sut = BearSiteBuilder(
+            notesProvider: anyThrowingProvider,
+            listsByCategoryProvider: anyProviderDummy,
+            listsByTagProvider: anyProviderDummy)
         
         XCTAssertThrowsError(try sut.execute())
     }
     
     func test_execute_deliversErrorOnListsByCategoryProviderError() throws {
-        let sut = BearSiteBuilder(notesProvider: anyProviderDummy, listsByCategoryProvider: {
-            throw NSError(domain: "any error", code: 0)
-        }, listsByTagProvider: anyProviderDummy)
+        let sut = BearSiteBuilder(
+            notesProvider: anyProviderDummy,
+            listsByCategoryProvider: anyThrowingProvider,
+            listsByTagProvider: anyProviderDummy
+        )
         
         XCTAssertThrowsError(try sut.execute())
     }
@@ -36,13 +39,14 @@ class BearSiteBuilderTests: XCTestCase {
         let sut = BearSiteBuilder(
             notesProvider: anyProviderDummy,
             listsByCategoryProvider: anyProviderDummy,
-            listsByTagProvider: {
-                throw NSError(domain: "any error", code: 0)
-            }
+            listsByTagProvider: anyThrowingProvider
         )
         
         XCTAssertThrowsError(try sut.execute())
     }
     
     func anyProviderDummy<T>() throws -> [T] {[T]()}
+    func anyThrowingProvider<T>() throws -> [T] {
+        throw NSError(domain: "any error", code: 0)
+    }
 }
