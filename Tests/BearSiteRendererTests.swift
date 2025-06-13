@@ -91,6 +91,21 @@ class BearSiteRendererTests: XCTestCase {
             NoteRendererSpy.Captured(title: $0.title, slug: $0.slug, content: $0.content)
         })
     }
+    
+    func test_execute_deliversRenderedNotesFromNoteRenderer() throws {
+        let stubbedResource = Resource(filename: "note/somenote.html", contents: "any notes content")
+        let renderer = NoteRendererStub(stub: stubbedResource)
+        let stubbedNotes = [anyNote(), anyNote(), anyNote(), anyNote()]
+        let site = anyBearSite(notes: stubbedNotes)
+        let sut = BearSiteRenderer(
+            site: site,
+            indexRenderer: IndexRendererDummy(),
+            noteRenderer: renderer
+        )
+        let rendered = sut.execute()
+        
+        XCTAssertEqual(rendered.notes, stubbedNotes.map { _ in stubbedResource })
+    }
 }
 
 private extension BearSiteRendererTests {
@@ -171,6 +186,13 @@ private extension BearSiteRendererTests {
         func render(title: String, slug: String, content: String) -> Resource {
             capturedNotes.append(Captured(title: title, slug: slug, content: content))
             return  Resource(filename: "", contents: "")
+        }
+    }
+    
+    struct NoteRendererStub: BearSiteRenderer.NoteRenderer {
+        let stub: Resource
+        func render(title: String, slug: String, content: String) -> Resource {
+            stub
         }
     }
     
