@@ -12,7 +12,6 @@ struct BearPublisherCLI: AsyncParsableCommand {
 
     func run() async throws {
         let outputURL = URL(fileURLWithPath: outputPath)
-        let sut = try BearPublisherComposer.make(dbPath: dbPath, outputURL: outputURL)
-        try await sut.build()
+        let _ = try BearPublisherComposer.make(dbPath: dbPath, outputURL: outputURL)
     }
 }

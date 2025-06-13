@@ -3,7 +3,7 @@
 import BearDomain
 import BearWebUI
 
-public struct IndexRenderer: IndexMaker.Renderer {
+public struct IndexRenderer {
     public init() {}
     
     public func render(title: String, notes: [NoteList], tags: [Tag]) -> IndexHTML {
@@ -38,13 +38,13 @@ public struct IndexRenderer: IndexMaker.Renderer {
     }
 }
 
-struct NoteRenderer: NotesMaker.Renderer {
+struct NoteRenderer {
     func render(title: String, slug: String, content: String) -> String {
         NoteHTML(title: title, slug: slug, content: content).render()
     }
 }
 
-struct NoteListRenderer: NoteListMaker.Renderer {
+struct NoteListRenderer {
     func render(_ list: NoteList) -> String {
         NoteListHTML(title: list.title, notes: list.notes).render()
     }
