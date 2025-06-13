@@ -3,7 +3,7 @@
 import XCTest
 import BearPublish
 
-class ComposerTests: XCTestCase {
+class IntegrationTests: XCTestCase {
     
     override func setUp() {
         try? FileManager.default.removeItem(at: testSpecificURL())
@@ -99,7 +99,7 @@ class ComposerTests: XCTestCase {
 }
 
 // MARK: - Custom asserts
-private extension ComposerTests {
+private extension IntegrationTests {
     
     func expectFileWithHashToExist(parentFolder: String, fileNamePrefix: String, file: StaticString = #filePath, line: UInt = #line) throws {
         
@@ -124,7 +124,7 @@ private extension ComposerTests {
 
 
 // MARK: - Helpers
-private extension ComposerTests {
+private extension IntegrationTests {
     func cachesDirectory() -> URL {
         return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
     }
