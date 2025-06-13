@@ -7,12 +7,13 @@ import BearPublish
 @main
 struct BearPublisherCLI: AsyncParsableCommand {
     
-    @Option(name: .shortAndLong, help: "The Bear sqlite database path") var dbPath: String
-    @Option(name: .shortAndLong, help: "The site's build path") var outputPath: String
+    @Option(name: .shortAndLong, help: "The Bear sqlite database path") var input: String
+    @Option(name: .shortAndLong, help: "The site's build path") var output: String
     @Option(name: .shortAndLong, help: "The site's title") var title: String
 
     func run() async throws {
-        let outputURL = URL(fileURLWithPath: outputPath)
-        let _ = try BearPublisherComposer.make(dbPath: dbPath, outputURL: outputURL, siteTitle: title)
+        let outputURL = URL(fileURLWithPath: output)
+        let publisher = try BearPublisherComposer.make(dbPath: input, outputURL: outputURL, siteTitle: title)
+        try await publisher.execute()
     }
 }
