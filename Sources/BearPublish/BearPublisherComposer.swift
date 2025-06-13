@@ -15,7 +15,7 @@ public enum BearPublisherComposer {
             siteTitle: siteTitle,
             notesProvider: bearDB.fetchAll >> NoteMapper.map,
             tagProvider: bearDB.fetchTagTree >> TagMapper.map,
-            categoryListProvider: DefaultNoteListProvider(bearDb: bearDB).get,
+            categoryListProvider: CategoryNoteListProvider(bearDb: bearDB).get,
             tagListProvider: TagsNoteListsProvider(bearDb: bearDB).get,
             indexRenderer: IndexRenderer(),
             noteRenderer: NoteRenderer(),

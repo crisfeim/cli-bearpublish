@@ -5,7 +5,7 @@ import BearWebUI
 import BearDatabase
 import BearDomain
 
-struct DefaultNoteListProvider {
+struct CategoryNoteListProvider {
     let bearDb: BearDb
     
     func get() throws -> [NoteList] {
