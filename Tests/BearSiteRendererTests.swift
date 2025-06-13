@@ -49,11 +49,7 @@ class BearSiteRendererTests: XCTestCase {
     func test_execute_passesCorrectArgumentsToIndexRenderer() throws {
         let renderer = IndexRendererSpy()
         let site = anyBearSite()
-        let sut = BearSiteRenderer(
-            site: site,
-            indexRenderer: renderer,
-            noteRenderer: NoteRendererDummy()
-        )
+        let sut = makeSUT(site: site, indexRenderer: renderer)
         let _ = sut.execute()
         
         XCTAssertEqual(renderer.capturedTitle, site.title)
@@ -66,11 +62,7 @@ class BearSiteRendererTests: XCTestCase {
         let stub = Resource(filename: "index.html", contents: "index contents")
         let renderer = IndexRendererStub(stub: stub)
         let site = anyBearSite()
-        let sut = BearSiteRenderer(
-            site: site,
-            indexRenderer: renderer,
-            noteRenderer: NoteRendererDummy()
-        )
+        let sut = makeSUT(site: site, indexRenderer: renderer)
         let rendered = sut.execute()
         
         XCTAssertEqual(rendered.index, stub)
@@ -80,11 +72,7 @@ class BearSiteRendererTests: XCTestCase {
         let renderer = NoteRendererSpy()
         let stubbedNotes = [anyNote(), anyNote(), anyNote(), anyNote()]
         let site = anyBearSite(notes: stubbedNotes)
-        let sut = BearSiteRenderer(
-            site: site,
-            indexRenderer: IndexRendererDummy(),
-            noteRenderer: renderer
-        )
+        let sut = makeSUT(site: site, noteRenderer: renderer)
         _ = sut.execute()
         
         XCTAssertEqual(renderer.capturedNotes, stubbedNotes.map {
@@ -97,11 +85,7 @@ class BearSiteRendererTests: XCTestCase {
         let renderer = NoteRendererStub(stub: stubbedResource)
         let stubbedNotes = [anyNote(), anyNote(), anyNote(), anyNote()]
         let site = anyBearSite(notes: stubbedNotes)
-        let sut = BearSiteRenderer(
-            site: site,
-            indexRenderer: IndexRendererDummy(),
-            noteRenderer: renderer
-        )
+        let sut = makeSUT(site: site, noteRenderer: renderer)
         let rendered = sut.execute()
         
         XCTAssertEqual(rendered.notes, stubbedNotes.map { _ in stubbedResource })
@@ -109,6 +93,19 @@ class BearSiteRendererTests: XCTestCase {
 }
 
 private extension BearSiteRendererTests {
+    typealias SUT = BearSiteRenderer
+    func makeSUT(
+        site: BearSite,
+        indexRenderer: SUT.IndexRenderer = IndexRendererDummy(),
+        noteRenderer: SUT.NoteRenderer = NoteRendererDummy()
+    ) -> SUT {
+        SUT(
+            site: site,
+            indexRenderer: indexRenderer,
+            noteRenderer: noteRenderer
+        )
+    }
+    
     func anyBearSite(notes: [Note] = [anyNote()]) -> BearSite {
         BearSite(
             title: "title",
