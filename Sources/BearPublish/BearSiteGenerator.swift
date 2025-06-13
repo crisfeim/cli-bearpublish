@@ -1,17 +1,21 @@
 // © 2025  Cristian Felipe Patiño Rojas. Created on 13/6/25.
 
-import XCTest
-import BearPublish
+import Foundation
 
-struct BearSiteGenerator: @unchecked Sendable {
+public struct BearSiteGenerator: @unchecked Sendable {
     let site: BearRenderedSite
     let outputURL: URL
+    
+    public init(site: BearRenderedSite, outputURL: URL) {
+        self.site = site
+        self.outputURL = outputURL
+    }
     
     private func cleanOutputFolder() {
         try? FileManager.default.removeItem(at: outputURL)
     }
 
-     func execute() async throws {
+     public func execute() async throws {
         cleanOutputFolder()
          async let writeIndex: () = write([site.index])
          async let writeNotes: () = write(site.notes)
