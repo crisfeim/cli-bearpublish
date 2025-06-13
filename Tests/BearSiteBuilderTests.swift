@@ -6,9 +6,12 @@ import BearDomain
 class BearSiteBuilderTests: XCTestCase {
     
     struct BearSiteBuilder {
-        let notesProvider: () throws -> [Note]
-        let listsByCategoryProvider: () throws -> [NoteList]
-        let listsByTagProvider: () throws -> [NoteList]
+        typealias NotesProvider = () throws -> [Note]
+        typealias NoteListProvider = () throws -> [NoteList]
+        
+        let notesProvider: NotesProvider
+        let listsByCategoryProvider: NoteListProvider
+        let listsByTagProvider: NoteListProvider
         func execute() throws {
             _ = try notesProvider()
             _ = try listsByCategoryProvider()
@@ -17,36 +20,36 @@ class BearSiteBuilderTests: XCTestCase {
     }
     
     func test_execute_deliversErrorOnNotesProviderError() throws {
-        let sut = BearSiteBuilder(
-            notesProvider: anyThrowingProvider,
-            listsByCategoryProvider: anyProviderDummy,
-            listsByTagProvider: anyProviderDummy)
-        
+        let sut = makeSUT(notesProvider: anyThrowingProvider)
         XCTAssertThrowsError(try sut.execute())
     }
     
     func test_execute_deliversErrorOnListsByCategoryProviderError() throws {
-        let sut = BearSiteBuilder(
-            notesProvider: anyProviderDummy,
-            listsByCategoryProvider: anyThrowingProvider,
-            listsByTagProvider: anyProviderDummy
-        )
-        
+        let sut = makeSUT(listsByCategoryProvider: anyThrowingProvider)
         XCTAssertThrowsError(try sut.execute())
     }
     
     func test_execute_deliversErrorOnListsByTagProviderError() throws {
-        let sut = BearSiteBuilder(
-            notesProvider: anyProviderDummy,
-            listsByCategoryProvider: anyProviderDummy,
-            listsByTagProvider: anyThrowingProvider
-        )
-        
+        let sut = makeSUT(listsByTagProvider: anyThrowingProvider)
         XCTAssertThrowsError(try sut.execute())
     }
     
-    func anyProviderDummy<T>() throws -> [T] {[T]()}
+    typealias SUT = BearSiteBuilder
+    private func makeSUT(
+        notesProvider: @escaping SUT.NotesProvider = anyProviderDummy,
+        listsByCategoryProvider: @escaping SUT.NoteListProvider = anyProviderDummy,
+        listsByTagProvider: @escaping SUT.NoteListProvider = anyProviderDummy
+    ) -> SUT {
+        SUT(
+            notesProvider: notesProvider,
+            listsByCategoryProvider: listsByCategoryProvider,
+            listsByTagProvider: listsByTagProvider
+        )
+    }
+
     func anyThrowingProvider<T>() throws -> [T] {
         throw NSError(domain: "any error", code: 0)
     }
 }
+
+fileprivate func anyProviderDummy<T>() throws -> [T] {[T]()}
