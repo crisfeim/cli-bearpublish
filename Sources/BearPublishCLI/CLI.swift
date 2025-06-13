@@ -9,9 +9,10 @@ struct BearPublisherCLI: AsyncParsableCommand {
     
     @Option(name: .shortAndLong, help: "The Bear sqlite database path") var dbPath: String
     @Option(name: .shortAndLong, help: "The site's build path") var outputPath: String
+    @Option(name: .shortAndLong, help: "The site's title") var title: String
 
     func run() async throws {
         let outputURL = URL(fileURLWithPath: outputPath)
-        let _ = try BearPublisherComposer.make(dbPath: dbPath, outputURL: outputURL)
+        let _ = try BearPublisherComposer.make(dbPath: dbPath, outputURL: outputURL, siteTitle: title)
     }
 }
