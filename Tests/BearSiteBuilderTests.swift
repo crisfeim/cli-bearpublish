@@ -33,9 +33,11 @@ class BearSiteBuilderTests: XCTestCase {
         let sut = makeSUT(listsByTagProvider: anyThrowingProvider)
         XCTAssertThrowsError(try sut.execute())
     }
+}
     
+private extension BearSiteBuilderTests {
     typealias SUT = BearSiteBuilder
-    private func makeSUT(
+     func makeSUT(
         notesProvider: @escaping SUT.NotesProvider = anyProviderDummy,
         listsByCategoryProvider: @escaping SUT.NoteListProvider = anyProviderDummy,
         listsByTagProvider: @escaping SUT.NoteListProvider = anyProviderDummy
