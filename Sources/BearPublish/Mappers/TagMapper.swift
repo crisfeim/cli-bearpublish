@@ -3,7 +3,7 @@
 import BearDatabase
 import BearDomain
 
-enum HasthagMapper {
+enum TagMapper {
     static func map(_ hashtag: DBTag) -> Tag {
         Tag(
             name: hashtag.name,

@@ -4,7 +4,7 @@ import BearDatabase
 import BearDomain
 
 enum FileMapper {
-    static func map(_ file: BearDatabase.DBFile) -> BearDomain.File {
+    static func map(_ file: DBFile) -> File {
         File(
             id: file.id,
             name: file.name,

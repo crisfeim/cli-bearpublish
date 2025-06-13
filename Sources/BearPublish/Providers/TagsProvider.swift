@@ -8,6 +8,6 @@ import BearDomain
 struct TagsProvider {
     let bearDb: BearDb
     func get() throws -> [Tag] {
-        try bearDb.fetchTagTree().map(HasthagMapper.map)
+        try bearDb.fetchTagTree().map(TagMapper.map)
     }
 }
