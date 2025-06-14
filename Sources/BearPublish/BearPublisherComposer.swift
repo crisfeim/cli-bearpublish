@@ -10,6 +10,13 @@ import BearMarkdown
 public enum BearPublisherComposer {
     public static func make(dbPath: String, outputURL: URL, siteTitle: String) throws  -> BearPublisher {
         let bearDB = try BearDb(path: dbPath)
+        let parser = BearMarkdown(
+            slugify: slugify,
+            imgProcessor: bearDB.imgProcessor,
+            hashtagProcessor: bearDB.hashtagProcessor,
+            fileBlockProcessor: bearDB.fileblockProcessor
+        )
+        
         return try BearPublisher(
             outputURL: outputURL,
             siteTitle: siteTitle,
@@ -18,7 +25,7 @@ public enum BearPublisherComposer {
             categoryListProvider: CategoryNoteListProvider(bearDb: bearDB).get,
             tagListProvider: TagsNoteListsProvider(bearDb: bearDB).get,
             indexRenderer: IndexRenderer(),
-            noteRenderer: NoteRenderer(),
+            noteRenderer: NoteRenderer(parser: parser.parse),
             listByCategoryRenderer: CategoryListRenderer(),
             listByTagRenderer: TagListRenderer(),
             assetsProvider: assetsProvider)
@@ -62,10 +69,10 @@ private extension BearPublisherComposer {
         }
     }
 
-    #warning("@todo: Add content markdown parsing")
     struct NoteRenderer: BearSiteRenderer.NoteRenderer {
+        let parser: (String) -> String
         func render(title: String, slug: String, content: String) -> Resource {
-            let html = NoteHTML(title: title, slug: slug, content: content)
+            let html = NoteHTML(title: title, slug: slug, content: parser(content))
             return Resource(filename: "standalone/note/\(slug).html", contents: html.render())
         }
     }
