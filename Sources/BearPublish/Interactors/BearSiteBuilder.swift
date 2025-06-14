@@ -8,6 +8,7 @@ public struct BearSiteBuilder {
     public typealias TagsProvider = () throws -> [Tag]
     
     let sitesTitle: String
+    let indexNotesProvider: NotesProvider
     let notesProvider: NotesProvider
     let listsByCategoryProvider: NoteListProvider
     let listsByTagProvider: NoteListProvider
@@ -15,12 +16,14 @@ public struct BearSiteBuilder {
     
     public init(
         sitesTitle: String,
+        indexNotesProvider: @escaping NotesProvider,
         notesProvider:  @escaping NotesProvider,
         listsByCategoryProvider:  @escaping NoteListProvider,
         listsByTagProvider:  @escaping NoteListProvider,
         tagsProvider:  @escaping TagsProvider
     ) {
         self.sitesTitle = sitesTitle
+        self.indexNotesProvider = indexNotesProvider
         self.notesProvider = notesProvider
         self.listsByCategoryProvider = listsByCategoryProvider
         self.listsByTagProvider = listsByTagProvider
@@ -28,13 +31,15 @@ public struct BearSiteBuilder {
     }
     
     public func execute() throws -> BearSite {
+        let indexNotes = try indexNotesProvider()
         let notes = try notesProvider()
         let tags = try tagsProvider()
         let listsByCategory = try listsByCategoryProvider()
         let listsByTag = try listsByTagProvider()
         return BearSite(
             title: sitesTitle,
-            notes: notes,
+            indexNotes: indexNotes,
+            allNotes: notes,
             tags: tags,
             listsByCategory: listsByCategory,
             listsByTag: listsByTag,

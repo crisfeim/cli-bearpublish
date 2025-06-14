@@ -34,6 +34,7 @@ class BearPublisherTests: XCTestCase {
         let sut = try BearPublisher(
             outputURL: testSpecificURL(),
             siteTitle: "Home",
+            indexNotesProvider: { [Self.anyNote()] },
             notesProvider: { [Self.anyNote()] },
             tagProvider: { [Self.anyTag()] },
             categoryListProvider: { [Self.anyNoteList()] },

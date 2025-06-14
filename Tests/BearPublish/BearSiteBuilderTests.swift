@@ -12,6 +12,11 @@ class BearSiteBuilderTests: XCTestCase {
         XCTAssertEqual(site.title, "site's title")
     }
     
+    func test_execute_deliversErrorOnIndexNotesProviderError() throws {
+        let sut = makeSUT(indexNotesProvider: anyThrowingProvider)
+        XCTAssertThrowsError(try sut.execute())
+    }
+    
     func test_execute_deliversErrorOnNotesProviderError() throws {
         let sut = makeSUT(notesProvider: anyThrowingProvider)
         XCTAssertThrowsError(try sut.execute())
@@ -37,7 +42,7 @@ class BearSiteBuilderTests: XCTestCase {
         let sut = makeSUT(notesProvider: { [stubedNote] })
         let site = try sut.execute()
         
-        XCTAssertEqual(site.notes, [stubedNote])
+        XCTAssertEqual(site.allNotes, [stubedNote])
     }
     
     func test_execute_deliversSiteWithProvidedListsByCategoryOnProviderSuccess() throws {
@@ -62,13 +67,14 @@ class BearSiteBuilderTests: XCTestCase {
         let site = try sut.execute()
         
         XCTAssertEqual(site.tags, [stubedTag])
-    }
+    }    
 }
     
 private extension BearSiteBuilderTests {
     typealias SUT = BearSiteBuilder
      func makeSUT(
         sitesTitle: String = "any title",
+        indexNotesProvider: @escaping SUT.NotesProvider = anyProviderDummy,
         notesProvider: @escaping SUT.NotesProvider = anyProviderDummy,
         listsByCategoryProvider: @escaping SUT.NoteListProvider = anyProviderDummy,
         listsByTagProvider: @escaping SUT.NoteListProvider = anyProviderDummy,
@@ -76,6 +82,7 @@ private extension BearSiteBuilderTests {
     ) -> SUT {
         SUT(
             sitesTitle: sitesTitle,
+            indexNotesProvider: indexNotesProvider,
             notesProvider: notesProvider,
             listsByCategoryProvider: listsByCategoryProvider,
             listsByTagProvider: listsByTagProvider,

@@ -20,6 +20,7 @@ public enum BearPublisherComposer {
         return try BearPublisher(
             outputURL: outputURL,
             siteTitle: siteTitle,
+            indexNotesProvider: bearDB.fetchNotes >> NoteMapper.map,
             notesProvider: bearDB.fetchAll >> NoteMapper.map,
             tagProvider: bearDB.fetchTagTree >> TagMapper.map,
             categoryListProvider: CategoryNoteListProvider(bearDb: bearDB).get,

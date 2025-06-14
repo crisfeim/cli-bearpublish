@@ -39,10 +39,10 @@ public struct BearSiteRenderer {
             index: indexRenderer.render(
                 title: site.title,
                 lists: site.listsByCategory,
-                notes: site.notes,
+                notes: site.indexNotes,
                 tags: site.tags
             ),
-            notes: site.notes.map(renderNote),
+            notes: site.allNotes.map(renderNote),
             listsByCategory: site.listsByCategory.map(renderListByCategory),
             listsByTag: site.listsByTag.map(renderListByTag),
             assets: assetsProvider()

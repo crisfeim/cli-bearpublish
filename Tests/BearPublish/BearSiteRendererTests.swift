@@ -13,7 +13,7 @@ class BearSiteRendererTests: XCTestCase {
         let _ = sut.execute()
         
         XCTAssertEqual(renderer.capturedTitle, site.title)
-        XCTAssertEqual(renderer.capturedNotes, site.notes)
+        XCTAssertEqual(renderer.capturedNotes, site.indexNotes)
         XCTAssertEqual(renderer.capturedLists, site.listsByCategory)
         XCTAssertEqual(renderer.capturedTags, site.tags)
     }
@@ -137,6 +137,7 @@ private extension BearSiteRendererTests {
     }
     
     func anyBearSite(
+        indexNotes: [Note] = [anyNote()],
         notes: [Note] = [anyNote()],
         tags: [Tag] = [anyTag()],
         listsByCategory: [NoteList] = [anyNoteList()],
@@ -144,7 +145,8 @@ private extension BearSiteRendererTests {
     ) -> BearSite {
         BearSite(
             title: "title",
-            notes: notes,
+            indexNotes: indexNotes,
+            allNotes: notes,
             tags: tags,
             listsByCategory: listsByCategory,
             listsByTag: listsByTag
