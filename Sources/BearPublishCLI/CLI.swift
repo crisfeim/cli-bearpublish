@@ -7,9 +7,9 @@ import BearPublish
 @main
 struct BearPublisherCLI: AsyncParsableCommand {
     
-    @Option(name: .shortAndLong, help: "The Bear sqlite database path") var input: String
-    @Option(name: .shortAndLong, help: "The site's build path") var output: String
-    @Option(name: .shortAndLong, help: "The site's title") var title: String
+    @Option(name: .shortAndLong, help: "The Bear sqlite database path") var input: String = "/Users/\(NSUserName())/Library/Group Containers/9K33E3U3T4.net.shinyfrog.bear/Application Data/database.sqlite"
+    @Option(name: .shortAndLong, help: "The site's build path") var output: String = "dist"
+    @Option(name: .shortAndLong, help: "The site's title") var title: String = "Home"
 
     func run() async throws {
         let outputURL = URL(fileURLWithPath: output)
