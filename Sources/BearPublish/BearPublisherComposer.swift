@@ -53,11 +53,11 @@ private extension BearPublisherComposer {
             
             return [
                 Menu(name: "Notes", fullPath: "all", notesCount: main.count, children: [
-                    Menu(name: "Untagged", fullPath: "untagged", notesCount: untagged!.notes.count, children: []),
-                    Menu(name: "Tasks", fullPath: "tasks", notesCount: tasks!.notes.count, children: [])
-                ]),
-                Menu(name: "Archived", fullPath: "archived", notesCount: archived!.notes.count, children: []),
-                Menu(name: "Trashed", fullPath: "trashed", notesCount: trashed!.notes.count, children: [])
+                    Menu(name: "Untagged", fullPath: "untagged", notesCount: untagged!.notes.count, children: [], icon: .tag),
+                    Menu(name: "Tasks", fullPath: "tasks", notesCount: tasks!.notes.count, children: [], icon: .checkbox)
+                ], icon: .note),
+                Menu(name: "Archived", fullPath: "archived", notesCount: archived!.notes.count, children: [], icon: .archive),
+                Menu(name: "Trashed", fullPath: "trashed", notesCount: trashed!.notes.count, children: [], icon: .bin)
             ]
         }
     }

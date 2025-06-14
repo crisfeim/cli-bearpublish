@@ -6,12 +6,14 @@ public struct Menu: Equatable, MenuView.Item {
     let fullPath: String
     let notesCount: Int
     let children: [Self]
+    let icon: SVG
     
-    public init(name: String, fullPath: String, notesCount: Int, children: [Self]) {
+    public init(name: String, fullPath: String, notesCount: Int, children: [Self], icon: SVG) {
         self.name = name
         self.fullPath = fullPath
         self.notesCount = notesCount
         self.children = children
+        self.icon = icon
     }
 }
 
