@@ -15,7 +15,7 @@ struct MenuView: Component, Equatable {
         Section {
             for item in menu {
                 Cell(
-                    icon: .note,
+                    icon: item.icon,
                     item: item,
                     getRouter: { "/standalone/list/\($0).html" },
                     pushedURL: { "/?list=\($0)" })
