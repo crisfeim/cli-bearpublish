@@ -1,5 +1,4 @@
 import Foundation
-import RubyGateway
 import MarkdownKit
 
 public typealias Processor = (String) -> String

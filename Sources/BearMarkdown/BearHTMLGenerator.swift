@@ -2,7 +2,6 @@
 
 
 import Foundation
-import RubyGateway
 import MarkdownKit
 
 extension BearMarkdown {
