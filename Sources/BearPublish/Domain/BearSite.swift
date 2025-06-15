@@ -3,6 +3,7 @@
 import BearDomain
 
 public struct BearSite {
+    public let lang: String
     public let title: String
     public let indexNotes: [Note]
     public let allNotes: [Note]
@@ -10,7 +11,8 @@ public struct BearSite {
     public let listsByCategory: [NoteList]
     public let listsByTag: [NoteList]
     
-    public init(title: String, indexNotes: [Note], allNotes: [Note], tags: [Tag], listsByCategory: [NoteList], listsByTag: [NoteList]) {
+    public init(lang: String, title: String, indexNotes: [Note], allNotes: [Note], tags: [Tag], listsByCategory: [NoteList], listsByTag: [NoteList]) {
+        self.lang = lang
         self.title = title
         self.indexNotes = indexNotes
         self.allNotes = allNotes

@@ -13,6 +13,7 @@ struct BearPublisherCLI: AsyncParsableCommand {
     @Option(name:.shortAndLong) var filesFolderPath: String = "/Users/\(NSUserName())/Library/Group Containers/9K33E3U3T4.net.shinyfrog.bear/Application Data/Local Files/Note Files"
     @Option(name: .shortAndLong, help: "The site's build path") var output: String = "dist"
     @Option(name: .shortAndLong, help: "The site's title") var title: String = "Home"
+    @Option(name: .shortAndLong, help: "The site's language") var lang: String = "en"
     
     func run() async throws {
         let outputURL = URL(fileURLWithPath: output)
@@ -24,7 +25,8 @@ struct BearPublisherCLI: AsyncParsableCommand {
             outputURL: outputURL,
             filesFolderURL: filesFolder,
             imagesFolderURL: imagesFolder,
-            siteTitle: title
+            siteTitle: title,
+            siteLang: lang
         )
         try await publisher.execute()
     }

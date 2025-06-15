@@ -50,7 +50,8 @@ class IntegrationTests: XCTestCase, OutputFilesystemTestCase {
             outputURL: outputFolder(),
             filesFolderURL: filesFolder,
             imagesFolderURL: imagesFolder,
-            siteTitle: "any title"
+            siteTitle: "any title",
+            siteLang: "es"
         )
         
         try await sut.execute()

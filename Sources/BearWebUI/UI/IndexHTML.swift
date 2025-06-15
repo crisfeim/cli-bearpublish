@@ -1,17 +1,20 @@
 import Plot
 
 public struct IndexHTML: Equatable, HTMLDocument {
+    let lang: String
     let title: String
     let menu: [MenuItemViewModel]
     let tags: [MenuItemViewModel]
     let notes: [NoteViewModel]
     
     public init(
+        lang: String,
         title: String,
         menu: [MenuItemViewModel],
         tags: [MenuItemViewModel],
         notes: [NoteViewModel],
     ) {
+        self.lang = lang
         self.title = title
         self.menu = menu
         self.tags = tags
@@ -20,7 +23,7 @@ public struct IndexHTML: Equatable, HTMLDocument {
     
     public var body: HTML {
         HTML(
-            .lang(.spanish),
+            .lang(Language(rawValue: lang)?.rawValue ?? lang),
             .head(
                 .title(title),
                 .meta(.charset(.utf8)),

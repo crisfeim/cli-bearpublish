@@ -22,11 +22,10 @@ public struct NoteStandaloneHTML: HTMLDocument {
         self.slug = slug
         self.content = content
     }
-    
+   
     public var body: HTML {
         HTML(
             .style("overflow: scroll"),
-            .lang(.spanish),
             .head(.title(title)),
             .body(
                 .class("js-off"),

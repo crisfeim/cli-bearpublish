@@ -137,6 +137,7 @@ private extension BearSiteRendererTests {
     }
     
     func anyBearSite(
+        lang: String = "any lang",
         indexNotes: [Note] = [anyNote()],
         notes: [Note] = [anyNote()],
         tags: [Tag] = [anyTag()],
@@ -144,6 +145,7 @@ private extension BearSiteRendererTests {
         listsByTag: [NoteList] = [anyNoteList()]
     ) -> BearSite {
         BearSite(
+            lang: lang,
             title: "title",
             indexNotes: indexNotes,
             allNotes: notes,
@@ -185,26 +187,28 @@ private extension BearSiteRendererTests {
     }
     
     struct IndexRendererDummy: BearSiteRenderer.IndexRenderer {
-        func render(title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource {
+        func render(lang: String, title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource {
             Resource(filename: "", contents: "")
         }
     }
     
     struct IndexRendererStub: BearSiteRenderer.IndexRenderer {
         let stub: Resource
-        func render(title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource {
+        func render(lang: String, title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource {
             stub
         }
     }
     
     class IndexRendererSpy: BearSiteRenderer.IndexRenderer {
         
+        var capturedLang: String?
         var capturedTitle: String?
         var capturedLists: [NoteList] = []
         var capturedNotes: [Note] = []
         var capturedTags: [Tag] = []
         
-        func render(title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource {
+        func render(lang: String, title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource {
+            capturedLang = lang
             capturedTitle = title
             capturedLists = lists
             capturedNotes = notes

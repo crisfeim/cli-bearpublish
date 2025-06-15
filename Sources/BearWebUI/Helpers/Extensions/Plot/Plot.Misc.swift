@@ -18,6 +18,14 @@ extension Component {
     }
 }
 
+public extension Node where Context == HTML.DocumentContext {
+    /// Specify the language of the HTML document's content.
+    /// - parameter language: The language to specify.
+    static func lang(_ language: String) -> Node {
+        .attribute(named: "lang", value: language)
+    }
+}
+
 extension Node<HTML.BodyContext> {
     static func makeCheckbox(_ sidebarName: String) -> Node<HTML.BodyContext> {
         .input(

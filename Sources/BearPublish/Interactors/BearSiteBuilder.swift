@@ -7,6 +7,7 @@ public struct BearSiteBuilder {
     public typealias NoteListProvider = () throws -> [NoteList]
     public typealias TagsProvider = () throws -> [Tag]
     
+    let lang: String
     let sitesTitle: String
     let indexNotesProvider: NotesProvider
     let notesProvider: NotesProvider
@@ -15,6 +16,7 @@ public struct BearSiteBuilder {
     let tagsProvider: TagsProvider
     
     public init(
+        lang: String,
         sitesTitle: String,
         indexNotesProvider: @escaping NotesProvider,
         notesProvider:  @escaping NotesProvider,
@@ -22,6 +24,7 @@ public struct BearSiteBuilder {
         listsByTagProvider:  @escaping NoteListProvider,
         tagsProvider:  @escaping TagsProvider
     ) {
+        self.lang = lang
         self.sitesTitle = sitesTitle
         self.indexNotesProvider = indexNotesProvider
         self.notesProvider = notesProvider
@@ -37,6 +40,7 @@ public struct BearSiteBuilder {
         let listsByCategory = try listsByCategoryProvider()
         let listsByTag = try listsByTagProvider()
         return BearSite(
+            lang: lang,
             title: sitesTitle,
             indexNotes: indexNotes,
             allNotes: notes,

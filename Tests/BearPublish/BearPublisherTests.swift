@@ -16,7 +16,7 @@ class BearPublisherTests: XCTestCase, OutputFilesystemTestCase {
 
     func test_execute_buildsTheExpectedSiteAtOutputURL() async throws {
         struct IndexRenderer: BearSiteRenderer.IndexRenderer {
-            func render(title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource {
+            func render(lang: String, title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource {
                 Resource(filename: "index.html", contents: "index rendered contents")
             }
         }
@@ -47,6 +47,7 @@ class BearPublisherTests: XCTestCase, OutputFilesystemTestCase {
         
         let sut = try BearPublisher(
             outputURL: outputFolder(),
+            siteLang: "es",
             siteTitle: "Home",
             indexNotesProvider: { [Self.anyNote()] },
             notesProvider: { [Self.anyNote()] },

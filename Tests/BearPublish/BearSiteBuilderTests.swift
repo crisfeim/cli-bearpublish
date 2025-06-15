@@ -73,6 +73,7 @@ class BearSiteBuilderTests: XCTestCase {
 private extension BearSiteBuilderTests {
     typealias SUT = BearSiteBuilder
      func makeSUT(
+        lang: String = "any lang",
         sitesTitle: String = "any title",
         indexNotesProvider: @escaping SUT.NotesProvider = anyProviderDummy,
         notesProvider: @escaping SUT.NotesProvider = anyProviderDummy,
@@ -81,6 +82,7 @@ private extension BearSiteBuilderTests {
         tagsProvider: @escaping SUT.TagsProvider = anyProviderDummy
     ) -> SUT {
         SUT(
+            lang: lang,
             sitesTitle: sitesTitle,
             indexNotesProvider: indexNotesProvider,
             notesProvider: notesProvider,

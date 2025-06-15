@@ -9,6 +9,7 @@ public struct BearPublisher {
     
     public init(
         outputURL: URL,
+        siteLang: String,
         siteTitle: String,
         indexNotesProvider: @escaping () throws -> [Note],
         notesProvider: @escaping () throws -> [Note],
@@ -24,6 +25,7 @@ public struct BearPublisher {
         assetsProvider: @escaping () -> [Resource]
     ) throws {
         let builder = BearSiteBuilder(
+            lang: siteLang,
             sitesTitle: siteTitle,
             indexNotesProvider: indexNotesProvider,
             notesProvider: notesProvider,

@@ -5,7 +5,7 @@ import BearDomain
 public struct BearSiteRenderer {
    
     public protocol IndexRenderer {
-        func render(title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource
+        func render(lang: String, title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource
     }
     
     public protocol NoteRenderer {
@@ -37,6 +37,7 @@ public struct BearSiteRenderer {
     public func execute() -> BearRenderedSite {
         BearRenderedSite(
             index: indexRenderer.render(
+                lang: site.lang,
                 title: site.title,
                 lists: site.listsByCategory,
                 notes: site.indexNotes,

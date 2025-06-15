@@ -7,7 +7,7 @@ import BearDomain
 import BearMarkdown
 
 public enum BearPublisherComposer {
-    public static func make(dbPath: String, outputURL: URL, filesFolderURL: URL, imagesFolderURL: URL, siteTitle: String) throws  -> BearPublisher {
+    public static func make(dbPath: String, outputURL: URL, filesFolderURL: URL, imagesFolderURL: URL, siteTitle: String, siteLang: String) throws  -> BearPublisher {
         let bearDB = try BearDb(path: dbPath)
         let parser = BearMarkdown(
             slugify: slugify,
@@ -18,6 +18,7 @@ public enum BearPublisherComposer {
         
         return try BearPublisher(
             outputURL: outputURL,
+            siteLang: siteLang,
             siteTitle: siteTitle,
             indexNotesProvider: bearDB.fetchNotes >> NoteMapper.map,
             notesProvider: bearDB.fetchAll >> NoteMapper.map,
@@ -43,8 +44,9 @@ private func >><A, B>(lhs: @escaping () throws -> [A], rhs: @escaping (A) -> B) 
 private extension BearPublisherComposer {
 
     struct IndexRenderer: BearSiteRenderer.IndexRenderer {
-        func render(title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource {
+        func render(lang: String, title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource {
             let html = IndexHTML(
+                lang: lang,
                 title: title,
                 menu: menu(main: notes, from: lists),
                 tags: tags.map(TagMapper.map),
