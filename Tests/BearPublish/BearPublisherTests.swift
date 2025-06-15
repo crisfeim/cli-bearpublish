@@ -76,7 +76,6 @@ class BearPublisherTests: XCTestCase, OutputFilesystemTestCase {
 }
 
 // MARK: - Helpers
-#warning("@todo: Extract helpers into common scope")
 private extension BearPublisherTests {
     
      static func anyNote() -> Note {
