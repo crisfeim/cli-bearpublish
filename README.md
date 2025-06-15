@@ -83,7 +83,7 @@ Feel free to open issues or pull requests — just know that response times may 
 
 - [Bear PHP export script](https://gist.github.com/crisfeim/55e5c005f7e888ee0a380660b2dba8d5) — One of my first attempts of doing something like this.
 - [Bearnotes Hugo theme](https://github.com/crisfeim/theme-hugo-bearnotes) — Basically the grandpa of this project.
-- [Miyano](https://github.com/wuusn/miyano) — Main inspiration for this project.
+- [Miyano](https://github.com/wuusn/miyano) — An awesome static site generator for Bear notes, built in Ruby by Wuusn. Main inspiration for this project.
 
 
 ## License
