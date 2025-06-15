@@ -111,10 +111,6 @@ private extension IntegrationTests {
             XCTFail(error.localizedDescription, file: file, line: line)
         }
     }
-    
-    func expectFileAtPathToExist(_ path: String, at directoryURL: URL, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssert(FileManager.default.fileExists(atPath: directoryURL.appendingPathComponent(path).path))
-    }
 }
 
 
