@@ -22,10 +22,7 @@ let package = Package(
         ]),
         .target(
             name: "BearWebUI",
-            dependencies: [
-                "BearDomain",
-                .product(name: "Plot", package: "Plot"),
-            ],
+            dependencies: [.product(name: "Plot", package: "Plot")],
             resources: [.process("Resources")]
         ),
         .target(name: "BearMarkdown", dependencies: [

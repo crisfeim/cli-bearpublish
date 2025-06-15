@@ -6,8 +6,6 @@
 //
 
 import Plot
-import BearDomain
-
 
 extension MenuView {
     struct Cell: Component {

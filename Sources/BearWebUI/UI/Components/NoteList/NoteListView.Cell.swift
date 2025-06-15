@@ -6,7 +6,6 @@
 //
 
 import Plot
-import BearDomain
 
 extension NoteListView {
     struct Cell: Component {

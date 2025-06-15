@@ -2,7 +2,6 @@
 
 
 import Plot
-import BearDomain
 
 struct NoteListView: Component {
     let title: String

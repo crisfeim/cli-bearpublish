@@ -3,7 +3,6 @@
 //
 
 import Plot
-import BearDomain
 
 struct MenuView: Component, Equatable {
     let menu: [MenuItem]

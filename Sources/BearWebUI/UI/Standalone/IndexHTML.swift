@@ -1,5 +1,4 @@
 import Plot
-import BearDomain
 
 public struct MenuItem: Equatable {
     let name: String

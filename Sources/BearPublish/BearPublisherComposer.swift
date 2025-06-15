@@ -126,7 +126,9 @@ extension BearDb {
               return "@todo: Error, handle this case"
           }
           
-        return FileBlock.Renderer(data: FileMapper.map(data)).render()
+        let domainObject: File = FileMapper.map(data)
+        let uiObject: FileUI = FileMapper.map(domainObject)
+        return FileBlock.Renderer(data: uiObject).render()
       }
 }
 

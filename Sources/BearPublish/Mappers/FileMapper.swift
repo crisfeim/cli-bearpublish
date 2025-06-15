@@ -2,6 +2,7 @@
 
 import BearDatabase
 import BearDomain
+import BearWebUI
 
 enum FileMapper {
     static func map(_ file: DBFile) -> File {
@@ -11,5 +12,9 @@ enum FileMapper {
             extension: file.extension,
             size: file.size
         )
+    }
+    
+    static func map(_ file: File) -> FileUI {
+        FileUI(id: file.id, name: file.name, extension: file.extension, size: file.size)
     }
 }
