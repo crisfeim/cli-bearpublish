@@ -33,6 +33,7 @@ extension String {
         return replacedString
     }
     
+    #warning("@todo: inject processor")
     func parseWikilinks(slugify: (String) -> String) -> String {
         let pattern = #"\[\[(.+?)\]\]"#
         let regex = try! NSRegularExpression(pattern: pattern)
@@ -49,7 +50,6 @@ extension String {
             
             
             let replacement = """
-            
             <a
             href="/?slug=\(href)"
             hx-get="/standalone/note/\(href).html"
@@ -58,6 +58,7 @@ extension String {
             hx-swap="innerHTML scroll:top"
             ><span class="brackets">[[</span>\(linkText)<span class="brackets">]]</span></a>
             """
+            
             transformedString = transformedString.replacingCharacters(in: Range(match.range, in: self)!, with: replacement)
         }
         
