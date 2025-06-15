@@ -4,16 +4,13 @@
 import XCTest
 import BearPublish
 
-extension XCTest {
-#warning("@todo: Assert file contets")
+protocol TestSpecificURLProvider {}
+extension TestSpecificURLProvider {
+    
     func expectFileAtPathToExist(_ path: String, at directoryURL: URL, file: StaticString = #filePath, line: UInt = #line) {
         XCTAssert(FileManager.default.fileExists(atPath: directoryURL.appendingPathComponent(path).path))
     }
-}
-
-
-protocol TestSpecificURLProvider {}
-extension TestSpecificURLProvider {
+    
     
     func cachesDirectory() -> URL {
         return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
