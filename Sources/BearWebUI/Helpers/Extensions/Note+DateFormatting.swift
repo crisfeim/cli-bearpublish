@@ -1,7 +1,7 @@
 import Foundation
 import BearDomain
 
-extension Note {
+extension NoteUI {
     var dateTime: String {
         creationDate?.dMMMyyyy() ?? "No date"
     }

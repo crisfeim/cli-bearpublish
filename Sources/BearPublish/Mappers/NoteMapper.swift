@@ -3,6 +3,7 @@
 
 import BearDatabase
 import BearDomain
+import BearWebUI
 
 enum NoteMapper {
     static func map(_ note: DBNote) -> Note {
@@ -17,6 +18,21 @@ enum NoteMapper {
             creationDate: note.creationDate,
             modificationDate: note.modificationDate,
             content: note.content ?? ""
+        )
+    }
+    
+    static func map(_ note: Note) -> NoteUI {
+        NoteUI(
+            id: note.id,
+            title: note.title,
+            slug: note.slug,
+            isPinned: note.isPinned,
+            isEncrypted: note.isEncrypted,
+            isEmpty: note.isEmpty,
+            subtitle: note.subtitle,
+            creationDate: note.creationDate,
+            modificationDate: note.modificationDate,
+            content: note.content
         )
     }
 }

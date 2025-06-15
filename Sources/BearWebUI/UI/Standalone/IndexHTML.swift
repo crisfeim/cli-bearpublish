@@ -21,13 +21,13 @@ public struct IndexHTML: Equatable, HTMLDocument {
     let title: String
     let menu: [MenuItem]
     let tags: [MenuItem]
-    let notes: [Note]
+    let notes: [NoteUI]
     
     public init(
         title: String,
         menu: [MenuItem],
         tags: [MenuItem],
-        notes: [Note],
+        notes: [NoteUI],
     ) {
         self.title = title
         self.menu = menu

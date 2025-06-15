@@ -6,7 +6,7 @@ import BearDomain
 
 struct NoteListView: Component {
     let title: String
-    let notes: [Note]
+    let notes: [NoteUI]
     
     @ComponentBuilder
     var body: Component {

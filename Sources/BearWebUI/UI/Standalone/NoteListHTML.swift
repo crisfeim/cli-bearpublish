@@ -10,9 +10,9 @@ import BearDomain
 
 public struct NoteListHTML: HTMLDocument {
     private let title: String
-    private let notes: [Note]
+    private let notes: [NoteUI]
     
-    public init(title: String, notes: [Note]) {
+    public init(title: String, notes: [NoteUI]) {
         self.title = title
         self.notes = notes
     }

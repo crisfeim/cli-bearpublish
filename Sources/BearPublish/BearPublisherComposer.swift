@@ -48,7 +48,7 @@ private extension BearPublisherComposer {
                 title: title,
                 menu: menu(main: notes, from: lists),
                 tags: tags.map(TagMapper.map),
-                notes: notes
+                notes: notes.map(NoteMapper.map)
             )
             
             return Resource(filename: "index.html", contents: html.render())
@@ -82,14 +82,14 @@ private extension BearPublisherComposer {
     
     struct CategoryListRenderer: BearSiteRenderer.ListRenderer {
         func render(title: String, slug: String, notes: [Note]) -> Resource {
-            let html = NoteListHTML(title: title, notes: notes)
+            let html = NoteListHTML(title: title, notes: notes.map(NoteMapper.map))
             return Resource(filename: "standalone/list/\(slug).html", contents: html.render())
         }
     }
     
     struct TagListRenderer: BearSiteRenderer.ListRenderer {
         func render(title: String, slug: String, notes: [Note]) -> Resource {
-            let html = NoteListHTML(title: title, notes: notes)
+            let html = NoteListHTML(title: title, notes: notes.map(NoteMapper.map))
             return Resource(filename: "standalone/tag/\(slug).html", contents: html.render())
         }
     }

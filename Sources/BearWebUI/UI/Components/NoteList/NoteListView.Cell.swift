@@ -10,7 +10,7 @@ import BearDomain
 
 extension NoteListView {
     struct Cell: Component {
-        let note: Note
+        let note: NoteUI
         var pushedUrl: String { "/?slug=\(note.slug)" }
         
         var body: Component {
