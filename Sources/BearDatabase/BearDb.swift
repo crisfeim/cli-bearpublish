@@ -68,7 +68,7 @@ public final class BearDb {
         let calendar = Calendar.current
         let start = calendar.startOfDay(for: Date())
         let end = calendar.date(byAdding: .day, value: 1, to: start)!
-        return try fetchNotes().filter { start...end ~= $0.creationDate ?? Date() }
+        return try fetchNotes().filter { start...end ~= $0.creationDate }
     }
     
     /// Fetches notes with active incompleted tasks that aren't archived or trashed
@@ -148,7 +148,7 @@ public final class BearDb {
         WHERE TAGTITLE = '\(tag)' AND ZTRASHED LIKE 0 AND ZARCHIVED LIKE 0
         """
         
-         return try db.prepare(query).map { note(from: $0) }
+         return try db.prepare(query).map { try note(from: $0) }
     }
     
     // MARK: - Detail
@@ -199,7 +199,7 @@ public final class BearDb {
          WHERE ZSFNOTEBACKLINK.ZLINKINGTO = \(id) AND ZTRASHED LIKE 0 AND ZARCHIVED LIKE 0
         """
         
-        return try db.prepare(query).map { note(from: $0) }.filterDuplicates()
+        return try db.prepare(query).map { try note(from: $0) }.filterDuplicates()
     }
     
     public func getFileData(from fileName: String) throws -> DBFile? {
@@ -264,7 +264,7 @@ public final class BearDb {
         WHERE LOWER(ZTITLE) LIKE '%' || '\(lowercaseQuery)' || '%'
         """
         
-        return try db.prepare(sqlQuery).map {note(from: $0)}
+        return try db.prepare(sqlQuery).map { try note(from: $0) }
     }
     
     public func getHashtagCount(_ hashtag: String) -> Int {
@@ -357,20 +357,19 @@ extension BearDb {
         return (table: notes.select(select), select: select)
     }
     
-    func note(from row: Statement.Element) -> DBNote {
-        var creationDate: Date?
+    private func getNoteCreationDate(from row: Statement.Element) throws -> Date {
         if let creationDouble = row[14] as? Double {
-            creationDate = Date(timeIntervalSinceReferenceDate: creationDouble)
+            return Date(timeIntervalSinceReferenceDate: creationDouble)
+        } else if let creationInt = row[14] as? Int64 {
+            return Date(timeIntervalSinceReferenceDate: Double(creationInt))
+        } else {
+            throw NotFoundDateError()
         }
-        
-        if let creationInt = row[14] as? Int64 {
-            creationDate = Date(timeIntervalSinceReferenceDate: Double(creationInt))
-        }
-        
-        var modificationDate: Date?
-        if let modificationDouble = row[15] as? Double {
-            modificationDate = Date(timeIntervalSinceReferenceDate: modificationDouble)
-        }
+    }
+    
+    func note(from row: Statement.Element) throws -> DBNote {
+        let creationDate = try getNoteCreationDate(from: row)
+        let modificationDate = (row[15] as? Double).map { Date(timeIntervalSinceReferenceDate:$0) }
         
        return DBNote(
            id: Int(row[0] as! Int64),

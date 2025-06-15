@@ -104,7 +104,7 @@ private extension BearSiteBuilderTests {
             isEncrypted: false,
             isEmpty: false,
             subtitle: "any subtitle",
-            creationDate: nil,
+            creationDate: Date(),
             modificationDate: nil,
             content: "any note content"
         )

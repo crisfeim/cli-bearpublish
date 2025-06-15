@@ -18,7 +18,7 @@ public struct DBNote {
     public let todoCompleted: Int
     public let todoIncompleted: Int
     public let isTrashed: Bool
-    public let creationDate: Date?
+    public let creationDate: Date
     public let modificationDate: Date?
     public let lastEditingDevice: String
     
@@ -37,7 +37,7 @@ public struct DBNote {
         todoCompleted: Int,
         todoIncompleted: Int,
         trashed: Bool,
-        creationDate: Date?,
+        creationDate: Date,
         modificationDate: Date?,
         lastEditingDevice: String
     ) {
@@ -82,6 +82,7 @@ extension DBNote: Codable {
         case lastEditingDevice = "ZLASTEDITINGDEVICE"
     }
     
+  
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(Int.self, forKey: .id)
@@ -109,7 +110,7 @@ extension DBNote: Codable {
             
             /// Creation Date is a required value that always exists within a note.
             /// This case should never happen
-           creationDate = nil
+           throw NotFoundDateError()
         }
         lastEditingDevice = try container.decode(String.self, forKey: .lastEditingDevice)
     }

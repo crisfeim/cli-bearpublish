@@ -9,11 +9,11 @@ public struct Note: Equatable {
     public let isEncrypted: Bool
     public let isEmpty: Bool
     public let subtitle: String
-    public let creationDate: Date?
+    public let creationDate: Date
     public let modificationDate: Date?
     public let content: String
  
-    public init(id: Int, title: String, slug: String, isPinned: Bool, isEncrypted: Bool, isEmpty: Bool, subtitle: String, creationDate: Date?, modificationDate: Date?, content: String) {
+    public init(id: Int, title: String, slug: String, isPinned: Bool, isEncrypted: Bool, isEmpty: Bool, subtitle: String, creationDate: Date, modificationDate: Date?, content: String) {
 
         self.id = id
         self.title = title
