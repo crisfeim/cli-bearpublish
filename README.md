@@ -65,6 +65,7 @@ swift build -c release
   `BearPublishCLI --tags [dev, code, articles]`
 - **Companion app** – A lightweight CLI or GUI focused solely on exporting notes by tag in raw markdown.
 - **Optimize CSS and JS** – These were initially written in 2023 to get a quick prototype running, so some parts may be ~~ugly~~~ repetitive or unoptimized.
+- **Polish frontend and markdown parser** – Still has a lot of rough edges.
 
 ## Contributing
 
