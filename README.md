@@ -66,6 +66,7 @@ swift build -c release
 - **Companion app** – A lightweight CLI or GUI focused solely on exporting notes by tag in raw markdown.
 - **Optimize CSS and JS** – These were initially written in 2023 to get a quick prototype running, so some parts may be ~~ugly~~~ repetitive or unoptimized.
 - **Polish frontend and markdown parser** – Still have a lot of rough edges.
+- **Add backlinks support** — As it was done in the original implementation.
 
 ## Contributing
 
