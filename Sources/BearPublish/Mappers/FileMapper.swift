@@ -7,17 +7,7 @@ import BearWebUI
 import Foundation
 
 enum FileMapper {
-    static func map(_ file: DBFile) -> File {
-        File(
-            id: file.id,
-            name: file.name,
-            date: file.date,
-            extension: file.extension,
-            size: file.size
-        )
-    }
-   
-    static func map(_ file: File) -> FileViewModel {
+    static func map(_ file: DBFile) -> FileViewModel {
         FileViewModel(
             id: file.id,
             name: file.name,
