@@ -9,7 +9,7 @@ import Plot
 
 public struct EmbededFileBlockHTML: Component {
     private let data: FileViewModel
-    private var ext: Ext { .init(value: data.extension) }
+    private var ext: Ext { .init(value: data.ext) }
     
     public init(data: FileViewModel) {
         self.data = data
@@ -63,10 +63,10 @@ fileprivate extension EmbededFileBlockHTML {
             Link(url: "/files/\(data.id)/\(data.name)") {
                 Span(html: data.name).class("filename")
                 Span {
-                    Span(html: data.extension).class("extension")
+                    Span(html: data.ext).class("extension")
                     Span {
                         Span(html: data.size.toFileSize()).class("file-size")
-                        Time(datetime: data.date?.dMMMyyyy()) { Text(data.date?.dMMMyyyy()  ?? "No date found") }
+                        Time(datetime: data.creationDate) { Text(data.creationDate) }
                     }
                     .class("meta")
                 }

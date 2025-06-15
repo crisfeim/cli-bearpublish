@@ -31,8 +31,8 @@ extension NoteListHTML {
                                 SVG.pin.render().makeRawNode()
                             }
                             
-                            Time(datetime: "") {
-                                note.dateTime.makeRawNode()
+                            Time(datetime: note.creationDate) {
+                                note.creationDate.makeRawNode()
                             }
                         }
                         .attribute(named: "spacing", value: "xs")

@@ -30,9 +30,9 @@ enum NoteMapper {
             isEncrypted: note.isEncrypted,
             isEmpty: note.isEmpty,
             subtitle: note.subtitle,
-            creationDate: note.creationDate,
-            modificationDate: note.modificationDate,
-            content: note.content
+            creationDate: dMMMyyyyFormatter.execute(note.creationDate!) ?? "Creation date not found"
         )
     }
 }
+
+

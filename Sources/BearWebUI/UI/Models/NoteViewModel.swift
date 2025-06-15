@@ -10,12 +10,9 @@ public struct NoteViewModel: Equatable {
     public let isEncrypted: Bool
     public let isEmpty: Bool
     public let subtitle: String
-    public let creationDate: Date?
-    public let modificationDate: Date?
-    public let content: String
- 
-    public init(id: Int, title: String, slug: String, isPinned: Bool, isEncrypted: Bool, isEmpty: Bool, subtitle: String, creationDate: Date?, modificationDate: Date?, content: String) {
+    public let creationDate: String
 
+    public init(id: Int, title: String, slug: String, isPinned: Bool, isEncrypted: Bool, isEmpty: Bool, subtitle: String, creationDate: String) {
         self.id = id
         self.title = title
         self.slug = slug
@@ -24,7 +21,5 @@ public struct NoteViewModel: Equatable {
         self.isEmpty = isEmpty
         self.subtitle = subtitle
         self.creationDate = creationDate
-        self.modificationDate = modificationDate
-        self.content = content
     }
 }
