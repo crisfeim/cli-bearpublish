@@ -12,7 +12,8 @@ extension XCTest {
 }
 
 
-extension XCTestCase {
+protocol TestSpecificURLProvider {}
+extension TestSpecificURLProvider {
     
     func cachesDirectory() -> URL {
         return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
