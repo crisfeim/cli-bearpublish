@@ -1,21 +1,5 @@
 import Plot
 
-public struct MenuItem: Equatable {
-    let name: String
-    let fullPath: String
-    let notesCount: Int
-    let children: [Self]
-    let icon: SVG
-    
-    public init(name: String, fullPath: String, notesCount: Int, children: [Self], icon: SVG) {
-        self.name = name
-        self.fullPath = fullPath
-        self.notesCount = notesCount
-        self.children = children
-        self.icon = icon
-    }
-}
-
 public struct IndexHTML: Equatable, HTMLDocument {
     let title: String
     let menu: [MenuItem]
