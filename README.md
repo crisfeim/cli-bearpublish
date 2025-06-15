@@ -56,7 +56,7 @@ swift build -c release
 
 ## Ideas for Future Improvements
 
-- **Theme selection** – Right now, the only supported theme is Duotone Light (❤️). I’d like to support theme selection via CLI:  
+- **Bear default's theme selection** – Right now, the only supported theme is Duotone Light (❤️). I’d like to support theme selection via CLI:  
   `BearPublishCLI (...args...) --theme duotone-light`
 - **Frontend theme switcher** – Ideally, visitors should be able to select themes from the generated site's UI.
 - **Fix UI bug** – There's a minor issue when selecting nested menu items that aren’t expanded yet.
@@ -67,6 +67,7 @@ swift build -c release
 - **Optimize CSS and JS** – These were initially written in 2023 to get a quick prototype running, so some parts may be ~~ugly~~~ repetitive or unoptimized.
 - **Polish frontend and markdown parser** – Still have a lot of rough edges.
 - **Add backlinks support** — As it was done in the original implementation.
+- **Support external themes (frontend)** – Like a proper SSG, this would enable more granular control and flexibility in how content is displayed or customized.
 
 ## Contributing
 
