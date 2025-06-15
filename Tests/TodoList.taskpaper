@@ -1,4 +1,3 @@
 - Default sort notes: pinned > creationDate
 - Default sort tags:  pinned > alphabetically
-- Make `creationDate` and `modificationDate` non optional on Note's model (BearDatabase module)
 - Snapshot testing?
