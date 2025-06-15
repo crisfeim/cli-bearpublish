@@ -44,11 +44,11 @@ private extension BearPublisherComposer {
 
     struct IndexRenderer: BearSiteRenderer.IndexRenderer {
         func render(title: String, lists: [NoteList], notes: [Note], tags: [Tag]) -> Resource {
-            let html = IndexUIComposer.make(
+            let html = IndexHTML(
                 title: title,
                 menu: menu(main: notes, from: lists),
-                notes: notes,
-                tags: tags
+                tags: tags,
+                notes: notes
             )
             
             return Resource(filename: "index.html", contents: html.render())
