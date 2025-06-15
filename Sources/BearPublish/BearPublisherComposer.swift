@@ -47,26 +47,26 @@ private extension BearPublisherComposer {
             let html = IndexHTML(
                 title: title,
                 menu: menu(main: notes, from: lists),
-                tags: tags,
+                tags: tags.map(TagMapper.map),
                 notes: notes
             )
             
             return Resource(filename: "index.html", contents: html.render())
         }
         
-        private func menu(main: [Note], from lists: [NoteList]) -> [Menu] {
+        private func menu(main: [Note], from lists: [NoteList]) -> [MenuItem] {
             let trashed = lists.first(where: { $0.title == "Trashed" })
             let archived = lists.first(where: { $0.title == "Archived" })
             let tasks = lists.first(where: { $0.title == "Tasks" })
             let untagged = lists.first(where: { $0.title == "Untagged" })
             
             return [
-                Menu(name: "Notes", fullPath: "all", notesCount: main.count, children: [
-                    Menu(name: "Untagged", fullPath: "untagged", notesCount: untagged!.notes.count, children: [], icon: .tag),
-                    Menu(name: "Tasks", fullPath: "tasks", notesCount: tasks!.notes.count, children: [], icon: .checkbox)
+                MenuItem(name: "Notes", fullPath: "all", notesCount: main.count, children: [
+                    MenuItem(name: "Untagged", fullPath: "untagged", notesCount: untagged!.notes.count, children: [], icon: .tag),
+                    MenuItem(name: "Tasks", fullPath: "tasks", notesCount: tasks!.notes.count, children: [], icon: .checkbox)
                 ], icon: .note),
-                Menu(name: "Archived", fullPath: "archived", notesCount: archived!.notes.count, children: [], icon: .archive),
-                Menu(name: "Trashed", fullPath: "trashed", notesCount: trashed!.notes.count, children: [], icon: .bin)
+                MenuItem(name: "Archived", fullPath: "archived", notesCount: archived!.notes.count, children: [], icon: .archive),
+                MenuItem(name: "Trashed", fullPath: "trashed", notesCount: trashed!.notes.count, children: [], icon: .bin)
             ]
         }
     }

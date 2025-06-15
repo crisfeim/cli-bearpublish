@@ -2,6 +2,7 @@
 
 import BearDatabase
 import BearDomain
+import BearWebUI
 
 enum TagMapper {
     static func map(_ hashtag: DBTag) -> Tag {
@@ -11,6 +12,16 @@ enum TagMapper {
             notesCount: hashtag.count,
             children: hashtag.children.map(Self.map),
             isPinned: hashtag.isPinned
+        )
+    }
+    
+    static func map(_ tag: Tag) -> MenuItem {
+        MenuItem(
+            name: tag.name,
+            fullPath: tag.fullPath,
+            notesCount: tag.notesCount,
+            children: tag.children.map(Self.map),
+            icon: .tag
         )
     }
 }

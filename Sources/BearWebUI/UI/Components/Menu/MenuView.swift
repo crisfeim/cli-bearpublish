@@ -6,8 +6,8 @@ import Plot
 import BearDomain
 
 struct MenuView: Component, Equatable {
-    let menu: [Menu]
-    let tags: [Tag]
+    let menu: [MenuItem]
+    let tags: [MenuItem]
    
     @ComponentBuilder
     var body: Component {
@@ -35,7 +35,4 @@ struct MenuView: Component, Equatable {
         }
     }
 }
-
-extension Tag: MenuView.Item {}
-
 

@@ -1,7 +1,7 @@
 import Plot
 import BearDomain
 
-public struct Menu: Equatable, MenuView.Item {
+public struct MenuItem: Equatable {
     let name: String
     let fullPath: String
     let notesCount: Int
@@ -19,14 +19,14 @@ public struct Menu: Equatable, MenuView.Item {
 
 public struct IndexHTML: Equatable, HTMLDocument {
     let title: String
-    let menu: [Menu]
-    let tags: [Tag]
+    let menu: [MenuItem]
+    let tags: [MenuItem]
     let notes: [Note]
     
     public init(
         title: String,
-        menu: [Menu],
-        tags: [Tag],
+        menu: [MenuItem],
+        tags: [MenuItem],
         notes: [Note],
     ) {
         self.title = title

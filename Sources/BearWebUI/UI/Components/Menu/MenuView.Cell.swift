@@ -10,16 +10,9 @@ import BearDomain
 
 
 extension MenuView {
-    protocol Item {
-        var name: String {get }
-        var fullPath: String {get }
-        var notesCount: Int {get }
-        var children: [Self] {get }
-    }
-    
     struct Cell: Component {
         let icon: SVG
-        let item: Item
+        let item: MenuItem
         let getRouter: (String) -> String
         let pushedURL: (String) -> String
         
