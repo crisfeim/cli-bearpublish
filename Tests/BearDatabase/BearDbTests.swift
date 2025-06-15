@@ -98,6 +98,11 @@ class BearDbTests: XCTestCase {
         let notes = try makeSUT().searchNotes(query: "tasks")
         XCTAssertEqual(notes.count, 2)
     }
+    
+    func test_getHashtagCount_retrievesCorrectTaggedAssociatedNotesCount() throws {
+        let notesCount = try makeSUT().getHashtagCount("code")
+        XCTAssertEqual(notesCount, 1)
+    }
 }
 
 // MARK: - Helper
