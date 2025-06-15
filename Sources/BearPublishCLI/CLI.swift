@@ -15,7 +15,6 @@ struct BearPublisherCLI: AsyncParsableCommand {
     @Option(name: .shortAndLong, help: "The site's title") var title: String = "Home"
     
     func run() async throws {
-        let imagesFolderPath: String = "/Users/\(NSUserName())/Library/Group Containers/9K33E3U3T4.net.shinyfrog.bear/Application Data/Local Files/Note Images"
         let outputURL = URL(fileURLWithPath: output)
         let imagesFolder = URL(fileURLWithPath: imagesFolderPath)
         let filesFolder = URL(fileURLWithPath: filesFolderPath)
