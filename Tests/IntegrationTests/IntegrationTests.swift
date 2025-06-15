@@ -114,23 +114,6 @@ private extension IntegrationTests {
 }
 
 
-// MARK: - Helpers
-private extension IntegrationTests {
-    
-    func cachesDirectory() -> URL {
-        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-    }
-    
-    func testSpecificURL() -> URL {
-        cachesDirectory().appendingPathComponent("\(type(of: self))")
-    }
-    
-    func outputFolder() -> URL {
-        testSpecificURL().appendingPathComponent("output")
-    }
-}
-
-
 // MARK: - My beloved asterisk
 infix operator .*: AdditionPrecedence
 

@@ -60,21 +60,3 @@ class BearSiteWriterTests: XCTestCase {
         expectFileAtPathToExist("js/somejs.js", at: outputFolder())
     }
 }
-
-// Custom expectations
-
-
-// MARK: - Helpers
-private extension BearSiteWriterTests {
-    func cachesDirectory() -> URL {
-        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-    }
-    
-    func testSpecificURL() -> URL {
-        cachesDirectory().appendingPathComponent("\(type(of: self))")
-    }
-    
-    func outputFolder() -> URL {
-        testSpecificURL().appendingPathComponent("output")
-    }
-}

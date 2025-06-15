@@ -24,13 +24,5 @@ class ResourceWriterTests: XCTestCase {
             resource.contents
         )
     }
-    
-    private func testSpecificURL() -> URL {
-        cachesDirectory().appendingPathComponent("\(type(of: self))")
-    }
-    
-    private func cachesDirectory() -> URL {
-        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-    }
 }
 

@@ -101,16 +101,4 @@ private extension BearPublisherTests {
     static func anyTag() -> Tag {
         Tag(name: "any tag", fullPath: "any-tag", notesCount: 0, children: [], isPinned: false)
     }
-    
-    func cachesDirectory() -> URL {
-        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-    }
-    
-    func testSpecificURL() -> URL {
-        cachesDirectory().appendingPathComponent("\(type(of: self))")
-    }
-    
-    func outputFolder() -> URL {
-        testSpecificURL().appendingPathComponent("output")
-    }
 }

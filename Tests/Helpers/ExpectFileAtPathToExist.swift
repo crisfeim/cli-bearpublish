@@ -10,3 +10,19 @@ extension XCTest {
         XCTAssert(FileManager.default.fileExists(atPath: directoryURL.appendingPathComponent(path).path))
     }
 }
+
+
+extension XCTestCase {
+    
+    func cachesDirectory() -> URL {
+        return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+    }
+    
+    func testSpecificURL() -> URL {
+        cachesDirectory().appendingPathComponent("\(type(of: self))")
+    }
+    
+    func outputFolder() -> URL {
+        testSpecificURL().appendingPathComponent("output")
+    }
+}
