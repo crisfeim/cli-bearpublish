@@ -214,7 +214,7 @@ public final class BearDb {
         WHERE ZFILENAME LIKE "\(fileName)"
         """
         
-        return try db.prepare(query).map {file(from: $0)}.first
+        return try db.prepare(query).map { try file(from: $0) }.first
     }
     
     public func getFileData(id: String) throws -> DBFile? {
@@ -229,7 +229,7 @@ public final class BearDb {
         WHERE ZUNIQUEIDENTIFIER LIKE "\(id)"
         """
         
-        return try db.prepare(query).map {file(from: $0)}.first
+        return try db.prepare(query).map { try file(from: $0) }.first
     }
     
     public func getFileId(with fileName: String) throws -> String? {
@@ -296,19 +296,12 @@ extension Array where Element == DBNote {
 // MARK: - Helpers
 extension BearDb {
     
-    func file(from row: Statement.Element) -> DBFile {
-        var creationDate: Date?
-        if let creationDouble = row[2] as? Double {
-            creationDate = Date(timeIntervalSinceReferenceDate: creationDouble)
-        }
-        
-        if let creationInt = row[2] as? Int64 {
-            creationDate = Date(timeIntervalSinceReferenceDate: Double(creationInt))
-        }
+    func file(from row: Statement.Element) throws -> DBFile {
+       let date = try getDate(from: row[2]!)
        return DBFile(
             id: row[0] as! String,
             name: row[1] as! String,
-            date: creationDate,
+            date: date,
             extension: row[3] as! String,
             size: Int(row[4] as! Int64)
         )
@@ -357,18 +350,18 @@ extension BearDb {
         return (table: notes.select(select), select: select)
     }
     
-    private func getNoteCreationDate(from row: Statement.Element) throws -> Date {
-        if let creationDouble = row[14] as? Double {
-            return Date(timeIntervalSinceReferenceDate: creationDouble)
-        } else if let creationInt = row[14] as? Int64 {
-            return Date(timeIntervalSinceReferenceDate: Double(creationInt))
+    private func getDate(from row: Binding) throws -> Date {
+        if let dateAsDouble = row as? Double {
+            return Date(timeIntervalSinceReferenceDate: dateAsDouble)
+        } else if let dateAsInt = row as? Int64 {
+            return Date(timeIntervalSinceReferenceDate: Double(dateAsInt))
         } else {
             throw NotFoundDateError()
         }
     }
     
     func note(from row: Statement.Element) throws -> DBNote {
-        let creationDate = try getNoteCreationDate(from: row)
+        let creationDate = try getDate(from: row[14]!)
         let modificationDate = (row[15] as? Double).map { Date(timeIntervalSinceReferenceDate:$0) }
         
        return DBNote(

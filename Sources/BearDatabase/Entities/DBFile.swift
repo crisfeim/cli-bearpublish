@@ -6,7 +6,7 @@ import Foundation
 public struct DBFile {
     public let id: String
     public let name: String
-    public let date: Date?
+    public let date: Date
     public let `extension`: String
     public let size: Int
 }

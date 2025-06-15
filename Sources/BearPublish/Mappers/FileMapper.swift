@@ -11,6 +11,7 @@ enum FileMapper {
         File(
             id: file.id,
             name: file.name,
+            date: file.date,
             extension: file.extension,
             size: file.size
         )
@@ -20,7 +21,7 @@ enum FileMapper {
         FileViewModel(
             id: file.id,
             name: file.name,
-            creationDate: dMMMyyyyFormatter.execute(file.date ?? Date()) ?? "No creation date",
+            creationDate: dMMMyyyyFormatter.execute(file.date) ?? "No creation date",
             ext: file.extension,
             size: file.size
         )
