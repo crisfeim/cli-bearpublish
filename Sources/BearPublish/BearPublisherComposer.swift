@@ -128,7 +128,7 @@ extension BearDb {
           
         let domainObject: File = FileMapper.map(data)
         let uiObject: FileViewModel = FileMapper.map(domainObject)
-        return FileBlock.Renderer(data: uiObject).render()
+        return EmbededFileBlockHTML(data: uiObject).render()
       }
 }
 

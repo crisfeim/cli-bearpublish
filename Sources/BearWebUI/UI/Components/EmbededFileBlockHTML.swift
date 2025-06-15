@@ -7,15 +7,31 @@
 
 import Plot
 
-public enum FileBlock {}
+public struct EmbededFileBlockHTML: Component {
+    private let data: FileViewModel
+    private var ext: Ext { .init(value: data.extension) }
+    
+    public init(data: FileViewModel) {
+        self.data = data
+    }
+    
+    @ComponentBuilder
+    public var body: Component {
+        switch ext {
+        case .html: HtmlBlock(data: data)
+        case .mp4, .mov: VideoBlock(data: data)
+        default: DescriptionBlock(data: data)
+        }
+    }
+}
 
-public extension FileBlock {
-     enum Extension {
+fileprivate extension EmbededFileBlockHTML {
+    enum Ext {
         case html
         case mp4
         case mov
         case other
-        
+
         public init(value: String) {
             switch value {
             case "html": self = .html
@@ -25,33 +41,8 @@ public extension FileBlock {
             }
         }
     }
-}
 
-
-
-public extension FileBlock {
-    struct Renderer: Component {
-        public init(data: FileViewModel) {
-            self.data = data
-        }
-        
-        let data: FileViewModel
-        private var `extension`: Extension { .init(value: data.extension) }
-        
-        @ComponentBuilder
-        public var body: Component {
-            switch `extension` {
-            case .html: HTML(data: data)
-            case .mp4, .mov: Video(data: data)
-            default: Description(data: data)
-            }
-        }
-    }
-}
-
-fileprivate extension FileBlock {
-    
-    struct HTML: Component {
+    struct HtmlBlock: Component {
         let data: FileViewModel
         var body: Component {
             Div {
@@ -59,13 +50,13 @@ fileprivate extension FileBlock {
                     .attribute(named: "width", value: "100%")
                     .attribute(named: "height", value: "400px")
                 
-                Description(data: data)
+                DescriptionBlock(data: data)
             }
             .class("iframe")
         }
     }
     
-    struct Description: Component {
+    struct DescriptionBlock: Component {
         let data: FileViewModel
         var body: Component {
             
@@ -84,7 +75,7 @@ fileprivate extension FileBlock {
         }
     }
     
-    struct Video: Component {
+    struct VideoBlock: Component {
         let data: FileViewModel
         var body: Component {
             Element(name: "video") {
