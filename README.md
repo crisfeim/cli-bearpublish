@@ -2,7 +2,6 @@
 
 ![Icon](img.png)
 
-
 Static site generator for Bear Notes.
 
 ## Overview
@@ -48,6 +47,15 @@ swift build -c release
   --title "My Static Site" \
   --lang "en""
 ```
+
+## Things I would do different if I started over
+
+- Use vanilla js instead of htmx
+- Better routing
+
+## Contributing
+
+This is a personal open source project. I don’t guarantee maintenance or support for feature requests, though improvements might happen depending on my availability.
 
 ## Third party
 

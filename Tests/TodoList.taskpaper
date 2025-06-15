@@ -1,3 +1,11 @@
 - Default sort notes: pinned > creationDate
 - Default sort tags:  pinned > alphabetically
 - Snapshot testing?
+- Add CI test workflow with github actions
+
+Maybe one day:
+    - Themeing
+    - Better routing
+    - Remove HTMX dependency
+    - Remove pylon css dependency
+    - Optimize css and js
