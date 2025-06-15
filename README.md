@@ -49,6 +49,12 @@ swift build -c release
   --lang "en""
 ```
 
+## Third party
+
+- [Plot](https://github.com/JohnSundell/Plot)
+- [Markdownkit](https://github.com/objecthub/swift-markdownkit)
+- [SQLite](https://github.com/stephencelis/SQLite.swift)
+
 ## License
 
 MIT
