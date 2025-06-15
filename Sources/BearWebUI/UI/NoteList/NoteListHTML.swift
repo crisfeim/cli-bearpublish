@@ -1,24 +1,33 @@
-//
-//  File.swift
-//  
-//
-//  Created by Cristian Felipe Patiño Rojas on 24/10/2023.
-//
+// © 2025  Cristian Felipe Patiño Rojas. Created on 9/6/25.
+
 
 import Plot
 
-public struct NoteListHTML: HTMLDocument {
-    private let title: String
-    private let notes: [NoteViewModel]
+struct NoteListHTML: Component {
+    let title: String
+    let notes: [NoteViewModel]
     
-    public init(title: String, notes: [NoteViewModel]) {
-        self.title = title
-        self.notes = notes
-    }
-    
-    public var body: HTML {
-        HTML(.body(.component(NoteListView(title: title, notes: notes))))
+    @ComponentBuilder
+    var body: Component {
+        Header {
+            Label("") {
+                SVG.burger
+                    .render()
+                    .makeRawNode()
+            }
+            .id("menu-toggle")
+            .class("js-element")
+            .attribute(named: "for", value: "menu-checkbox")
+            Spacer()
+            H4(title).class("title")
+            Spacer()
+        }
+        
+        List {}
+            .id("spinner")
+            .class("htmx-indicator")
+        
+        List(notes, content: Cell.init)
+            .id("note-list")
     }
 }
-
-

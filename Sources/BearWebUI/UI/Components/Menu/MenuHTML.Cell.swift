@@ -7,7 +7,7 @@
 
 import Plot
 
-extension MenuView {
+extension MenuHTML {
     struct Cell: Component {
         let icon: SVG
         let item: MenuItemViewModel

@@ -74,7 +74,7 @@ private extension BearPublisherComposer {
     struct NoteRenderer: BearSiteRenderer.NoteRenderer {
         let parser: (String) -> String
         func render(title: String, slug: String, content: String) -> Resource {
-            let html = NoteHTML(title: title, slug: slug, content: parser(content))
+            let html = NoteStandaloneHTML(title: title, slug: slug, content: parser(content))
             return Resource(filename: "standalone/note/\(slug).html", contents: html.render())
         }
     }
@@ -82,14 +82,14 @@ private extension BearPublisherComposer {
     
     struct CategoryListRenderer: BearSiteRenderer.ListRenderer {
         func render(title: String, slug: String, notes: [Note]) -> Resource {
-            let html = NoteListHTML(title: title, notes: notes.map(NoteMapper.map))
+            let html = NoteListStandaloneHTML(title: title, notes: notes.map(NoteMapper.map))
             return Resource(filename: "standalone/list/\(slug).html", contents: html.render())
         }
     }
     
     struct TagListRenderer: BearSiteRenderer.ListRenderer {
         func render(title: String, slug: String, notes: [Note]) -> Resource {
-            let html = NoteListHTML(title: title, notes: notes.map(NoteMapper.map))
+            let html = NoteListStandaloneHTML(title: title, notes: notes.map(NoteMapper.map))
             return Resource(filename: "standalone/tag/\(slug).html", contents: html.render())
         }
     }
@@ -115,7 +115,7 @@ import BearWebUI
 
 extension BearDb {
     func hashtagProcessor(_ hashtag: String) -> String {
-        NoteContentView.Hashtag(hashtag: hashtag, count: getHashtagCount(hashtag)).render()
+        NoteHTML.Hashtag(hashtag: hashtag, count: getHashtagCount(hashtag)).render()
     }
 }
 

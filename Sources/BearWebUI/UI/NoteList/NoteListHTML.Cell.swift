@@ -7,7 +7,7 @@
 
 import Plot
 
-extension NoteListView {
+extension NoteListHTML {
     struct Cell: Component {
         let note: NoteViewModel
         var pushedUrl: String { "/?slug=\(note.slug)" }
@@ -62,7 +62,7 @@ enum Indicator {
     }
 }
 
-extension NoteListView {
+extension NoteListHTML {
     struct EncryptedPlaceholder: Component {
         var body: Component {
             Div {

@@ -4,7 +4,7 @@
 
 import Plot
 
-struct MenuView: Component, Equatable {
+struct MenuHTML: Component, Equatable {
     let menu: [MenuItemViewModel]
     let tags: [MenuItemViewModel]
    

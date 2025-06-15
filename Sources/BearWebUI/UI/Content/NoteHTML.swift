@@ -2,36 +2,47 @@
 //  File.swift
 //  
 //
-//  Created by Cristian Felipe Patiño Rojas on 24/10/2023.
+//  Created by Cristian Felipe Patiño Rojas on 08/09/2023.
 //
 
 import Plot
 
-public struct NoteHTML: HTMLDocument {
-    
-    private let title: String
-    private let content: String
-    private let slug: String
-    
-    public init(
-        title: String,
-        slug: String,
-        content: String
-    ) {
-        self.title = title
-        self.slug = slug
-        self.content = content
+public struct NoteHTML: Component {
+    let content: String?
+   
+    @ComponentBuilder
+    public var body: Component {
+        Header {
+            Label("") {
+                SVG.chevron.render().makeRawNode()
+            }
+            .id("nav-toggle")
+            .attribute(named: "for", value: "nav-checkbox")
+            .hyperscript("on click set #menu-checkbox.checked to false")
+            .class("js-element")
+        }
+        
+        Article {
+            Skeleton()
+            
+            if let content = content {
+                Div { Raw(text: content) }
+                .class("content main-indicator")
+            }
+        }
+        .class("document-wrapper")
     }
     
-    public var body: HTML {
-        HTML(
-            .style("overflow: scroll"),
-            .lang(.spanish),
-            .head(.title(title)),
-            .body(
-                .class("js-off"),
-                .div(.component(NoteContentView(content: content)))
-            )
-        )
+    var threedots: Component {
+        HStack {
+            Div {
+                SVG.threedots.render().makeRawNode()
+            }
+            .id("share-button")
+            .class("js-element")
+        }
+        .attribute(named: "spacing", value: "xs")
     }
 }
+
+
