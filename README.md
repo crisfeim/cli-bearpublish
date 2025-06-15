@@ -67,7 +67,9 @@ swift build -c release
 - **Optimize CSS and JS** – These were initially written in 2023 to get a quick prototype running, so some parts may be ~~ugly~~~ repetitive or unoptimized.
 - **Polish frontend and markdown parser** – Still have a lot of rough edges.
 - **Add backlinks support** — As it was done in the original implementation.
+- **Add live server** — As it was done in the original implementation.
 - **Support external themes (frontend)** – Like a proper SSG, this would enable more granular control and flexibility in how content is displayed or customized.
+
 
 ## Contributing
 
