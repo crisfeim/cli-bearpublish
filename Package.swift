@@ -23,7 +23,7 @@ let package = Package(
         .target(
             name: "BearWebUI",
             dependencies: [.product(name: "Plot", package: "Plot")],
-            resources: [.process("Resources")]
+            resources: [.process("UI/Resources")]
         ),
         .target(name: "BearMarkdown", dependencies: [
             .product(name: "MarkdownKit", package: "swift-markdownkit")

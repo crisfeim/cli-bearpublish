@@ -9,7 +9,7 @@ import Plot
 
 extension NoteListView {
     struct Cell: Component {
-        let note: NoteUI
+        let note: NoteViewModel
         var pushedUrl: String { "/?slug=\(note.slug)" }
         
         var body: Component {

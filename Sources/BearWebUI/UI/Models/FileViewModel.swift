@@ -4,7 +4,7 @@
 import Plot
 import Foundation
 
-public struct FileUI {
+public struct FileViewModel {
     public let id: String
     public let name: String
     public let date: Date?

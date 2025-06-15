@@ -14,7 +14,7 @@ enum FileMapper {
         )
     }
     
-    static func map(_ file: File) -> FileUI {
-        FileUI(id: file.id, name: file.name, extension: file.extension, size: file.size)
+    static func map(_ file: File) -> FileViewModel {
+        FileViewModel(id: file.id, name: file.name, extension: file.extension, size: file.size)
     }
 }

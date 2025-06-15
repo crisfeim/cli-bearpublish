@@ -31,11 +31,11 @@ public extension FileBlock {
 
 public extension FileBlock {
     struct Renderer: Component {
-        public init(data: FileUI) {
+        public init(data: FileViewModel) {
             self.data = data
         }
         
-        let data: FileUI
+        let data: FileViewModel
         private var `extension`: Extension { .init(value: data.extension) }
         
         @ComponentBuilder
@@ -52,7 +52,7 @@ public extension FileBlock {
 fileprivate extension FileBlock {
     
     struct HTML: Component {
-        let data: FileUI
+        let data: FileViewModel
         var body: Component {
             Div {
                 IFrame(url: "/files/\(data.id)/\(data.name)", addBorder: false, allowFullScreen: false, enabledFeatureNames: [])
@@ -66,7 +66,7 @@ fileprivate extension FileBlock {
     }
     
     struct Description: Component {
-        let data: FileUI
+        let data: FileViewModel
         var body: Component {
             
             Link(url: "/files/\(data.id)/\(data.name)") {
@@ -85,7 +85,7 @@ fileprivate extension FileBlock {
     }
     
     struct Video: Component {
-        let data: FileUI
+        let data: FileViewModel
         var body: Component {
             Element(name: "video") {
                 Element(name: "source") {}

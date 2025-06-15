@@ -30,7 +30,7 @@ public struct NoteHTML: HTMLDocument {
             .head(.title(title)),
             .body(
                 .class("js-off"),
-                .div(.component(ContentView(content: content)))
+                .div(.component(NoteContentView(content: content)))
             )
         )
     }

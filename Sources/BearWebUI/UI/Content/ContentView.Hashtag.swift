@@ -7,7 +7,7 @@
 
 import Plot
 
-extension ContentView {
+extension NoteContentView {
     public struct Hashtag: Component {
         
         let hashtag: String

@@ -10,7 +10,7 @@ import Plot
 extension MenuView {
     struct Cell: Component {
         let icon: SVG
-        let item: MenuItem
+        let item: MenuItemViewModel
         let getRouter: (String) -> String
         let pushedURL: (String) -> String
         

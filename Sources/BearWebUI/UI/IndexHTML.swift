@@ -2,15 +2,15 @@ import Plot
 
 public struct IndexHTML: Equatable, HTMLDocument {
     let title: String
-    let menu: [MenuItem]
-    let tags: [MenuItem]
-    let notes: [NoteUI]
+    let menu: [MenuItemViewModel]
+    let tags: [MenuItemViewModel]
+    let notes: [NoteViewModel]
     
     public init(
         title: String,
-        menu: [MenuItem],
-        tags: [MenuItem],
-        notes: [NoteUI],
+        menu: [MenuItemViewModel],
+        tags: [MenuItemViewModel],
+        notes: [NoteViewModel],
     ) {
         self.title = title
         self.menu = menu
@@ -37,7 +37,7 @@ public struct IndexHTML: Equatable, HTMLDocument {
                 .makeCheckbox("nav"),
                 .menu(.component(MenuView(menu: menu, tags: tags)), .class("js-element")),
                 .nav(.component(NoteListView(title: "Notes", notes: notes))),
-                .main(.component(ContentView(content: nil))),
+                .main(.component(NoteContentView(content: nil))),
                 .script(type: "text/hyperscript", layoutScript),
                 .forEach(Self.bodyJS(), { .script(.src($0.fullPath)) })
             )

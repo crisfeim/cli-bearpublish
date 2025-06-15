@@ -54,19 +54,19 @@ private extension BearPublisherComposer {
             return Resource(filename: "index.html", contents: html.render())
         }
         
-        private func menu(main: [Note], from lists: [NoteList]) -> [MenuItem] {
+        private func menu(main: [Note], from lists: [NoteList]) -> [MenuItemViewModel] {
             let trashed = lists.first(where: { $0.title == "Trashed" })
             let archived = lists.first(where: { $0.title == "Archived" })
             let tasks = lists.first(where: { $0.title == "Tasks" })
             let untagged = lists.first(where: { $0.title == "Untagged" })
             
             return [
-                MenuItem(name: "Notes", fullPath: "all", notesCount: main.count, children: [
-                    MenuItem(name: "Untagged", fullPath: "untagged", notesCount: untagged!.notes.count, children: [], icon: .tag),
-                    MenuItem(name: "Tasks", fullPath: "tasks", notesCount: tasks!.notes.count, children: [], icon: .checkbox)
+                MenuItemViewModel(name: "Notes", fullPath: "all", notesCount: main.count, children: [
+                    MenuItemViewModel(name: "Untagged", fullPath: "untagged", notesCount: untagged!.notes.count, children: [], icon: .tag),
+                    MenuItemViewModel(name: "Tasks", fullPath: "tasks", notesCount: tasks!.notes.count, children: [], icon: .checkbox)
                 ], icon: .note),
-                MenuItem(name: "Archived", fullPath: "archived", notesCount: archived!.notes.count, children: [], icon: .archive),
-                MenuItem(name: "Trashed", fullPath: "trashed", notesCount: trashed!.notes.count, children: [], icon: .bin)
+                MenuItemViewModel(name: "Archived", fullPath: "archived", notesCount: archived!.notes.count, children: [], icon: .archive),
+                MenuItemViewModel(name: "Trashed", fullPath: "trashed", notesCount: trashed!.notes.count, children: [], icon: .bin)
             ]
         }
     }
@@ -115,7 +115,7 @@ import BearWebUI
 
 extension BearDb {
     func hashtagProcessor(_ hashtag: String) -> String {
-        ContentView.Hashtag(hashtag: hashtag, count: getHashtagCount(hashtag)).render()
+        NoteContentView.Hashtag(hashtag: hashtag, count: getHashtagCount(hashtag)).render()
     }
 }
 
@@ -127,7 +127,7 @@ extension BearDb {
           }
           
         let domainObject: File = FileMapper.map(data)
-        let uiObject: FileUI = FileMapper.map(domainObject)
+        let uiObject: FileViewModel = FileMapper.map(domainObject)
         return FileBlock.Renderer(data: uiObject).render()
       }
 }

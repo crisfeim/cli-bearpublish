@@ -3,7 +3,7 @@
 
 import Plot
 
-public struct MenuItem: Equatable {
+public struct MenuItemViewModel: Equatable {
     let name: String
     let fullPath: String
     let notesCount: Int

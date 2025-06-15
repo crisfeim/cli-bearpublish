@@ -5,7 +5,7 @@ import Plot
 
 struct NoteListView: Component {
     let title: String
-    let notes: [NoteUI]
+    let notes: [NoteViewModel]
     
     @ComponentBuilder
     var body: Component {

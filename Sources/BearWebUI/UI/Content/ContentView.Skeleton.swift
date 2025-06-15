@@ -3,7 +3,7 @@
 
 import Plot
 
-extension ContentView {
+extension NoteContentView {
     struct Skeleton: Component {
         var body: Component {
             Div {

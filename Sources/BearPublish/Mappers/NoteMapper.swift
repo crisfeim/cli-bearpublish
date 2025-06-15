@@ -21,8 +21,8 @@ enum NoteMapper {
         )
     }
     
-    static func map(_ note: Note) -> NoteUI {
-        NoteUI(
+    static func map(_ note: Note) -> NoteViewModel {
+        NoteViewModel(
             id: note.id,
             title: note.title,
             slug: note.slug,

@@ -9,9 +9,9 @@ import Plot
 
 public struct NoteListHTML: HTMLDocument {
     private let title: String
-    private let notes: [NoteUI]
+    private let notes: [NoteViewModel]
     
-    public init(title: String, notes: [NoteUI]) {
+    public init(title: String, notes: [NoteViewModel]) {
         self.title = title
         self.notes = notes
     }

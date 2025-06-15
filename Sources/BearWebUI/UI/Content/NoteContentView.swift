@@ -7,7 +7,7 @@
 
 import Plot
 
-public struct ContentView: Component {
+public struct NoteContentView: Component {
     let content: String?
    
     @ComponentBuilder

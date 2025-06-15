@@ -5,8 +5,8 @@
 import Plot
 
 struct MenuView: Component, Equatable {
-    let menu: [MenuItem]
-    let tags: [MenuItem]
+    let menu: [MenuItemViewModel]
+    let tags: [MenuItemViewModel]
    
     @ComponentBuilder
     var body: Component {

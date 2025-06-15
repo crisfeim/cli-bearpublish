@@ -15,8 +15,8 @@ enum TagMapper {
         )
     }
     
-    static func map(_ tag: Tag) -> MenuItem {
-        MenuItem(
+    static func map(_ tag: Tag) -> MenuItemViewModel {
+        MenuItemViewModel(
             name: tag.name,
             fullPath: tag.fullPath,
             notesCount: tag.notesCount,
