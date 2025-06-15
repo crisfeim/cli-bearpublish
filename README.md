@@ -48,14 +48,29 @@ swift build -c release
   --lang "en""
 ```
 
-## Things I would do different if I started over
+## What I'd Do Differently (and Hope to Add Eventually)
 
-- Use vanilla js instead of htmx
-- Better routing
+- **Drop HTMX for vanilla JS** – HTMX helped speed up the prototype, but it's overkill for what this project needs. I’m mainly using `hx-get` and `hx-swap`, and the extra attributes feel like baggage.
+  
+- **Better routing** – Currently routes rely on query parameters (e.g., `?slug=note-slug`). I’d prefer cleaner URLs like `bearsit.es/note-slug`.
+
+## Ideas for Future Improvements
+
+- **Theme selection** – Right now, the only supported theme is Duotone Light (❤️). I’d like to support theme selection via CLI:  
+  `BearPublishCLI (...args...) --theme duotone-light`
+- **Frontend theme switcher** – Ideally, visitors should be able to select themes from the generated site's UI.
+- **Fix UI bug** – There's a minor issue when selecting nested menu items that aren’t expanded yet.
+- **Mac App** – I’d love to build a GUI for non-technical users to publish directly.
+- **Tag-based note export** – Add support for filtering exported notes via tags:  
+  `BearPublishCLI --tags [dev, code, articles]`
+- **Companion app** – A lightweight CLI or GUI focused solely on exporting notes by tag in raw markdown.
+- **Optimize CSS and JS** – These were initially written in 2023 to get a quick prototype running, so some parts may be ~~ugly~~~ repetitive or unoptimized.
 
 ## Contributing
 
-This is a personal open source project. I don’t guarantee maintenance or support for feature requests, though improvements might happen depending on my availability.
+This is a personal open source project.  While I’d love to keep improving it, I can’t promise active maintenance or support for feature requests. That said, improvements may happen as time and energy allow.
+
+Feel free to open issues or pull requests — just know that response times may vary (and sometimes take a while).
 
 ## Third party
 
