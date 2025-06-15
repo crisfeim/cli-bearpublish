@@ -4,7 +4,7 @@ import XCTest
 import BearDomain
 import BearPublish
 
-class BearPublisherTests: XCTestCase, TestSpecificURLProvider {
+class BearPublisherTests: XCTestCase, OutputFilesystemTestCase {
     
     override func setUp() {
         try? FileManager.default.removeItem(at: testSpecificURL())
