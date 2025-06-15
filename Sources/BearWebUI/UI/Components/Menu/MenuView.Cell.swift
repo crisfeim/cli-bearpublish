@@ -56,7 +56,7 @@ extension MenuView {
                     Div {
                         for children in item.children {
                             Cell(
-                                icon: icon,
+                                icon: children.icon,
                                 item: children,
                                 getRouter: getRouter,
                                 pushedURL: pushedURL
