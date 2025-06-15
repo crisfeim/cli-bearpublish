@@ -65,21 +65,21 @@ class BearPublisherTests: XCTestCase {
         
         try await sut.execute()
         
-        expectFileAtPathToExist("index.html")
-        expectFileAtPathToExist("note/\(Self.anyNote().slug).html")
-        expectFileAtPathToExist("list/\(Self.anyNoteList().slug).html")
-        expectFileAtPathToExist("tag/\(Self.anyNoteList().slug).html")
-        expectFileAtPathToExist("css/some.css")
-        expectFileAtPathToExist("images")
-        expectFileAtPathToExist("files")
+        expectFileAtPathToExist("index.html", at: outputFolder())
+        expectFileAtPathToExist("note/\(Self.anyNote().slug).html", at: outputFolder())
+        expectFileAtPathToExist("list/\(Self.anyNoteList().slug).html", at: outputFolder())
+        expectFileAtPathToExist("tag/\(Self.anyNoteList().slug).html", at: outputFolder())
+        expectFileAtPathToExist("css/some.css", at: outputFolder())
+        expectFileAtPathToExist("images", at: outputFolder())
+        expectFileAtPathToExist("files", at: outputFolder())
     }
 }
 
 
 private extension BearPublisherTests {
     #warning("@todo: Assert file contets")
-    func expectFileAtPathToExist(_ path: String, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssert(FileManager.default.fileExists(atPath: outputFolder().appendingPathComponent(path).path))
+    func expectFileAtPathToExist(_ path: String, at directoryURL: URL, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssert(FileManager.default.fileExists(atPath: directoryURL.appendingPathComponent(path).path))
     }
 }
 

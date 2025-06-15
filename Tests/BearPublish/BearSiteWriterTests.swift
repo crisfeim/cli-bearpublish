@@ -52,19 +52,19 @@ class BearSiteWriterTests: XCTestCase {
         
         try await sut.execute()
       
-        expectFileAtPathToExist("index.html")
-        expectFileAtPathToExist("notes/somenote.html")
-        expectFileAtPathToExist("list/somecategorylist.html")
-        expectFileAtPathToExist("tag/sometaglist.html")
-        expectFileAtPathToExist("css/somecss.css")
-        expectFileAtPathToExist("js/somejs.js")
+        expectFileAtPathToExist("index.html", at: outputFolder())
+        expectFileAtPathToExist("notes/somenote.html", at: outputFolder())
+        expectFileAtPathToExist("list/somecategorylist.html", at: outputFolder())
+        expectFileAtPathToExist("tag/sometaglist.html", at: outputFolder())
+        expectFileAtPathToExist("css/somecss.css", at: outputFolder())
+        expectFileAtPathToExist("js/somejs.js", at: outputFolder())
     }
 }
 
 // Custom expectations
 private extension BearSiteWriterTests {
-    func expectFileAtPathToExist(_ path: String, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssert(FileManager.default.fileExists(atPath: outputFolder().appendingPathComponent(path).path))
+    func expectFileAtPathToExist(_ path: String, at directoryURL: URL, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssert(FileManager.default.fileExists(atPath: directoryURL.appendingPathComponent(path).path))
     }
 }
 

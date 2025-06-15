@@ -39,7 +39,7 @@ class IntegrationTests: XCTestCase {
         ])
         
         try await cli.run()
-        expectSiteToExist()
+        expectSiteToExist(at: outputFolder())
     }
     
     func test_bearPublisherComposerExecute_buildsExpectedFilesAtOutputURL() async throws {
@@ -54,48 +54,48 @@ class IntegrationTests: XCTestCase {
         )
         
         try await sut.execute()
-        expectSiteToExist()
+        expectSiteToExist(at: outputFolder())
     }
 }
 
 // MARK: - Custom asserts
 private extension IntegrationTests {
     
-    func expectSiteToExist(file: StaticString = #filePath, line: UInt = #line){
-        expectFileAtPathToExist("index.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/note/archived-note.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/note/encrypted-note.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/note/note-with-done-tasks.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/note/note-with-file.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/note/note-with-source-code.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/note/note-with-tag.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/note/note-with-undone-tasks.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/note/pinned-note.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/note/regular-note.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/note/trashed-note.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/list/all.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/list/archived.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/list/tasks.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/list/trashed.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/tag/code.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/tag/dev.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/tag/sometag.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/tag/sometag&nested.html", file: file, line: line)
-        expectFileAtPathToExist("standalone/tag/sometag&nested&nested.html", file: file, line: line)
-        expectFileAtPathToExist("assets/css", file: file, line: line)
-        expectFileAtPathToExist("assets/js", file: file, line: line)
+    func expectSiteToExist(at outputURL: URL, file: StaticString = #filePath, line: UInt = #line){
+        expectFileAtPathToExist("index.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/note/archived-note.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/note/encrypted-note.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/note/note-with-done-tasks.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/note/note-with-file.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/note/note-with-source-code.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/note/note-with-tag.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/note/note-with-undone-tasks.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/note/pinned-note.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/note/regular-note.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/note/trashed-note.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/list/all.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/list/archived.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/list/tasks.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/list/trashed.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/tag/code.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/tag/dev.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/tag/sometag.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/tag/sometag&nested.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("standalone/tag/sometag&nested&nested.html", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("assets/css", at: outputURL, file: file, line: line)
+        expectFileAtPathToExist("assets/js", at: outputURL, file: file, line: line)
 
-        expectFileWithHashToExist(parentFolder: "assets/css", fileNamePrefix: "theme-variables", file: file, line: line)
-        expectFileWithHashToExist(parentFolder: "assets/css", fileNamePrefix: "styles", file: file, line: line)
-        expectFileWithHashToExist(parentFolder: "assets/js", fileNamePrefix: "htmx", file: file, line: line)
-        expectFileWithHashToExist(parentFolder: "assets/js", fileNamePrefix: "hyperscript", file: file, line: line)
-        expectFileWithHashToExist(parentFolder: "assets/js", fileNamePrefix: "main", file: file, line: line)
+        expectFileWithHashToExist(parentFolder: "assets/css", fileNamePrefix: "theme-variables", at: outputURL, file: file, line: line)
+        expectFileWithHashToExist(parentFolder: "assets/css", fileNamePrefix: "styles", at: outputURL, file: file, line: line)
+        expectFileWithHashToExist(parentFolder: "assets/js", fileNamePrefix: "htmx", at: outputURL, file: file, line: line)
+        expectFileWithHashToExist(parentFolder: "assets/js", fileNamePrefix: "hyperscript", at: outputURL, file: file, line: line)
+        expectFileWithHashToExist(parentFolder: "assets/js", fileNamePrefix: "main", at: outputURL, file: file, line: line)
     }
     
-    func expectFileWithHashToExist(parentFolder: String, fileNamePrefix: String, file: StaticString = #filePath, line: UInt = #line) {
+    func expectFileWithHashToExist(parentFolder: String, fileNamePrefix: String, at outputURL: URL, file: StaticString = #filePath, line: UInt = #line) {
         
         do {
-            let directoryURL = outputFolder().appendingPathComponent(parentFolder)
+            let directoryURL = outputURL.appendingPathComponent(parentFolder)
             
             let contents = try FileManager.default.contentsOfDirectory(
                 at: directoryURL,
@@ -112,8 +112,8 @@ private extension IntegrationTests {
         }
     }
     
-    func expectFileAtPathToExist(_ path: String, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssert(FileManager.default.fileExists(atPath: outputFolder().appendingPathComponent(path).path))
+    func expectFileAtPathToExist(_ path: String, at directoryURL: URL, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssert(FileManager.default.fileExists(atPath: directoryURL.appendingPathComponent(path).path))
     }
 }
 
