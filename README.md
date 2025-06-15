@@ -40,12 +40,13 @@ For custom output and paths, pass arguments:
 
 ```bash
 swift build -c release
-.build/release/BearPublisherCLI \
+.build/release/BearPublishCLI \
   --db-path /path/to/database.sqlite \
   --files-folder-path /path/to/files \
   --images-folder-path /path/to/images \
   --output ./dist \
-  --title "My Static Site"
+  --title "My Static Site" \
+  --lang "en""
 ```
 
 ## License
