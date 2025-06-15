@@ -20,11 +20,11 @@ Static site generator for Bear Notes.
 ### Site Generation
 
 - `BearSiteBuilder`: Builds `BearSite` with the needed data.
-- `BearSiteRenderer`: Renders a `BearSite` with the provided renderers.
-- `BearSiteGenerator`: Writes rendered site to output url and copies media files.
-- `BearPublisher`: Composes the generator with the data providers and needed renderers. 
-- `BearPublisherComposer`: Composes the publisher with data coming from the bear database and ui renders.
-- `BearPublisherCLI`: command-line interface using `ArgumentParser`.
+- `BearSiteRenderer`: Builds a `BearSiteRendered` with provided renderers from `BearSite`.
+- `BearSiteGenerator`: Writes `BearSiteRendered`  to disk (output url) and copies provided media files (files & images folders).
+- `BearPublisher`: Composes the generator with the data passed data providers and needed renderers. 
+- `BearPublisherComposer`: Composes the publisher with defaults (data coming from the bear database and ui renders from the ui module)
+- `BearPublisherCLI`: command-line interface using `ArgumentParser` that consumes `BearPublisherComposer`.
 
 ## Installation & Usage
 
@@ -51,7 +51,6 @@ swift build -c release
 ## What I'd Do Differently (and Hope to Add Eventually)
 
 - **Drop HTMX for vanilla JS** – HTMX helped speed up the prototype, but it's overkill for what this project needs. I’m mainly using `hx-get` and `hx-swap`, and the extra attributes feel like baggage.
-  
 - **Better routing** – Currently routes rely on query parameters (e.g., `?slug=note-slug`). I’d prefer cleaner URLs like `bearsit.es/note-slug`.
 
 ## Ideas for Future Improvements
@@ -73,7 +72,7 @@ swift build -c release
 
 ## Contributing
 
-This is a personal open source project.  While I’d love to keep improving it, I can’t promise active maintenance or support for feature requests. That said, improvements may happen as time and energy allow.
+This is a personal open source project. While I’d love to keep improving it, for now I can’t guarantee active maintenance or support for feature requests. That said, improvements may happen as time and energy allow.
 
 Feel free to open issues or pull requests — just know that response times may vary (and sometimes take a while).
 
