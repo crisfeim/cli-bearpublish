@@ -1,5 +1,7 @@
 # 🐻‍❄️ BearPublish
 
+![type: cli-tool](https://img.shields.io/badge/type-cli--tool-blue.svg)
+
 ![Icon](img.png)
 
 Static site generator for Bear Notes.
