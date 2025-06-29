@@ -83,6 +83,9 @@ Feel free to open issues or pull requests — just know that response times may 
 - [Plot](https://github.com/JohnSundell/Plot)
 - [Markdownkit](https://github.com/objecthub/swift-markdownkit)
 - [SQLite](https://github.com/stephencelis/SQLite.swift)
+- [HTMX](https://github.com/bigskysoftware/htmx)
+- [Hyperscript](https://github.com/bigskysoftware/_hyperscript)
+- [PylonCSS](https://github.com/almonk/pylon)
 
 ## Related Projects
 
