@@ -93,12 +93,6 @@ Feel free to open issues or pull requests — just know that response times may 
 - [Bearnotes Hugo theme](https://github.com/crisfeim/theme-hugo-bearnotes) — Basically the grandpa of this project.
 - [Miyano](https://github.com/wuusn/miyano) — An awesome static site generator for Bear notes, built in Ruby by Wuusn. Main inspiration for this project.
 
-## ☕ Buy Me a Coffee
-
-If you found this project useful and feel like supporting it, you can buy me a coffee — no pressure, but always appreciated!
-
-[Buy me a coffee](https://buymeacoffee.com/crisfeim)
-
 
 ## License
 
