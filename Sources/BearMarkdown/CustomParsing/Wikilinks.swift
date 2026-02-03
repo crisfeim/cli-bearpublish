@@ -33,7 +33,6 @@ extension String {
         return replacedString
     }
     
-    #warning("@todo: inject processor")
     func parseWikilinks(slugify: (String) -> String) -> String {
         let pattern = #"\[\[(.+?)\]\]"#
         let regex = try! NSRegularExpression(pattern: pattern)
