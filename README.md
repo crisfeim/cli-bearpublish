@@ -1,6 +1,7 @@
 # 🐻‍❄️ BearPublish
 
 ![type: cli-tool](https://img.shields.io/badge/type-cli--tool-blue.svg)
+![CI](https://github.com/crisfeim/cli-bearpublish/actions/workflows/CI.yml/badge.svg)
 
 ![Icon](img.png)
 
