@@ -2,6 +2,7 @@
 
 ![type: cli-tool](https://img.shields.io/badge/type-cli--tool-blue.svg)
 ![CI](https://github.com/crisfeim/cli-bearpublish/actions/workflows/CI.yml/badge.svg)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/crisfeim/cli-bearpublish)
 
 ![Icon](img.png)
 
