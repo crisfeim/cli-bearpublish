@@ -10,7 +10,7 @@ Static site generator for Bear Notes.
 
 ## Overview
 
-**BearPublish** transforms a Bear Notes database into a static website.
+**BearPublish** transforms a Bear Notes database into a static website. Here's [an example of a site created with BearPublish](https://bearpublish.vercel.app) 
 
 ## Project Architecture
 
